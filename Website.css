@@ -1,0 +1,25 @@
+:root {
+    --theme-color: #7395AE;
+    --theme-dark-color: #557A95;
+    --primary-font-color: #F6C90E;
+    --link-font-color: #white;
+    background-color: #3A4750;
+ }
+ 
+ body {
+    
+    color: var(--primary-font-color);
+    padding: 10px;
+ }
+ 
+ a {
+    text-decoration: none;
+    color: var(--theme-dark-color);
+ }
+
+ header > h1 {
+    color: var(--theme-dark-color);
+    font-size: 2.5rem;
+    margin: 10px 0;
+    text-shadow: 2px 2px 3px gray;
+ }
