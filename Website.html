@@ -35,7 +35,7 @@
           <p>
             Checklist: <br>
             <div id="Login Popup">
-              Log in will be a pop up I believe
+              Log in
             </div>
             <div id = "hintRotation">
               A rotating hints tab
@@ -45,6 +45,35 @@
             </div>
           </p>
       </main>
+      <div class="container">
+        <form class="form" id="login">
+          <h1 class = "form__title">Login</h1>
+          <div class="form__input-message">Input Your Unique Username and Password Below</div>
+          <div class = "form__input-group">
+            <input type = "text" class= "form__input" autofocus placeholder="Username">
+            <div class="form__input-error-message">Potential Error Message: Username Wrong</div>
+          </div>
+          <div class = "form__input-group">
+            <input type = "text" class= "form__input" autofocus placeholder="Password">
+            <div class="form__input-error-message">Potential Error Message: Password Wrong</div>
+          </div>
+          <button class="form__button" type="submit">Continue</button>
+        </form>
+        <form class="form" id="signup">
+          <h1 class = "form__title">Create Account</h1>
+          <div class="form__input-message">Input Your Email with Your New Username and Password Below</div>
+          <div class = "form__input-group">
+            <input type = "text" class= "form__input" autofocus placeholder="Email">
+          </div>
+          <div class = "form__input-group">
+            <input type = "text" class= "form__input" autofocus placeholder="Username">
+          </div>
+          <div class = "form__input-group">
+            <input type = "text" class= "form__input" autofocus placeholder="Password">
+          </div>
+          <button class="form__button" type="submit">Continue</button>
+        </form>
+      </div>
     </body>
   
 </html>
