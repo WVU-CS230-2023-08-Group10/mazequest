@@ -6,24 +6,45 @@
     background-color: #5A5A5A;
  }
  
- body {
-    
-    color: var(--primary-font-color);
-    padding: 10px;
- }
- #changeH {
+ @font-face {
+   font-family: 'Alagard';
+   src: url('Fonts/Alagard/Alagard.eot');
+   src: url('Fonts/Alagard/Alagard.eot?#iefix') format('embedded-opentype'),
+       url('Fonts/Alagard/Alagard.woff2') format('woff2'),
+       url('Fonts/Alagard/Alagard.woff') format('woff'),
+       url('Fonts/Alagard/Alagard.ttf') format('truetype'),
+       url('Fonts/Alagard/Alagard.svg#Alagard') format('svg');
+   font-weight: 500;
+   font-style: normal;
+   font-display: swap;
+}
+
+body {
+   font-family: "Alagard";
+   color: var(--primary-font-color);
+   padding: 10px;
+   text-align: center;
+}
+
+#changeH {
    color:black;
    background-color:#E3963E;
- }
- 
- a {
-    text-decoration: none;
-    color: var(--theme-dark-color);
- }
+}
 
- header > h1 {
-    color: var(--theme-dark-color);
-    font-size: 2.5rem;
-    margin: 10px 0;
-    text-shadow: 2px 2px 3px gray;
- }
+a {
+   text-decoration: none;
+   color: var(--theme-dark-color);
+}
+
+header > h1 {
+   color: var(--theme-dark-color);
+   font-size: 2.5rem;
+   margin: 10px 0;
+   text-shadow: 2px 2px 3px gray;
+}
+
+#headerContainer{
+   background-color: black;
+   margin-top: 0;
+   text-align: center;
+}
