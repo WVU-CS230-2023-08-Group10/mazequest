@@ -1,60 +1,61 @@
-class Player
-{
+class Player extends Entity{
     Account;
     Health = 10;
     Inventory = Array(7);
-    Room;
     
+    Room;
     constructor(health){
         this.Health=health;
+        Inventory.add(null);
+        Inventory.add(null);
     }
     constructor(account, health){
         this.Account=account;
         this.Health=health;
     }
-    pickUp(Armor){
+    function pickUp(Armor){
         if(Inventory.at(1)==null){
             Inventory.add(Armor,1);
         }
     }
-    pickUp(Weapon){
+    function pickUp(Weapon){
         if(Inventory.at(0)==null){
             Inventory.add(Weapon, 0);
         }
     }
-    pickUp(ObscureObject){
+    function pickUp(ObscureObject){
         if(Inventory.size()<Inventory.length){
             Inventory.append(ObscureObject);
         }
     }
-    dropObscureObject(index){
+    function dropObscureObject(index){
         if(Inventory.at(Index)!=null){
             Inventory.add(null, index);
         }
     }
-    dropWeapon(){
+    function dropWeapon(){
         if(Inventory.at(0)!=null){
             Inventory.add(null, 0);
         }
     }
-    dropArmor(){
+    function dropArmor(){
         if(Inventory.at(1)!=null){
             Inventory.add(null,1);
         }
     }
-    position(room,tile){
-        this.room=room;
-        this.tile=tile;
-    }
-    damage(damageDone){
+    function damage(damageDone){
         health-damageDone;
         if(health<1){
             //game over
         }
     }
-    initializeCombat(){
+    function initializeCombat(){
         // call combat
     }
+    function position(room,tile){
+        this.room=room;
+        this.tile=tile;
+    }
     //move functions
-    //display function (renders character on tile)
-}
+    //display function (renders character on tile with sprite)
+    }
