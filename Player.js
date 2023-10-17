@@ -13,46 +13,46 @@ class Player extends Entity{
         this.Account=account;
         this.Health=health;
     }
-    function pickUp(Armor){
+    pickUp(Armor){
         if(Inventory.at(1)==null){
             Inventory.add(Armor,1);
         }
     }
-    function pickUp(Weapon){
+    pickUp(Weapon){
         if(Inventory.at(0)==null){
             Inventory.add(Weapon, 0);
         }
     }
-    function pickUp(ObscureObject){
+    pickUp(ObscureObject){
         if(Inventory.size()<Inventory.length){
             Inventory.append(ObscureObject);
         }
     }
-    function dropObscureObject(index){
+    dropObscureObject(index){
         if(Inventory.at(Index)!=null){
             Inventory.add(null, index);
         }
     }
-    function dropWeapon(){
+    dropWeapon(){
         if(Inventory.at(0)!=null){
             Inventory.add(null, 0);
         }
     }
-    function dropArmor(){
+    dropArmor(){
         if(Inventory.at(1)!=null){
             Inventory.add(null,1);
         }
     }
-    function damage(damageDone){
+    damage(damageDone){
         health-damageDone;
         if(health<1){
             //game over
         }
     }
-    function initializeCombat(){
+    initializeCombat(){
         // call combat
     }
-    function position(room,tile){
+    position(room,tile){
         this.room=room;
         this.tile=tile;
     }
