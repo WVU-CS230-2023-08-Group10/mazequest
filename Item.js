@@ -1,11 +1,12 @@
-class Item{
+class Item extends Entity
+{
     constructor(name){
         this.itemname=name;
     }
-    get IName(){
+    get getName(){
         return this.itemname;
     }
-    set IName(x){
+    set setName(x){
         this.itemname=x;
     }
 }
