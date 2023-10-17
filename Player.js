@@ -1,12 +1,13 @@
-class Player
-{
+class Player extends Entity{
     Account;
     Health = 10;
     Inventory = Array(7);
-    Room;
     
+    Room;
     constructor(health){
         this.Health=health;
+        Inventory.add(null);
+        Inventory.add(null);
     }
     constructor(account, health){
         this.Account=account;
@@ -42,10 +43,6 @@ class Player
             Inventory.add(null,1);
         }
     }
-    position(room,tile){
-        this.room=room;
-        this.tile=tile;
-    }
     damage(damageDone){
         health-damageDone;
         if(health<1){
@@ -55,6 +52,10 @@ class Player
     initializeCombat(){
         // call combat
     }
+    position(room,tile){
+        this.room=room;
+        this.tile=tile;
+    }
     //move functions
-    //display function (renders character on tile)
-}
+    //display function (renders character on tile with sprite)
+    }
