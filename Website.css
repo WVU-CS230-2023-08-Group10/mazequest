@@ -27,8 +27,7 @@ body {
    padding: 40px 15px 0px 15px;
    margin: 20px auto;
    text-align: center;
-   background-image: url(InterfaceBackground.png);
-   background-size: cover;
+   background-color: rgb(15, 15, 15)
 }
 
 #changeH {
