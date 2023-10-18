@@ -1,3 +1,5 @@
+import { Direction } from "./MazeLayout";
+
 class Player extends Entity{
     Account = 0;
     Health = 10;
@@ -79,13 +81,13 @@ class Player extends Entity{
         var position;
         switch (direction) {
             case value: right
-                position = MazeLayout.Direction.Right;
+                position = Direction.Right;
             case value: left 
-                position = MazeLayout.Direction.Left;
+                position = Direction.Left;
             case value: down
-                position = MazeLayout.Direction.Down;
+                position = Direction.Down;
             case value: up
-                position = MazeLayout.Direction.Up;
+                position = Direction.Up;
             default: 
                 break;
         }
