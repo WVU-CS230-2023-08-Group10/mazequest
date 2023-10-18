@@ -10,7 +10,8 @@ const s = supabase.createClient(supabaseUrl, supabaseKey);
 document.addEventListener("DOMContentLoaded", async () => {
 
 // BEGIN SIGNUP
-   const signup = document.getElementById("signup").addEventListener("submit", async (e) => {
+   document.getElementById("signup").addEventListener("submit", async (e) => {
+      
      e.preventDefault();
     
     
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 // END SUPABASE
 
 //below is used for hint rotation
-var hintsText = ["To engage in combat, move into the enemy", "Gather items to help fight off enemys", "If you hit the dragon, it might not like you", "Did you know that 2 to the 3rd power is 8?", "If you look around, there might be a secret room or two somewhere...", "Watch out for goblins! Those Pesky little Buggers will neevr leave you alone",
+var hintsText = ["To engage in combat, move into the enemy", "Gather items to help fight off enemies", "If you hit the dragon, it might not like you", "Did you know that 2 to the 3rd power is 8?", "If you look around, there might be a secret room or two somewhere...", "Watch out for goblins! Those Pesky little Buggers will neevr leave you alone",
  "The minotaur is a scary beast, I wonder if it's within the maze?", "The cake is a lie"];
 
 var counter = 0;
