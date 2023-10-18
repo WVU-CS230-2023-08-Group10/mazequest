@@ -17,48 +17,84 @@
     </header>
     <body>
       <main> 
-          <p>
-            Checklist: <br>
-            <div id="Login Popup">
-              Log in
+        <!-- Tab links -->
+        <div class="tab">
+          <button class="tablinks" onclick="openTab(event, 'Hom')">Home</button>
+          <button class="tablinks" onclick="openTab(event, 'Sig')">Sign-Up</button>
+          <button class="tablinks" onclick="openTab(event, 'In')">Login</button>
+          <button class="tablinks" onclick="openTab(event, 'Gam')">Game</button>
+          <button class="tablinks" onclick="openTab(event, 'Out')">Log-Out</button>
+        </div>
+
+        <!-- Tab content -->
+        <div id="Hom" class="tabcontent">
+          <!-- <div id="headerContainer">
+            <h1>Welcome to</h1>
+            <img src="MazeQuest.png" alt="maze-quest-title-image">
+          </div> -->
+          //Under Construction
+          <p> Explain Game Here</p>
+        </div>
+        <div id="In" class="tabcontent">
+          <form class="form" id="login">
+            <h1 class = "form__title">Login</h1>
+            <div class="form__input-message">Input Your Unique Username and Password Below</div>
+            <div class = "form__input-group">
+              <input type = "text" class= "form__input" autofocus placeholder="Username">
+              <div class="form__input-error-message">Potential Error Message: Username Wrong</div>
             </div>
-            <div id = "hintRotation">
-              A rotating hints tab
+            <div class = "form__input-group">
+              <input type = "text" class= "form__input" autofocus placeholder="Password">
+              <div class="form__input-error-message">Potential Error Message: Password Wrong</div>
             </div>
-            <div id= "gameWindow">
-              There will be a game in here someday...
+            <button class="form__button" type="submit">Continue</button>
+          </form>
+        </div>
+
+        <div id="Out" class="tabcontent">
+          //Under Construction
+          <p>Log Out</p>
+          <button class="form__button" type="submit">Here</button>
+        </div>
+
+        <div id="Sig" class="tabcontent">
+          <form class="form" id="signup">
+            <h1 class = "form__title">Create Account</h1>
+            <div class="form__input-message">Input Your Email with Your New Username and Password Below</div>
+            <div class = "form__input-group">
+              <input type = "text" class= "form__input" autofocus placeholder="Email">
             </div>
-          </p>
+            <div class = "form__input-group">
+              <input type = "text" class= "form__input" autofocus placeholder="Username">
+            </div>
+            <div class = "form__input-group">
+              <input type = "text" class= "form__input" autofocus placeholder="Password">
+            </div>
+            <button class="form__button" type="submit">Continue</button>
+          </form>
+        </div>
+
+        <div id="Gam" class="tabcontent">
+          //Under Construction
+          //add game here
+          <p> This is where the fun stuff'l go</p>
+        </div>
+        <script>
+          function openTab(evt, name) {
+          var i, tabcontent, tablinks;
+          tabcontent = document.getElementsByClassName("tabcontent");
+          for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+          }
+          tablinks = document.getElementsByClassName("tablinks");
+          for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+          }
+          document.getElementById(name).style.display = "block";
+          evt.currentTarget.className += " active";
+          }
+        </script>
       </main>
-      <div class="container">
-        <form class="form" id="login">
-          <h1 class = "form__title">Login</h1>
-          <div class="form__input-message">Input Your Unique Username and Password Below</div>
-          <div class = "form__input-group">
-            <input type = "text" class= "form__input" autofocus placeholder="Username">
-            <div class="form__input-error-message">Potential Error Message: Username Wrong</div>
-          </div>
-          <div class = "form__input-group">
-            <input type = "text" class= "form__input" autofocus placeholder="Password">
-            <div class="form__input-error-message">Potential Error Message: Password Wrong</div>
-          </div>
-          <button class="form__button" type="submit">Continue</button>
-        </form>
-        <form class="form" id="signup">
-          <h1 class = "form__title">Create Account</h1>
-          <div class="form__input-message">Input Your Email with Your New Username and Password Below</div>
-          <div class = "form__input-group">
-            <input type = "text" class= "form__input" autofocus placeholder="Email">
-          </div>
-          <div class = "form__input-group">
-            <input type = "text" class= "form__input" autofocus placeholder="Username">
-          </div>
-          <div class = "form__input-group">
-            <input type = "text" class= "form__input" autofocus placeholder="Password">
-          </div>
-          <button class="form__button" type="submit">Continue</button>
-        </form>
-      </div>
       <div id="changeH">You found the Secret Hint, there's nothing hidden here though, You should look harder in the Maze</div>
       <script>
         var elem = document.getElementById("changeH");
