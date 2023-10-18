@@ -14,5 +14,5 @@ function changeHints() {
   }
 }
 
-var layout = new MazeLayout(new GenerationParameters(10, 10));
+var layout = new MazeLayout(new GenerationParameters(10, 10, 16, 64, .5));
 layout.generateRoomLayout();
