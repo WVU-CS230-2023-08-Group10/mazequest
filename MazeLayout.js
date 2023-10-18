@@ -48,46 +48,88 @@ class MazeLayout
         var startCol = Math.floor(Math.random() * this.roomArray[startRow].length);
         var startPos = new Vector2(startCol, startRow);
 
+        // Make a batch of rooms to generate
         var batch = [ startPos ];
 
         while (batch.length > 0)
         {
+            // Make the next batch
             var newBatch = [];
+            // Iterate through the batch
             for (let i = 0; i < batch.length; i++) {
                 const pos = batch[i];
 
+                // Generate the batch element
                 toBeGenerated[pos.y][pos.x] = 1;
                 
+                // Get the adjacent rooms
                 var up = Vector2.add(pos, Direction.Up);
                 var down = Vector2.add(pos, Direction.Down); 
                 var left = Vector2.add(pos, Direction.Left);
                 var right = Vector2.add(pos, Direction.Right);
 
                 var adjacent = [up, down, left, right];
-                //console.log(adjacent);
+                // Iterate through adjacent rooms
                 for (let j = 0; j < adjacent.length; j++) {
                     const adj = adjacent[j];
 
-                    if (!this.isPositionInMaze(pos))
+                    // If the room isn't within the maze, skip
+                    if (!this.isPositionInMaze(adj))
                         continue;
-
+                    // If the room has already been generated, skip
                     if (toBeGenerated[adj.y][adj.x] != -1)
                         continue;
-
+                    // Should the room be generated?
                     if (this.params.isGenerated())
                     {
-                        toBeGenerated[adj.y][adj.x] = 1;
+                        // If yes, add to batch
                         newBatch.push(adj);
                     }
-                    else{
+                    else
+                    {
+                        // If no, set toBeGenerated to 0;
                         toBeGenerated[adj.y][adj.x] = 0;
                     }
                 }
             }
+            // Reset the batch
             batch = newBatch;
         }
 
-        console.log(toBeGenerated);
+        var logStr = "";    
+        var tiles = ['-','╨','╞','╚','╥','║','╔','╠','╡','╝','═','╩','╗','╣','╦','╬'];
+        for (let i = 0; i < this.params.dimensions.y; i++) {
+            for (let j = 0; j < this.params.dimensions.x; j++) {
+                if (toBeGenerated[i][j] <= 0)
+                {
+                    logStr += ' ';
+                    continue;
+                }
+
+                var pos = new Vector2(j, i);
+                toBeGenerated[i][j] = 0;
+
+                var up = Vector2.add(pos, Direction.Up);
+                var down = Vector2.add(pos, Direction.Down); 
+                var left = Vector2.add(pos, Direction.Left);
+                var right = Vector2.add(pos, Direction.Right);
+
+                var adjacent = [up, right, down, left];
+                for (let a = 0; a < adjacent.length; a++) {
+                    const adj = adjacent[a];
+                    if (!this.isPositionInMaze(adj)) continue;
+                    if (toBeGenerated[adj.y][adj.x] > 0)
+                    {
+                        toBeGenerated[i][j] += 1 << a;
+                    }
+                }
+
+                logStr += tiles[toBeGenerated[i][j]];
+            }
+            logStr += "\n";
+        }
+        console.log(logStr);
+        console.log(this.params.currentRoomCount);
     }
 
     isPositionInMaze(pos)
@@ -105,23 +147,49 @@ class MazeLayout
 class GenerationParameters
 {
     currentRoomCount = 0;
+    currentIteration = 0;
     dimensions;
     minRooms;
     maxRooms;
+    clumping;
 
-    constructor(width, height, minRooms, maxRooms) 
+    /**
+     * Constructor for GenerationParameters. These parameters are used in MazeLayout to influence that shape and size of the maze generated.
+     * 
+     * @param {integer} width Width, in rooms, of the layout
+     * @param {integer} height Height, in rooms, of the layout
+     * @param {integer} minRooms Minimum number of rooms the layout will generate with. With low clumping values, this minimum is not necessarily a hard rule.
+     * @param {integer} maxRooms Maximum number of reooms the layout will generate with.
+     * @param {float} clumping A value between 0 and 1 that represents the maximum chance that a given tile is generated.
+     * At 0, this means that absolutely no generation can happen (don't set this to 0.).
+     * At 1, the algorithm will gaurantee a tile is generated if we haven't yet reached minRooms. This behavior basically
+     * makes grids of rooms, instead of more interesting layouts. Also not recommended. Values around 0.5 are ideal.
+     */
+    constructor(width = 10, height = 10, minRooms = 8, maxRooms = 16, clumping = 0.5) 
     {
         this.dimensions = new Vector2(width, height);
         this.minRooms = minRooms;
         this.maxRooms = maxRooms;
+        this.clumping = clumping;
     }
 
     isGenerated()
     {
-        //var chance = 1 - (this.currentRoomCount-this.minRooms)/(this.maxRooms-this.minRooms);
-        let generate = Math.random() < 0.5;
+        // Chance scales down as we approach max rooms
+        var chance = 1 - (this.currentRoomCount-this.minRooms)/(this.maxRooms-this.minRooms);
+        chance *= this.clumping;
+        var boundsProtection = 1 - (this.currentRoomCount/this.currentIteration);
+        if (this.currentRoomCount < this.minRooms)
+            chance = chance + (boundsProtection * (1-chance));
+        else if (this.currentRoomCount > this.maxRooms)
+            chance = 0;
+        let generate = Math.random() < chance;
+
+        // Tick up counters
+        this.currentIteration++;
         if (generate)
             this.currentRoomCount++;
+
         return generate;
     }
 }
