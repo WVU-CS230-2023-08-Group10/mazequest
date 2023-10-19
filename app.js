@@ -24,20 +24,25 @@ app.stage.addChild(bkg);
 app.stage.addChild(player);
 
 document.addEventListener('keydown', function(input) {
+    console.log(input.key);
     switch (input.key) {
         case 'ArrowUp':
+        case 'w':
             player.texture = PIXI.Texture.from("./images/up.png");
             player.y -= 10;
             break;
         case 'ArrowLeft':
+        case 'a':
             player.texture = PIXI.Texture.from("./images/left.png");
             player.x -= 10;
             break;
         case 'ArrowDown':
+        case 's':
             player.texture = PIXI.Texture.from("./images/down.png");
             player.y += 10;
             break;
         case 'ArrowRight':
+        case 'd':
             player.texture = PIXI.Texture.from("./images/right.png");
             player.x += 10;
             break;
