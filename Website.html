@@ -7,8 +7,10 @@
     <title>MazeQuest</title>
     <link rel="stylesheet" href="./Website.css">
     <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pixelify Sans">-->
-    <script type="module" src="./Website.js"></script>
-    </head>
+    <script type="module" src = "./Website.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+
     <header>
       <div id="headerContainer">
         <h1>Welcome to</h1>
@@ -62,13 +64,13 @@
             <h1 class = "form__title">Create Account</h1>
             <div class="form__input-message">Input Your Email with Your New Username and Password Below</div>
             <div class = "form__input-group">
-              <input type = "text" class= "form__input" autofocus placeholder="Email">
+              <input type = "email" id = "email" class= "form__input" autofocus placeholder="Email">
             </div>
             <div class = "form__input-group">
               <input type = "text" class= "form__input" autofocus placeholder="Username">
             </div>
             <div class = "form__input-group">
-              <input type = "text" class= "form__input" autofocus placeholder="Password">
+              <input type = "password" id = "password" class= "form__input" autofocus placeholder="Password">
             </div>
             <button class="form__button" type="submit">Continue</button>
           </form>
@@ -79,6 +81,9 @@
           <canvas id="canvas"></canvas>
         </div>
         
+        <script>
+          document.getElementById("signup").addEventListener("submit")
+        </script>
         <script>
           function openTab(evt, name) {
             var i, tabcontent, tablinks;
