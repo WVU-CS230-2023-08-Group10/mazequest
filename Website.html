@@ -7,12 +7,12 @@
     <title>MazeQuest</title>
     <link rel="stylesheet" href="./Website.css">
     <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pixelify Sans">-->
-    <script type="module" src = "Website.js"></script>
+    <script type="module" src="./Website.js"></script>
     </head>
     <header>
       <div id="headerContainer">
         <h1>Welcome to</h1>
-        <img src="MazeQuest.png" alt="maze-quest-title-image">
+        <img src="./images/MazeQuest.png" alt="maze-quest-title-image">
       </div>
     </header>
     <body>
@@ -30,9 +30,9 @@
         <div id="Hom" class="tabcontent">
           <!-- <div id="headerContainer">
             <h1>Welcome to</h1>
-            <img src="MazeQuest.png" alt="maze-quest-title-image">
+            <img src="./images/MazeQuest.png" alt="maze-quest-title-image">
           </div> -->
-          //Under Construction
+          <!-- Under Construction -->
           <p> Explain Game Here</p>
         </div>
         <div id="In" class="tabcontent">
@@ -52,7 +52,7 @@
         </div>
 
         <div id="Out" class="tabcontent">
-          //Under Construction
+          <!-- Under Construction -->
           <p>Log Out</p>
           <button class="form__button" type="submit">Here</button>
         </div>
@@ -75,27 +75,38 @@
         </div>
 
         <div id="Gam" class="tabcontent">
-          //Under Construction
-          //add game here
-          <p> This is where the fun stuff'l go</p>
+          <script src="./node_modules/pixi.js/dist/pixi.min.js"></script>
+          <canvas id="canvas"></canvas>
         </div>
+        
         <script>
           function openTab(evt, name) {
-          var i, tabcontent, tablinks;
-          tabcontent = document.getElementsByClassName("tabcontent");
-          for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+              tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+              tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(name).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // If Game tab is pressed, load the game canvas
+            if (name == "Gam")
+            {
+              var script = document.createElement('script'),
+                scripts = document.getElementsByTagName('script')[0];
+              script.src = "./app.js";
+              scripts.parentNode.insertBefore(script, scripts);
+            }
           }
-          tablinks = document.getElementsByClassName("tablinks");
-          for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-          }
-          document.getElementById(name).style.display = "block";
-          evt.currentTarget.className += " active";
-          }
+          
         </script>
+
       </main>
-      <div id="changeH">You found the Secret Hint, Nothing's hidden here though, Look harder in the Maze</div>
+      <div id="changeH">You found the secret hint! Nothing's hidden here though... Look harder in The Maze!</div>
       <script>
         var elem = document.getElementById("changeH");
       </script>

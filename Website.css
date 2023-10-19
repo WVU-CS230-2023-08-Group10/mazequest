@@ -3,7 +3,7 @@
     --theme-dark-color: #557A95;
     --primary-font-color: #F6C90E;
     --link-font-color: #white;
-    background-image: url(WebsiteBackground.png);
+    background-image: url(./images/WebsiteBackground.png);
     background-size: cover;
  }
  
@@ -87,4 +87,8 @@ header > h1 {
    padding: 6px 12px;
    border: 1px solid rgb(30, 30, 30);
    border-top: none;
+ }
+
+ #canvas {
+   padding: 10px;
  }
