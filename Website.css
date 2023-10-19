@@ -3,27 +3,92 @@
     --theme-dark-color: #557A95;
     --primary-font-color: #F6C90E;
     --link-font-color: #white;
-    background-color: #5A5A5A;
+    background-image: url(./images/WebsiteBackground.png);
+    background-size: cover;
  }
  
- body {
-    
-    color: var(--primary-font-color);
-    padding: 10px;
- }
- #changeH {
+ @font-face {
+   font-family: 'Alagard';
+   src: url('Fonts/Alagard/Alagard.eot');
+   src: url('Fonts/Alagard/Alagard.eot?#iefix') format('embedded-opentype'),
+       url('Fonts/Alagard/Alagard.woff2') format('woff2'),
+       url('Fonts/Alagard/Alagard.woff') format('woff'),
+       url('Fonts/Alagard/Alagard.ttf') format('truetype'),
+       url('Fonts/Alagard/Alagard.svg#Alagard') format('svg');
+   font-weight: 500;
+   font-style: normal;
+   font-display: swap;
+}
+
+body {
+   width: 80%;
+   height: 80%;
+   font-family: "Alagard";
+   display: table;
+   color: var(--primary-font-color);
+   padding: 40px 15px 0px 15px;
+   margin: 20px auto;
+   text-align: center;
+   background-color: rgb(15, 15, 15)
+}
+
+#changeH {
    color:black;
    background-color:#E3963E;
+}
+
+a {
+   text-decoration: none;
+   color: var(--theme-dark-color);
+}
+
+header > h1 {
+   color: var(--theme-dark-color);
+   font-size: 2.5rem;
+   margin: 10px 0;
+   text-shadow: 2px 2px 3px gray;
+}
+
+/* Style the tab */
+.tab {
+   overflow: hidden;
+   border: 1px solid rgb(30, 30, 30);
+   background-color: rgb(30, 30, 30);
  }
  
- a {
-    text-decoration: none;
-    color: var(--theme-dark-color);
+ /* Style the buttons that are used to open the tab content */
+ .tab button {
+   background-color: inherit;
+   float: left;
+   border: none;
+   outline: none;
+   cursor: pointer;
+   padding: 14px 16px;
+   transition: 0.3s;  
+   color: var(--primary-font-color);
+   font-family: 'Alagard';
+ }
+ 
+ /* Change background color of buttons on hover */
+ .tab button:hover {
+   background-color: #E3963E;
+   color: black;
+ }
+ 
+ /* Create an active/current tablink class */
+ .tab button.active {
+   background-color: #E3963E;
+   color: black;
+ }
+ 
+ /* Style the tab content */
+ .tabcontent {
+   display: none;
+   padding: 6px 12px;
+   border: 1px solid rgb(30, 30, 30);
+   border-top: none;
  }
 
- header > h1 {
-    color: var(--theme-dark-color);
-    font-size: 2.5rem;
-    margin: 10px 0;
-    text-shadow: 2px 2px 3px gray;
+ #canvas {
+   padding: 10px;
  }

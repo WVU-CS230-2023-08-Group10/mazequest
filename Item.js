@@ -1,12 +1,23 @@
-class Item{
+class Item extends Entity
+{
     constructor(name){
         this.itemname=name;
     }
-    get IName(){
+    get getName(){
         return this.itemname;
     }
-    set IName(x){
+    set setName(x){
         this.itemname=x;
+    }
+      
+    isWeapon(Item){
+        return Item instanceof Weapon;
+    }
+    isArmor(Item){
+        return Item instanceof Armor;
+    }
+    isConsumable(Item){
+        return Item instanceof Consumable;
     }
 }
 class Weapon extends Item{
@@ -29,26 +40,8 @@ class Armor extends Item{
 // class Utility extends Item{
 
 // }
-class ObscureObject extends Item{
+class Consumable extends Item{
     constructor(name){
         super(name);
     }
-}
-function isWeapon(Item){
-    if(Item.Weapon){
-        return true;
-    }
-    return false;
-}
-function isArmor(Item){
-    if(Item.Armor){
-        return true;
-    }
-    return false;
-}
-function isObscureObject(Item){
-    if(Item.ObscureObject){
-        return true;
-    }
-    return false;
 }
