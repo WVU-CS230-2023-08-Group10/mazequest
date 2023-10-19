@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
          console.error(error)
       } else {
          // successful login
+         alert("Success! Account is being created.")
       }
    });
    // END SIGNUP
