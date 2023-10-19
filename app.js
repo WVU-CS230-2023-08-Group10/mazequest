@@ -8,7 +8,7 @@ const app = new PIXI.Application(
         backgroundColor: 0xFFFFFF
     }
 );
-document.body.appendChild(app.view);
+document.getElementById("Gam").appendChild(app.view);
 
 const playerTexture = PIXI.Texture.from('./images/down.png');
 const player = new PIXI.Sprite(playerTexture);
