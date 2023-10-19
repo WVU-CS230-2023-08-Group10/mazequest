@@ -1,63 +1,31 @@
-import { Direction } from "./MazeLayout";
+import { Direction } from "./MazeLayout.js";
+import { Item } from "./Item.js";
 
-class Player extends Entity{
-    Account = 0;
-    Health = 10;
-    Inventory = Array(7);
-    
+class Player extends Entity
+{
+    account;
+    health = 10;
+    inventory;
     Room;
+
     constructor(health)
     {
-        this.Health=health;
-        Inventory.add(null);
-        Inventory.add(null);
+        this.account = null;
+        this.health = health;
+        this.inventory = new Inventory();
     }
     constructor(account, health)
     {
         this.Account=account;
-        this.Health=health;
+        this.health=health;
     }
-    pickUp(Armor)
+    pickUp(item)
     {
-        if(Inventory.at(1)==null)
-        {
-            Inventory.add(Armor,1);
-        }
+        this.inventory.store(item);
     }
-    pickUp(Weapon)
+    drop(item)
     {
-        if(Inventory.at(0)==null)
-        {
-            Inventory.add(Weapon, 0);
-        }
-    }
-    pickUp(ObscureObject)
-    {
-        if(Inventory.size()<Inventory.length)
-        {
-            Inventory.append(ObscureObject);
-        }
-    }
-    dropObscureObject(index)
-    {
-        if(Inventory.at(Index)!=null)
-        {
-            Inventory.add(null, index);
-        }
-    }
-    dropWeapon()
-    {
-        if(Inventory.at(0)!=null)
-        {
-            Inventory.add(null, 0);
-        }
-    }
-    dropArmor()
-    {
-        if(Inventory.at(1)!=null)
-        {
-            Inventory.add(null,1);
-        }
+        this.inventory.drop(item);
     }
     damage(damageDone)
     {
@@ -116,4 +84,77 @@ class Player extends Entity{
         //returns character sprite at position
     }
     
+}
+
+
+class Inventory
+{
+    weapon;
+    armor;
+    consumables;
+
+    constructor()
+    {
+        this.weapon = null;
+        this.armor = null;
+        this.consumables = [];
     }
+
+    /**
+     * Stores an item in the inventory. If something needs to be dropped to store, returns an item. 
+     * Otherwise, return null;
+     * @param {Item} item
+     * @returns {Item?} item to drop, if applicable
+     */
+    store(item)
+    {
+        if (item.isWeapon())
+        {
+            var currentWeapon = this.weapon;
+            this.weapon = item;
+            return currentWeapon;
+        }
+        else if (item.isArmor())
+        {
+            var currentArmor = this.armor;
+            this.armor = item;
+            return currentArmor;
+        }
+        else if (item.isConsumable())
+        {
+            var stackableItem = this.consumables.find((e) => e.equals(item));
+            if (stackableItem == undefined)
+            {
+                this.consumables.push(item);
+            }
+            else
+            {
+                stackableItem.stackCount++;
+            }
+        }
+    }
+
+    drop(item)
+    {
+        if (this.weapon.equals(item))
+        {
+            this.weapon = null;
+            return true;
+        }
+        else if (this.armor.equals(item))
+        {
+            this.armor = null;
+            return true;
+        }
+        else
+        {
+            var index = this.consumables.findIndex((e) => e.equals(item));
+            if (index != -1)
+            {
+                this.consumables.splice(index, 1);
+                return true;
+            }
+            return false;
+        }
+    }
+}

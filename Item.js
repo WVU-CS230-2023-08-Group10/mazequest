@@ -1,13 +1,17 @@
+export {Item, Weapon, Armor, Consumable};
+
 class Item extends Entity
 {
+    itemName;
+
     constructor(name){
-        this.itemname=name;
+        this.itemName = name;
     }
     get getName(){
-        return this.itemname;
+        return this.itemName;
     }
-    set setName(x){
-        this.itemname=x;
+    set setName(name){
+        this.itemName = name;
     }
       
     isWeapon(Item){
@@ -18,6 +22,15 @@ class Item extends Entity
     }
     isConsumable(Item){
         return Item instanceof Consumable;
+    }
+    
+    equals(obj)
+    {
+        if (!(obj instanceof Item))
+            return false;
+
+        if (this.itemName == obj.itemName)
+            return true;
     }
 }
 class Weapon extends Item{
@@ -40,8 +53,23 @@ class Armor extends Item{
 // class Utility extends Item{
 
 // }
-class Consumable extends Item{
-    constructor(name){
+class Consumable extends Item
+{
+    stackCount;
+
+    constructor(name)
+    {
         super(name);
+        stackCount = 1;
+    }
+
+    /**
+     * Stacks this item with another consumable, combining their stack counts.
+     * 
+     * @param {Consumable} consumable The consumable to stack into this.
+     */
+    stack(consumable)
+    {
+        this.stackCount += consumable.stackCount;
     }
 }
