@@ -21,7 +21,7 @@
       <main> 
         <!-- Tab links -->
         <div class="tab">
-          <button class="tablinks" onclick="openTab(event, 'Hom')">Home</button>
+          <button class="tablinks active" onclick="openTab(event, 'Hom')">Home</button>
           <button class="tablinks" onclick="openTab(event, 'Sig')">Sign-Up</button>
           <button class="tablinks" onclick="openTab(event, 'In')">Login</button>
           <button class="tablinks" onclick="openTab(event, 'Gam')">Game</button>
@@ -82,7 +82,7 @@
         </div>
         
         <script>
-          document.getElementById("signup").addEventListener("submit")
+          document.getElementById("signup").addEventListener("submit");
         </script>
         <script>
           function openTab(evt, name) {
@@ -92,11 +92,15 @@
               tabcontent[i].style.display = "none";
             }
             tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-              tablinks[i].className = tablinks[i].className.replace(" active", "");
+            if (evt.currentTarget != null)
+            {
+              for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+              }
+              evt.currentTarget.className += " active";
             }
             document.getElementById(name).style.display = "block";
-            evt.currentTarget.className += " active";
+            console.log(evt);
 
             // If Game tab is pressed, load the game canvas
             if (name == "Gam")
@@ -107,7 +111,7 @@
               scripts.parentNode.insertBefore(script, scripts);
             }
           }
-          
+          openTab(new Event('PointerEvent'), 'Hom');
         </script>
 
       </main>
