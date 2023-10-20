@@ -8,6 +8,31 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const s = supabase.createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener("DOMContentLoaded", async () => {
+   
+// BEGIN LOGIN
+   document.getElementById("login").addEventListener("submit", async (e) => {
+      
+      e.preventDefault();
+     
+     
+      const email = document.getElementById("liEmail").value
+      const password = document.getElementById("liPassword").value 
+      
+      // Switch to Home view
+      const { data, error } = await s.auth.signInWithPassword({
+          email: email,
+          password: password
+ 
+       })
+ 
+       if (error) {
+          console.error(error)
+       } else {
+          // successful login
+          alert("Success! Logged In")
+       }
+    });
+// END LOGIN
 
 // BEGIN SIGNUP
    document.getElementById("signup").addEventListener("submit", async (e) => {
@@ -15,8 +40,8 @@ document.addEventListener("DOMContentLoaded", async () => {
      e.preventDefault();
     
     
-     const email = document.getElementById("email").value
-     const password = document.getElementById("password").value 
+     const email = document.getElementById("suEmail").value
+     const password = document.getElementById("suPassword").value 
      
      // Switch to Home view
      const { data, error } = await s.auth.signUp({
