@@ -1,11 +1,11 @@
 import { MazeLayout, GenerationParameters, Vector2 } from "./MazeLayout.js";
-
+import { createClient } from '@supabase/supabase-js'
 // BEGIN SUPABASE ; s = supabase client variable
 
 // CLIENT INITIALIZATION
 const supabaseUrl = "https://inyelmyxiphvbfgmhmrk.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlueWVsbXl4aXBodmJmZ21obXJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTc0Nzg3NzEsImV4cCI6MjAxMzA1NDc3MX0.9ByIuA4tv1oMmEr2UPAbCvNQYSvH-wY8aU-4Y8JSprg";
-const s = supabase.createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const password = document.getElementById("liPassword").value 
       
       // Switch to Home view
-      const { data, error } = await s.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
           email: email,
           password: password
  
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
      const password = document.getElementById("suPassword").value 
      
      // Switch to Home view
-     const { data, error } = await s.auth.signUp({
+     const { data, error } = await supabase.auth.signUp({
          email: email,
          password: password
 
