@@ -8,7 +8,7 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const s = supabase.createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener("DOMContentLoaded", async () => {
-   
+
 // BEGIN LOGIN
    document.getElementById("login").addEventListener("submit", async (e) => {
       
@@ -24,7 +24,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           password: password
  
        })
- 
+
+       document.getElementById("liEmail").value = ""
+       document.getElementById("liPassword").value = ""
        if (error) {
           console.error(error)
        } else {
@@ -50,6 +52,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       })
 
+      document.getElementById("suEmail").value = ""
+      document.getElementById("suPassword").value = ""
+      
       if (error) {
          console.error(error)
       } else {
