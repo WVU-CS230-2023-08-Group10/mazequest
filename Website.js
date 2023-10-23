@@ -1,5 +1,5 @@
 import { MazeLayout, GenerationParameters, Vector2 } from "./MazeLayout.js";
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js';
 // BEGIN SUPABASE ; s = supabase client variable
 
 // CLIENT INITIALIZATION
@@ -67,17 +67,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 // END SUPABASE
 
 //below is used for hint rotation
-var hintsText = ["To engage in combat, move into the enemy!", "Gather items to help fight off enemies.", "If you hit the dragon, it might not like you...", "Did you know that 2 to the 3rd power is 8?", "If you look around, there might be a secret room or two somewhere...", "Watch out for goblins! Those pesky little buggers will never leave you alone!",
- "The minotaur is a scary beast, I wonder if it's within the maze?", "The cake is a lie!"];
+var hintsText = ["To engage in combat, move into the enemy!",
+   "Differrent weapons have different attack patterns. Find one that works for you!",
+   "The better you trace an attack pattern, the more damage you deal.",
+   "Gather items to help fight off enemies.", 
+   "If you hit the dragon, it might not like you...", 
+   "Did you know that 2 to the 3rd power is 8?", 
+   "If you look around, there might be a secret room or two somewhere...", 
+   "Watch out for goblins! Those pesky little buggers will never leave you alone!",
+   "The minotaur is a scary beast, I wonder if it's within the maze?", 
+   "The cake is a lie!",
+   "Hey, you, you're finally awake.",
+   "I used to be an adventurer like you. Then I took an arrow to the knee...",
+   "Beware the Jabberwock! It's jaws that bite, it's claws that catch!",
+   "Have you heard of the High Elves?"];
 
 var counter = 0;
 setInterval(changeHints, 5000);
 function changeHints() {
   elem.textContent = hintsText[counter];
-  counter++;
-  if (counter >= hintsText.length) {
-    counter = 0;
-  }
+  counter = Math.floor(Math.random() * hintsText.length);
 }
 //^ Hint rotation
 
