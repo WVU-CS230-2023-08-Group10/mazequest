@@ -1,11 +1,11 @@
 import { MazeLayout, GenerationParameters, Vector2 } from "./MazeLayout.js";
-import { createClient } from '@supabase/supabase-js';
+//import { createClient } from '@supabase/supabase-js';
 // BEGIN SUPABASE ; s = supabase client variable
 
 // CLIENT INITIALIZATION
 const supabaseUrl = "https://inyelmyxiphvbfgmhmrk.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlueWVsbXl4aXBodmJmZ21obXJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTc0Nzg3NzEsImV4cCI6MjAxMzA1NDc3MX0.9ByIuA4tv1oMmEr2UPAbCvNQYSvH-wY8aU-4Y8JSprg";
-const supabase = createClient(supabaseUrl, supabaseKey);
+const s = supabase.createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const password = document.getElementById("liPassword").value 
       
       // Switch to Home view
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await s.auth.signInWithPassword({
           email: email,
           password: password
  
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
      const password = document.getElementById("suPassword").value 
      
      // Switch to Home view
-     const { data, error } = await supabase.auth.signUp({
+     const { data, error } = await s.auth.signUp({
          email: email,
          password: password
 
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 //below is used for hint rotation
 var hintsText = ["To engage in combat, move into the enemy!",
-   "Differrent weapons have different attack patterns. Find one that works for you!",
+   "Different weapons have different attack patterns. Find one that works for you!",
    "The better you trace an attack pattern, the more damage you deal.",
    "Gather items to help fight off enemies.", 
    "If you hit the dragon, it might not like you...", 
@@ -83,10 +83,34 @@ var hintsText = ["To engage in combat, move into the enemy!",
    "Have you heard of the High Elves?"];
 
 var counter = 0;
+shuffle(hintsText);
 setInterval(changeHints, 5000);
-function changeHints() {
-  elem.textContent = hintsText[counter];
-  counter = Math.floor(Math.random() * hintsText.length);
+function shuffle(array) {
+   let currentIndex = array.length,  randomIndex;
+   
+   // While there remain elements to shuffle.
+   while (currentIndex > 0) {
+   
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+   
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+         array[randomIndex], array[currentIndex]];
+   }
+   
+   return array;
+}
+function changeHints() 
+{
+   elem.textContent = hintsText[counter];
+   counter++;
+   if (counter >= hintsText.length)
+   {
+      counter = 0;
+      shuffle(hintsText);
+   }
 }
 //^ Hint rotation
 
