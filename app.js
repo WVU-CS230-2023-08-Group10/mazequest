@@ -24,7 +24,6 @@ app.stage.addChild(bkg);
 app.stage.addChild(player);
 
 document.addEventListener('keydown', function(input) {
-    console.log(input.key);
     switch (input.key) {
         case 'ArrowUp':
         case 'w':
