@@ -9,6 +9,7 @@ const s = supabase.createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener("DOMContentLoaded", async () => {
 
+
 // BEGIN LOGIN
    document.getElementById("login").addEventListener("submit", async (e) => {
       
@@ -36,6 +37,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 // END LOGIN
 
+//BEGIN LOGOUT 
+document.getElementById("logout").addEventListener("click", async (e) =>{
+   const { error } = await supabase.auth.signOut()
+   if (error){
+      console.error(error)
+   } else {
+      alert("You have been successfully signed out")
+   }
+})
 // BEGIN SIGNUP
    document.getElementById("signup").addEventListener("submit", async (e) => {
       
