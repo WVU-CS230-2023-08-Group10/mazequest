@@ -1,4 +1,4 @@
-import { Direction } from "./MazeLayout.js";
+import { Direction } from "./Vectors.js";
 import { Item } from "./Item.js";
 
 class Player extends Entity
@@ -83,7 +83,10 @@ class Player extends Entity
     {
         //returns character sprite at position
     }
-    
+    update()
+    {
+        
+    }
 }
 
 
