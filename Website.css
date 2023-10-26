@@ -8,6 +8,7 @@
     background-position: fixed;
     /* padding-bottom: 330px; */
     animation: animBg 35s linear forwards;
+    background-attachment: scroll;
  }
  
  @font-face {
