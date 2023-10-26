@@ -21,14 +21,12 @@
 }
 input{
   font-family:"Alagard";
-  color: #221100;
+  color: white;
   background-color: #71797E2F;
   border-color: #F6C90E;
   font-weight: bold;
-}
-input ::placeholder{
-color:#221100;
-opacity: 1;
+  padding: 5px;
+  margin: 5px;
 }
 body {
    width: 80%;

@@ -1,4 +1,4 @@
-import { MazeLayout, GenerationParameters, Vector2 } from "./MazeLayout.js";
+import { MazeLayout, GenerationParameters } from "./MazeLayout.js";
 //import { createClient } from '@supabase/supabase-js';
 // BEGIN SUPABASE ; s = supabase client variable
 

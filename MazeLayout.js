@@ -1,4 +1,4 @@
-import { Vector2, Direction } from "./Vectors";
+import { Vector2, Direction } from "./Vectors.js";
 
 export { MazeLayout, GenerationParameters, Room};
 
