@@ -3,8 +3,8 @@
     --theme-dark-color: #557A95;
     --primary-font-color: #F6C90E;
     --link-font-color: #white;
-    background-image: url(./images/WebsiteBackground.png);
-    background-size: cover;
+    /* background-image: url(./images/WebsiteBackground.png);
+    background-size: cover; */
  }
  
  @font-face {
@@ -19,6 +19,7 @@
    font-style: normal;
    font-display: swap;
 }
+
 input{
   font-family:"Alagard";
   color: white;
@@ -28,6 +29,7 @@ input{
   padding: 5px;
   margin: 5px;
 }
+
 body {
    width: 80%;
    height: 80%;
@@ -39,6 +41,28 @@ body {
    text-align: center;
    background-color: rgb(15, 15, 15)
 }
+
+@keyframes animBg {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    tranform: translateY(-330px);
+  }
+}
+
+.anim_bg
+{
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  padding-bottom: 330px;
+  background-color: black;
+  background-image: url(./images/WebsiteBackground.png);
+  background-size: cover;
+  animation: scrollBg 35s linear forwards;
+}
+
 .form__button
 {
   font-family:"Alagard";
@@ -48,6 +72,7 @@ body {
   padding: 5px 15px 5px 15px;
   margin: 5px;
 }
+
 .form__button:hover
 {
   background-color: #71797E;
