@@ -111,6 +111,10 @@ header > h1 {
    border-top: none;
  }
 
+ p {
+  color: #E3963E;
+ }
+
  #canvas {
    padding: 10px;
  }

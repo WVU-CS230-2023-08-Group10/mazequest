@@ -62,14 +62,14 @@
         <div id="In" class="tabcontent">
           <form class="form" id="login">
             <h1 class = "form__title">Login</h1>
-            <div class="form__input-message">Input Your Email and Password Below</div>
+            <p class="form__input-message">Input Your Email and Password Below</p>
             <div class = "form__input-group">
               <input type = "text" id = "liEmail" class= "form__input" autofocus placeholder="Email">
-              <div class="form__input-error-message">Potential Error Message: Username Wrong</div>
+              <p id = "emailErrorMsg" class="form__input-error-message"></p>
             </div>
             <div class = "form__input-group">
               <input type = "password" id = "liPassword" class= "form__input" autofocus placeholder="Password">
-              <div class="form__input-error-message">Potential Error Message: Password Wrong</div>
+              <p id = "passwordErrorMsg" class="form__input-error-message"></p>
             </div>
             <button class="form__button" type="submit">Continue</button>
           </form>
@@ -84,7 +84,7 @@
         <div id="Sig" class="tabcontent">
           <form class="form" id="signup">
             <h1 class = "form__title">Create Account</h1>
-            <div class="form__input-message">Input Your Email with Your New Username and Password Below</div>
+            <p class="form__input-message">Input Your Email with Your New Username and Password Below</p>
             <div class = "form__input-group">
               <input type = "email" id = "suEmail" class= "form__input" autofocus placeholder="Email">
             </div>
