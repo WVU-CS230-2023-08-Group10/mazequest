@@ -5,6 +5,9 @@
     --link-font-color: #white;
     background-image: url(./images/WebsiteBackground.png);
     background-size: cover;
+    background-position: fixed;
+    padding-bottom: 330px;
+    animation: scrollBg 35s linear forwards;
  }
  
  @font-face {
@@ -42,7 +45,7 @@ body {
    background-color: rgb(15, 15, 15)
 }
 
-/* @keyframes animBg {
+@keyframes animBg {
   from {
     transform: translateY(0px);
   }
@@ -51,7 +54,7 @@ body {
   }
 }
 
-.anim_bg
+/* .anim_bg
 {
   height: 100%;
   width: 100%;
