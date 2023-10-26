@@ -39,6 +39,20 @@ body {
    text-align: center;
    background-color: rgb(15, 15, 15)
 }
+.form__button
+{
+  font-family:"Alagard";
+  color: #F6C90E;
+  background-color: #71797E2F;
+  border-color: #F6C90E;
+  padding: 5px 15px 5px 15px;
+  margin: 5px;
+}
+.form__button:hover
+{
+  background-color: #71797E;
+  color: white;
+}
 
 #changeH {
    color:black;
