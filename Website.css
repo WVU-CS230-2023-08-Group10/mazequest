@@ -6,8 +6,8 @@
     background-image: url(./images/WebsiteBackground.png);
     background-size: cover;
     background-position: fixed;
-    padding-bottom: 330px;
-    animation: scrollBg 35s linear forwards;
+    /* padding-bottom: 330px; */
+    animation: animBg 35s linear forwards;
  }
  
  @font-face {
