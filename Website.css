@@ -47,11 +47,11 @@ body {
 }
 
 @keyframes animBg {
-  from {
+  0% {
     transform: translateY(0px);
   }
-  to {
-    tranform: translateY(3300px);
+  100% {
+    tranform: translateY(-3300px);
   }
 }
 
