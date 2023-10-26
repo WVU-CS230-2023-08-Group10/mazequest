@@ -51,9 +51,10 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       
      e.preventDefault();
     
-    
+     // Grabbing email and password entered by user
      const email = document.getElementById("suEmail").value
      const password = document.getElementById("suPassword").value 
+     const emailCheck = document.getElementById("checkEmail") // Place to put a check email notice
      
      // Switch to Home view
      const { data, error } = await s.auth.signUp({
@@ -70,11 +71,21 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       } else {
          // successful login
          alert("Success! Account is being created.")
+         emailCheck.innerHTML = "Check your email to confirm your account."
       }
    });
    // END SIGNUP
  });
 // END SUPABASE
+
+// Function to check the length of the user entered password
+function isStrongPassword(password) {
+   const passwordBox = document.getElementById("suPassword");
+   if (password.length < 8) {
+       console.log("Password is too short!");
+       return false;
+   }
+}
 
 //below is used for hint rotation
 var hintsText = ["To engage in combat, move into the enemy!",
