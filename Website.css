@@ -6,7 +6,8 @@
     background-image: url(./images/WebsiteBackground.png);
     background-size: cover;
     background-position: fixed;
-    /* padding-bottom: 330px; */
+    -moz-animation: animBg 35s linear forwards;
+    -webkit-animation: animBg 35s linear forwards;
     animation: animBg 35s linear forwards;
     background-attachment: scroll;
  }
