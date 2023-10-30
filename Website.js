@@ -57,22 +57,24 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
      const emailCheck = document.getElementById("checkEmail") // Place to put a check email notice
      
      // Switch to Home view
-     const { data, error } = await s.auth.signUp({
-         email: email,
-         password: password
+     if (isStrongPassword(password)) {
+      const { data, error } = await s.auth.signUp({
+          email: email,
+          password: password
+      });
 
-      })
+      document.getElementById("suEmail").value = "";
+      document.getElementById("suPassword").value = "";
 
-      document.getElementById("suEmail").value = ""
-      document.getElementById("suPassword").value = ""
-      
       if (error) {
-         console.error(error)
+          console.error(error);
       } else {
-         // successful login
-         alert("Success! Account is being created.")
-         emailCheck.innerHTML = "Check your email to confirm your account."
+          alert("Success! Account is being created.");
+          emailCheck.innerHTML = "Check your email to confirm your account.";
       }
+  } else {
+      alert("Please enter a valid password.");
+  }
    });
    // END SIGNUP
  });
@@ -82,8 +84,13 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
 function isStrongPassword(password) {
    const passwordBox = document.getElementById("suPassword");
    if (password.length < 8) {
-       console.log("Password is too short!");
+      passwordBox.value = "";
+      passwordBox.style.backgroundColor = "#E3963E";
        return false;
+   }
+   else {
+      passwordBox.style.backgroundColor = '';
+      return true;
    }
 }
 
