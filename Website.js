@@ -1,6 +1,6 @@
 import { MazeLayout, GenerationParameters, Vector2 } from "./MazeLayout.js";
 //import { createClient } from '@supabase/supabase-js';
-// BEGIN SUPABASE ; s = supabase client variable
+// BEGIN SUPABASE 
 
 // CLIENT INITIALIZATION
 const supabaseUrl = "https://inyelmyxiphvbfgmhmrk.supabase.co";
