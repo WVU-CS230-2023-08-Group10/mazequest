@@ -25,7 +25,8 @@
           <button class="tablinks active" onclick="openTab(event, 'Hom')">Home</button>
           <button class="tablinks" onclick="openTab(event, 'Sig')">Sign Up</button>
           <button class="tablinks" onclick="openTab(event, 'In')">Login</button>
-          <button class="tablinks" onclick="openTab(event, 'Gam')">Game</button>
+          <button class="tablinks" onclick="openTab(event, 'Bui')">LevelBuilder</button>
+          <button class="tablinks" onclick="openTab(event, 'Gam')">GameWindow</button>
           <button class="tablinks" onclick="openTab(event, 'Out')">Log Out</button>
         </div>
 
@@ -35,9 +36,12 @@
             text-align: left;
           }
         </style>
-        <div id="Hom" class="tabcontent">
+        <div id="Bui" class="tabcontent">
           <!-- Under Construction -->
-          
+          <h1 class = "form__title">Level Builder</h1>
+          <p>We will have an upload file button that will take users inputed rooms to be added into maze layout.</p>
+        </div>
+        <div id="Hom" class="tabcontent">
           <h2><u>Synopsis</u></h2>
           <p>MazeQuest is an action-packed exploration game! Your journey begins as you wake up in the middle of an isolated room
             with only a single door ahead of you. Your only choice? ESCAPE. On this journey, you will encounter numerous challenging 
@@ -105,19 +109,10 @@
            </form>
           </form>
         </div>
-        <!-- <style>
-          input{
-            font: Alacard;
-          }
-        </style> -->
         <div id="Gam" class="tabcontent">
-          <script src="./node_modules/pixi.js/dist/pixi.min.js"></script>
+          <script src="https://pixijs.download/release/pixi.js"></script>
           <canvas id="canvas"></canvas>
         </div>
-        
-        <!--<script>
-          document.getElementById("signup").addEventListener("submit");
-        </script>-->
         <script>
           function openTab(evt, name) {
             var i, tabcontent, tablinks;
