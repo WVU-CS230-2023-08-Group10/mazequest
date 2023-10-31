@@ -6,9 +6,9 @@
     background-image: url(./images/WebsiteBackground.png);
     background-size: cover;
     background-position: fixed;
-    -moz-animation: animBg 35s linear forwards;
-    -webkit-animation: animBg 35s linear forwards;
-    animation: animBg 35s linear forwards;
+    -moz-animation: animBg 60s linear forwards;
+    -webkit-animation: animBg 60s linear forwards;
+    animation: animBg 60s linear forwards;
     background-attachment: scroll;
  }
  
@@ -48,12 +48,8 @@ body {
 }
 
 @keyframes animBg {
-  0% {
-    transform: translateY(0px);
-  }
-  100% {
-    tranformY: translateY(-3300px);
-  }
+  from {background-position-y: 0px;}
+  to {background-position-y: -3000px;}
 }
 
 /* .anim_bg
