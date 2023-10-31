@@ -54,7 +54,6 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
      // Grabbing email and password entered by user
      const email = document.getElementById("suEmail").value
      const password = document.getElementById("suPassword").value 
-     const emailCheck = document.getElementById("checkEmail") // Place to put a check email notice
      
      // Switch to Home view
      if (isStrongPassword(password)) {
@@ -63,16 +62,33 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
           password: password
       });
 
+      // Get the form. And get the email and password text boxes.
       document.getElementById("suEmail").value = "";
       document.getElementById("suPassword").value = "";
+      const SigDiv = document.getElementById("Sig");
 
       if (error) {
           console.error(error);
       } else {
+         // Create a success message 
           alert("Success! Account is being created.");
-          emailCheck.innerHTML = "Check your email to confirm your account.";
+
+         // Remove the text boxes and instructions from the form
+          document.getElementById("signup").remove();
+
+          // Add Quest Birb and check email message
+          const successMessage = document.createElement("succMsg");
+          successMessage.textContent = "Check your email to confirm your account.";
+          SigDiv.appendChild(successMessage);
+
+          const successImage = document.createElement("img");
+          successImage.src = "./images/Quest_Birb_3.png";
+          successImage.alt = "Birb";
+          successImage.width = "500";
+          SigDiv.appendChild(successImage);
       }
   } else {
+      // Password not entered correctly, retry
       alert("Please enter a valid password.");
   }
    });
@@ -83,12 +99,20 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
 // Function to check the length of the user entered password
 function isStrongPassword(password) {
    const passwordBox = document.getElementById("suPassword");
+   const passwordErrMsg = document.getElementById("passwordErrorMsg");
    if (password.length < 8) {
+      passwordErrMsg.innerHTML = " ";
       passwordBox.value = "";
       passwordBox.style.backgroundColor = "#E3963E";
        return false;
    }
-   else {
+   if (password.includes("password")) {
+      passwordErrMsg.innerHTML = "Password cannot contain the word 'password'";
+      passwordBox.value = "";
+      passwordBox.style.backgroundColor = "#E3963E";
+      return false;
+  }
+   else{
       passwordBox.style.backgroundColor = '';
       return true;
    }

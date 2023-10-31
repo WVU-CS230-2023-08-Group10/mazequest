@@ -83,6 +83,7 @@
 
         <div id="Sig" class="tabcontent">
           <form class="form" id="signup">
+            <form class="form" id = "signupContents">
             <h1 class = "form__title">Create Account</h1>
             <p class="form__input-message">Input Your Email with Your New Username and Password Below</p>
             <div class = "form__input-group">
@@ -92,12 +93,16 @@
               <input type = "text" class= "form__input" autofocus placeholder="Username">
             </div>
             <div class = "form__input-group">
-              <p>Password Must Be Greater Than 8 Characters</p>
+              <p>Password Must:</p>
+              <l>
+                <li>Be Greater than 8 Characters</li>
+                <li>Not Contain the Word "Password"</li>
+              </l>
               <input type = "password" id = "suPassword" class= "form__input" autofocus placeholder="Password">
               <p id = "passwordErrorMsg"></p>
             </div>
             <button class="form__button" type="submit">Continue</button>
-            <p id="checkEmail"></p>
+           </form>
           </form>
         </div>
         <!-- <style>
