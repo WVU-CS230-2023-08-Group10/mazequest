@@ -1,4 +1,4 @@
-import { MazeLayout, GenerationParameters, Vector2 } from "./MazeLayout.js";
+import { MazeLayout, GenerationParameters } from "./MazeLayout.js";
 //import { createClient } from '@supabase/supabase-js';
 // BEGIN SUPABASE 
 
@@ -51,30 +51,72 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       
      e.preventDefault();
     
-    
+     // Grabbing email and password entered by user
      const email = document.getElementById("suEmail").value
      const password = document.getElementById("suPassword").value 
      
      // Switch to Home view
-     const { data, error } = await s.auth.signUp({
-         email: email,
-         password: password
+     if (isStrongPassword(password)) {
+      const { data, error } = await s.auth.signUp({
+          email: email,
+          password: password
+      });
 
-      })
+      // Get the form. And get the email and password text boxes.
+      document.getElementById("suEmail").value = "";
+      document.getElementById("suPassword").value = "";
+      const SigDiv = document.getElementById("Sig");
 
-      document.getElementById("suEmail").value = ""
-      document.getElementById("suPassword").value = ""
-      
       if (error) {
-         console.error(error)
+          console.error(error);
       } else {
-         // successful login
-         alert("Success! Account is being created.")
+         // Create a success message 
+          alert("Success! Account is being created.");
+
+         // Remove the text boxes and instructions from the form
+          document.getElementById("signup").remove();
+
+          // Add Quest Birb and check email message
+          const successMessage = document.createElement("succMsg");
+          successMessage.textContent = "Check your email to confirm your account.";
+          SigDiv.appendChild(successMessage);
+
+          const successImage = document.createElement("img");
+          successImage.src = "./images/Quest_Birb_3.png";
+          successImage.alt = "Birb";
+          successImage.width = "500";
+          SigDiv.appendChild(successImage);
       }
+  } else {
+      // Password not entered correctly, retry
+      alert("Please enter a valid password.");
+  }
    });
    // END SIGNUP
  });
 // END SUPABASE
+
+// Function to check the length of the user entered password
+function isStrongPassword(password) {
+   const passwordBox = document.getElementById("suPassword");
+   const passwordErrMsg = document.getElementById("passwordErrorMsg");
+   if (password.length < 8) {
+      passwordErrMsg.innerHTML = " ";
+      passwordBox.value = "";
+      passwordBox.style.backgroundColor = "#E3963E";
+       return false;
+   }
+   if (password.includes("password")) {
+      passwordErrMsg.innerHTML = "Password cannot contain the word 'password'";
+      passwordBox.value = "";
+      passwordBox.style.backgroundColor = "#E3963E";
+      return false;
+  }
+   else{
+      passwordBox.style.backgroundColor = '';
+      return true;
+   }
+}
 
 //below is used for hint rotation
 var hintsText = ["To engage in combat, move into the enemy!",

@@ -19,7 +19,15 @@
    font-style: normal;
    font-display: swap;
 }
-
+input{
+  font-family:"Alagard";
+  color: white;
+  background-color: #71797E2F;
+  border-color: #F6C90E;
+  font-weight: bold;
+  padding: 5px;
+  margin: 5px;
+}
 body {
    width: 80%;
    height: 80%;
@@ -30,6 +38,20 @@ body {
    margin: 20px auto;
    text-align: center;
    background-color: rgb(15, 15, 15)
+}
+.form__button
+{
+  font-family:"Alagard";
+  color: #F6C90E;
+  background-color: #71797E2F;
+  border-color: #F6C90E;
+  padding: 5px 15px 5px 15px;
+  margin: 5px;
+}
+.form__button:hover
+{
+  background-color: #71797E;
+  color: white;
 }
 
 #changeH {
@@ -87,6 +109,10 @@ header > h1 {
    padding: 6px 12px;
    border: 1px solid rgb(30, 30, 30);
    border-top: none;
+ }
+
+ p {
+  color: #E3963E;
  }
 
  #canvas {

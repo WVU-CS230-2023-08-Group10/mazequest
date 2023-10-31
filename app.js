@@ -28,22 +28,30 @@ document.addEventListener('keydown', function(input) {
         case 'ArrowUp':
         case 'w':
             player.texture = PIXI.Texture.from("./images/up.png");
-            player.y -= 10;
+            if (player.y - 32 < 32)
+                break;
+            player.y -= 32;
             break;
         case 'ArrowLeft':
         case 'a':
             player.texture = PIXI.Texture.from("./images/left.png");
-            player.x -= 10;
+            if (player.x - 32 < 32)
+                break;
+            player.x -= 32;
             break;
         case 'ArrowDown':
         case 's':
             player.texture = PIXI.Texture.from("./images/down.png");
-            player.y += 10;
+            if (player.y + 32 > 480)
+                break;
+            player.y += 32;
             break;
         case 'ArrowRight':
         case 'd':
             player.texture = PIXI.Texture.from("./images/right.png");
-            player.x += 10;
+            if (player.x + 32 > 480)
+                break;
+            player.x += 32;
             break;
         default:
             break;

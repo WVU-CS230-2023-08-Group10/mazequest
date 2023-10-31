@@ -1,4 +1,6 @@
-export { MazeLayout, GenerationParameters, Vector2, Room, Direction};
+import { Vector2, Direction } from "./Vectors.js";
+
+export { MazeLayout, GenerationParameters, Room};
 
 class MazeLayout
 {
@@ -201,34 +203,4 @@ class Room
     constructor(entities) {
         this.entities = entities;
     }
-}
-
-class Vector2
-{
-    x;
-    y;
-
-    constructor(x, y)
-    {
-        this.x = x;
-        this.y = y;
-    }
-
-    add(other)
-    {
-        this.x += other.x;
-        this.y += other.y;
-    }
-
-    static add(v1, v2)
-    {
-        return new Vector2(v1.x + v2.x, v1.y + v2.y);
-    }
-}
-
-const Direction = {
-    Up: new Vector2(0, -1),
-    Down: new Vector2(0, 1),
-    Left: new Vector2(-1, 0),
-    Right: new Vector2(1, 0)
 }

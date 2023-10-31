@@ -23,10 +23,10 @@
         <!-- Tab links -->
         <div class="tab">
           <button class="tablinks active" onclick="openTab(event, 'Hom')">Home</button>
-          <button class="tablinks" onclick="openTab(event, 'Sig')">Sign-Up</button>
+          <button class="tablinks" onclick="openTab(event, 'Sig')">Sign Up</button>
           <button class="tablinks" onclick="openTab(event, 'In')">Login</button>
           <button class="tablinks" onclick="openTab(event, 'Gam')">Game</button>
-          <button class="tablinks" onclick="openTab(event, 'Out')">Log-Out</button>
+          <button class="tablinks" onclick="openTab(event, 'Out')">Log Out</button>
         </div>
 
         <!-- Tab content -->
@@ -39,37 +39,37 @@
           <!-- Under Construction -->
           
           <h2><u>Synopsis</u></h2>
-          <p>MazeQuest is an action packed exploration game! Your journey begins as you wake up in the midst of an isolated room,
-            with a single door ahead. Your only thought: ESCAPE. 
-            This games essance is to escape the dungeon you woke up in. 
-            You will encounter numerous obstacles, enemies and rooms as you fight to find the exit. 
-          </p>
+          <p>MazeQuest is an action-packed exploration game! Your journey begins as you wake up in the middle of an isolated room
+            with only a single door ahead of you. Your only choice? ESCAPE. On this journey, you will encounter numerous challenging 
+            puzzles, resilient enemies, and mysterious rooms as you fight to find the way forward.</p>
           <h2><u>How To Play</u></h2>
           <h3>Level Builder</h3>
-          <p>Upload room templates to the site and it will be added to your Levels room algorithms. While the template room would be custom made by you, the user, the level will still have a uniquely random layout that may contain base elements from the game.</p>
+          <p>Upload room templates to the site, and it will be added to your level's room layout. 
+            While the template room is custom made by you, the user, the level will still possess a 
+            uniquely-random layout that may contain base elements from the game.</p>
           <h3>Game Window</h3>
           <p>Greetings new player!
-             Your journey is just starting as you embark on this adventure. 
-             This game is comprised of many rooms that contain mazes full of secrets and enemies. 
-             These paths can branch off from the exit but they may contain helpful items that will strengthen your character. 
-             Although this can also make it a dangerous journey so lookout for those helpful items as you avoid or fight enemies. </p>
+             Your journey is just starting as you embark on this brand-new adventure! This game is comprised of many rooms that contain 
+             mazes full of secrets and enemies. These paths can branch off from the exit, but they may contain helpful items that will 
+             strengthen your character. Although, this can also make it a dangerous journey; be on the lookout for helpful items as you 
+             choose to avoid or fight enemies.</p>
           <h2><u>Controls</u></h2>
           <h3>Movement</h3>
-          <p>Up: w<br>Down: s<br>Left: a<br>Right: d</p>
+          <p>Up: W<br>Down: S<br>Left: A<br>Right: D</p>
           <h3>Inventory Bar</h3>
-          <p>Use Keys 1-7 to access inventory slots</p>
+          <p>Use Keys 1-7 or your mouse's scroll wheel to access inventory slots.</p>
         </div>
         <div id="In" class="tabcontent">
           <form class="form" id="login">
             <h1 class = "form__title">Login</h1>
-            <div class="form__input-message">Input Your Email and Password Below</div>
+            <p class="form__input-message">Input Your Email and Password Below</p>
             <div class = "form__input-group">
               <input type = "text" id = "liEmail" class= "form__input" autofocus placeholder="Email">
-              <div class="form__input-error-message">Potential Error Message: Username Wrong</div>
+              <p id = "emailErrorMsg" class="form__input-error-message"></p>
             </div>
             <div class = "form__input-group">
-              <input type = "text" id = "liPassword" class= "form__input" autofocus placeholder="Password">
-              <div class="form__input-error-message">Potential Error Message: Password Wrong</div>
+              <input type = "password" id = "liPassword" class= "form__input" autofocus placeholder="Password">
+              <p id = "passwordErrorMsg" class="form__input-error-message"></p>
             </div>
             <button class="form__button" type="submit">Continue</button>
           </form>
@@ -77,14 +77,15 @@
 
         <div id="Out" class="tabcontent">
           <!-- Under Construction -->
-          <p>Log Out</p>
+          <h1 class = "form__title">Log Out</h1>
           <button id = "logout" class="form__button" type="submit">Here</button>
         </div>
 
         <div id="Sig" class="tabcontent">
           <form class="form" id="signup">
+            <form class="form" id = "signupContents">
             <h1 class = "form__title">Create Account</h1>
-            <div class="form__input-message">Input Your Email with Your New Username and Password Below</div>
+            <p class="form__input-message">Input Your Email with Your New Username and Password Below</p>
             <div class = "form__input-group">
               <input type = "email" id = "suEmail" class= "form__input" autofocus placeholder="Email">
             </div>
@@ -92,12 +93,23 @@
               <input type = "text" class= "form__input" autofocus placeholder="Username">
             </div>
             <div class = "form__input-group">
+              <p>Password Must:</p>
+              <l>
+                <li>Be Greater than 8 Characters</li>
+                <li>Not Contain the Word "Password"</li>
+              </l>
               <input type = "password" id = "suPassword" class= "form__input" autofocus placeholder="Password">
+              <p id = "passwordErrorMsg"></p>
             </div>
             <button class="form__button" type="submit">Continue</button>
+           </form>
           </form>
         </div>
-
+        <!-- <style>
+          input{
+            font: Alacard;
+          }
+        </style> -->
         <div id="Gam" class="tabcontent">
           <script src="./node_modules/pixi.js/dist/pixi.min.js"></script>
           <canvas id="canvas"></canvas>
