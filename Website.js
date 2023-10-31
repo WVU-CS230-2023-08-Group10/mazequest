@@ -1,11 +1,11 @@
 import { MazeLayout, GenerationParameters } from "./MazeLayout.js";
-//import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 // BEGIN SUPABASE 
 
 // CLIENT INITIALIZATION
 const supabaseUrl = "https://inyelmyxiphvbfgmhmrk.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlueWVsbXl4aXBodmJmZ21obXJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTc0Nzg3NzEsImV4cCI6MjAxMzA1NDc3MX0.9ByIuA4tv1oMmEr2UPAbCvNQYSvH-wY8aU-4Y8JSprg";
-const s = supabase.createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const password = document.getElementById("liPassword").value 
       
       // Switch to Home view
-      const { data, error } = await s.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
           email: email,
           password: password
  
@@ -46,6 +46,9 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       alert("You have been successfully signed out")
    }
 })
+
+
+
 // BEGIN SIGNUP
    document.getElementById("signup").addEventListener("submit", async (e) => {
       
@@ -54,17 +57,24 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
      // Grabbing email and password entered by user
      const email = document.getElementById("suEmail").value
      const password = document.getElementById("suPassword").value 
+     const user_name = document.getElementById("username").value
      
      // Switch to Home view
      if (isStrongPassword(password)) {
-      const { data, error } = await s.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
           email: email,
-          password: password
+          password: password,
+          data: {
+            "username": user_name
+          }
       });
+
+
 
       // Get the form. And get the email and password text boxes.
       document.getElementById("suEmail").value = "";
       document.getElementById("suPassword").value = "";
+      document.getElementById("username").value = "";
       const SigDiv = document.getElementById("Sig");
 
       if (error) {
