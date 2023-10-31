@@ -6,9 +6,10 @@
     background-image: url(./images/WebsiteBackground.png);
     background-size: cover;
     background-position: fixed;
-    -moz-animation: animBg 60s linear forwards;
-    -webkit-animation: animBg 60s linear forwards;
-    animation: animBg 60s linear forwards;
+    background-repeat: repeat-y;
+    -moz-animation: animBg 60s linear infinite;
+    -webkit-animation: animBg 60s linear infinite;
+    animation: animBg 60s linear infinite;
     background-attachment: scroll;
  }
  
@@ -49,20 +50,8 @@ body {
 
 @keyframes animBg {
   from {background-position-y: 0px;}
-  to {background-position-y: -3000px;}
+  to {background-position-y: -2000px;}
 }
-
-/* .anim_bg
-{
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  padding-bottom: 330px;
-  background-color: black;
-  background-image: url(./images/WebsiteBackground.png);
-  background-size: cover;
-  animation: scrollBg 35s linear forwards;
-} */
 
 .form__button
 {
