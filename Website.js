@@ -130,23 +130,41 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
 // Function to check the length of the user entered password
  function isStrongPassword(password) {
    const passwordBox = document.getElementById("suPassword");
+   const rePasswordBox = document.getElementById("reSuPassword");
    const passwordErrMsg = document.getElementById("passwordErrorMsg");
-   if (password.length < 8) {
-      passwordErrMsg.innerHTML = " ";
-      passwordBox.value = "";
-      passwordBox.style.backgroundColor = "#E3963E";
-       return false;
+
+   // Check if the two password boxes contain the same text
+   if (passwordBox.value == rePasswordBox.value){
+      rePasswordBox.style.backgroundColor = '';
+      // Passwords match, check other requirements
+      // Check password length
+      if (password.length < 8) {
+         passwordErrMsg.textContent = "Password is not long enough";
+         passwordBox.value = "";
+         rePasswordBox.value = "";
+         passwordBox.style.backgroundColor = "#E3963E";
+          return false;  
+       }
+      // Check password to see if contains "password"
+      if (password.includes("password")) {
+         passwordErrMsg.innerHTML = "Password cannot contain the word 'password'";
+         passwordBox.value = "";
+         rePasswordBox.value = "";
+         passwordBox.style.backgroundColor = "#E3963E";
+          return false;
+      }
+      // Password is valid. Return true
+      else{
+         passwordBox.style.backgroundColor = '';
+          return true;
+      }
    }
-   if (password.includes("password")) {
-      passwordErrMsg.innerHTML = "Password cannot contain the word 'password'";
-      passwordBox.value = "";
-      passwordBox.style.backgroundColor = "#E3963E";
-      return false;
-  }
-   else{
-      passwordBox.style.backgroundColor = '';
-      return true;
-   }
+   // Text boxes did not match. Make them re-enter.
+   alert("Passwords do not match.")
+   passwordBox.style.backgroundColor = '';
+   rePasswordBox.value = "";
+   rePasswordBox.style.backgroundColor = "#E3963E";
+   return false;
 }
 
 //below is used for hint rotation
