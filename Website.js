@@ -1,13 +1,14 @@
 import { MazeLayout, GenerationParameters } from "./MazeLayout.js";
-import { createClient } from '@supabase/supabase-js';
-// BEGIN SUPABASE 
+// import { createClient } from '@supabase/supabase-js';
+// BEGIN SUPABASE ;
 
 // CLIENT INITIALIZATION
 const supabaseUrl = "https://inyelmyxiphvbfgmhmrk.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlueWVsbXl4aXBodmJmZ21obXJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTc0Nzg3NzEsImV4cCI6MjAxMzA1NDc3MX0.9ByIuA4tv1oMmEr2UPAbCvNQYSvH-wY8aU-4Y8JSprg";
-const supabase = createClient(supabaseUrl, supabaseKey);
+const s = supabase.createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener("DOMContentLoaded", async () => {
+   
 
 
 // BEGIN LOGIN
@@ -16,11 +17,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       e.preventDefault();
      
      
+     
       const email = document.getElementById("liEmail").value
       const password = document.getElementById("liPassword").value 
       
       // Switch to Home view
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await s.auth.signInWithPassword({
           email: email,
           password: password
  
@@ -39,37 +41,39 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 //BEGIN LOGOUT 
 document.getElementById("logout").addEventListener("click", async (e) =>{
-   const { error } = await supabase.auth.signOut()
+   const { error } = await s.auth.signOut()
    if (error){
       console.error(error)
    } else {
       alert("You have been successfully signed out")
    }
-})
+});
 
 
 
 // BEGIN SIGNUP
    document.getElementById("signup").addEventListener("submit", async (e) => {
-      
-     e.preventDefault();
     
+     e.preventDefault();
+     
      // Grabbing email and password entered by user
      const email = document.getElementById("suEmail").value
      const password = document.getElementById("suPassword").value 
      const user_name = document.getElementById("username").value
      
      // Switch to Home view
-     if (isStrongPassword(password)) {
-      const { data, error } = await supabase.auth.signUp({
+     if (isStrongPassword(password)){
+   
+      
+      const { data, error } = await s.auth.signUp({
           email: email,
           password: password,
-          data: {
+          options:{data: {
             "username": user_name
-          }
+          }}
       });
 
-
+      
 
       // Get the form. And get the email and password text boxes.
       document.getElementById("suEmail").value = "";
@@ -78,13 +82,14 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       const SigDiv = document.getElementById("Sig");
 
       if (error) {
-          console.error(error);
+          alert("error")
+          console.log(error)
       } else {
          // Create a success message 
           alert("Success! Account is being created.");
 
          // Remove the text boxes and instructions from the form
-          document.getElementById("signup").remove();
+         document.getElementById("signup").remove();
 
           // Add Quest Birb and check email message
           const successMessage = document.createElement("succMsg");
@@ -97,7 +102,7 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
           successImage.width = "500";
           SigDiv.appendChild(successImage);
       }
-  } else {
+   } else {
       // Password not entered correctly, retry
       alert("Please enter a valid password.");
   }
@@ -107,7 +112,7 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
 // END SUPABASE
 
 // Function to check the length of the user entered password
-function isStrongPassword(password) {
+ function isStrongPassword(password) {
    const passwordBox = document.getElementById("suPassword");
    const passwordErrMsg = document.getElementById("passwordErrorMsg");
    if (password.length < 8) {
