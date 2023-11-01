@@ -1,4 +1,9 @@
+
+
 import { MazeLayout, GenerationParameters } from "./MazeLayout.js";
+import { profanity } from "https://cdn.skypack.dev/@2toad/profanity";
+
+
 // import { createClient } from '@supabase/supabase-js';
 // BEGIN SUPABASE ;
 
@@ -9,7 +14,8 @@ const s = supabase.createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener("DOMContentLoaded", async () => {
    
-
+   
+      
 
 // BEGIN LOGIN
    document.getElementById("login").addEventListener("submit", async (e) => {
@@ -61,6 +67,14 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
      const password = document.getElementById("suPassword").value 
      const user_name = document.getElementById("username").value
      
+     
+
+     if (profanity.exists(user_name))
+     {
+      alert("Hark! Thy name is an unforgivable curse...")
+      document.getElementById("username").value = ""
+      return}
+
      // Switch to Home view
      if (isStrongPassword(password)){
    
@@ -110,6 +124,8 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
    // END SIGNUP
  });
 // END SUPABASE
+
+
 
 // Function to check the length of the user entered password
  function isStrongPassword(password) {
