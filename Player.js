@@ -1,23 +1,25 @@
-import { Direction } from "./Vectors.js";
+import { Direction, Vector2 } from "./Vectors.js";
 import { Item } from "./Item.js";
+import { Transform } from "./Transform.js";
+import { Renderer } from "./Renderer.js";
+import { Entity } from "./Entity.js";
+export {Player};
 
 class Player extends Entity
 {
     account;
-    health = 10;
+    health;
     inventory;
     Room;
 
-    constructor(health)
+    speed = 32;
+
+    constructor(name = "", transform = new Transform(), renderer = new Renderer(), health=10, account=null)
     {
-        this.account = null;
+        super(name, transform, renderer);
+        this.account = account;
         this.health = health;
         this.inventory = new Inventory();
-    }
-    constructor(account, health)
-    {
-        this.Account=account;
-        this.health=health;
     }
     pickUp(item)
     {
@@ -83,9 +85,42 @@ class Player extends Entity
     {
         //returns character sprite at position
     }
-    update()
+    broadcast(event)
     {
-        
+        switch (event.type)
+        {
+            case "keydown":
+                this.playerInput(event.key);
+                break;
+        }
+    }
+    playerInput(key)
+    {
+        switch (key) {
+            case 'ArrowUp':
+            case 'w':
+                this.renderer.updateSprite(PIXI.Texture.from("./images/up.png"));
+                this.transform.translate(new Vector2(0, -this.speed));
+                break;
+            case 'ArrowLeft':
+            case 'a':
+                this.renderer.updateSprite(PIXI.Texture.from("./images/left.png"));
+                this.transform.translate(new Vector2(-this.speed, 0));
+                break;
+            case 'ArrowDown':
+            case 's':
+                this.renderer.updateSprite(PIXI.Texture.from("./images/down.png"));
+                this.transform.translate(new Vector2(0, this.speed));
+                break;
+            case 'ArrowRight':
+            case 'd':
+                this.renderer.updateSprite(PIXI.Texture.from("./images/right.png"));
+                this.transform.translate(new Vector2(this.speed, 0));
+                break;
+            default:
+                break;
+        }
+        console.log(this.transform.position)
     }
 }
 
