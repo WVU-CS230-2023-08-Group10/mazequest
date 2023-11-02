@@ -20,10 +20,10 @@ class Entity
 
     update(delta) {}
 
-    render()
+    render(delta)
     {
         this.renderer.transform = this.transform;
-        this.renderer.update();
+        this.renderer.update(delta);
     }
 
     broadcast(event) {}

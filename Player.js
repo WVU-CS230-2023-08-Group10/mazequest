@@ -13,6 +13,7 @@ class Player extends Entity
     Room;
 
     speed = 32;
+    roomSize = 512;
 
     constructor(name = "", transform = new Transform(), renderer = new Renderer(), health=10, account=null)
     {
@@ -48,38 +49,34 @@ class Player extends Entity
     }
     move(direction)
     {
-        var position;
-        switch (direction) {
-            case value: right
-                position = Direction.Right;
-            case value: left 
-                position = Direction.Left;
-            case value: down
-                position = Direction.Down;
-            case value: up
-                position = Direction.Up;
-            default: 
-                break;
-        }
-        //check case for wall
-        if(position==wall)
+        var pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.speed));
+
+        if (pos.x < 0 || pos.x >= this.roomSize || pos.y < 0 || pos.y >= this.roomSize)
         {
-            //return original position
+            return;
         }
-        //check case for wall
-        if(position==door.room)
-        {
-            //return new position in new room
-        }
-        //check case for Mob
-        if(position.hasMob())
-        {
-            //initiate combat then return original position
-        }
-        else
-        {
-            //return position
-        }
+
+        this.transform.position = pos;
+
+        // //check case for wall
+        // if(pos==wall)
+        // {
+        //     //return original position
+        // }
+        // //check case for wall
+        // if(pos==door.room)
+        // {
+        //     //return new position in new room
+        // }
+        // //check case for Mob
+        // if(pos.hasMob())
+        // {
+        //     //initiate combat then return original position
+        // }
+        // else
+        // {
+        //     //return position
+        // }
     }
     display()
     {
@@ -100,22 +97,22 @@ class Player extends Entity
             case 'ArrowUp':
             case 'w':
                 this.renderer.updateSprite(PIXI.Texture.from("./images/up.png"));
-                this.transform.translate(new Vector2(0, -this.speed));
+                this.move(Direction.Up);
                 break;
             case 'ArrowLeft':
             case 'a':
                 this.renderer.updateSprite(PIXI.Texture.from("./images/left.png"));
-                this.transform.translate(new Vector2(-this.speed, 0));
+                this.move(Direction.Left);
                 break;
             case 'ArrowDown':
             case 's':
                 this.renderer.updateSprite(PIXI.Texture.from("./images/down.png"));
-                this.transform.translate(new Vector2(0, this.speed));
+                this.move(Direction.Down);
                 break;
             case 'ArrowRight':
             case 'd':
                 this.renderer.updateSprite(PIXI.Texture.from("./images/right.png"));
-                this.transform.translate(new Vector2(this.speed, 0));
+                this.move(Direction.Right);
                 break;
             default:
                 break;

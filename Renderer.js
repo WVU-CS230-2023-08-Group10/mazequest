@@ -34,7 +34,7 @@ class Renderer
     {
         this.sprite.texture = newTexture;
     }
-    update()
+    update(delta)
     {
         var pos = this.transform.position;
         this.sprite.x = pos.x;

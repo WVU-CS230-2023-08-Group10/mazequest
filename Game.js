@@ -28,7 +28,7 @@ class Game
     {
         for (const entity of this.entityList) {
             entity.update(delta);
-            entity.render();
+            entity.render(delta);
         }
     }
 
