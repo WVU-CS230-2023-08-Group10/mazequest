@@ -2,9 +2,6 @@
 
 import { MazeLayout, GenerationParameters } from "./MazeLayout.js";
 import { profanity } from "https://cdn.skypack.dev/@2toad/profanity";
-
-
-// import { createClient } from '@supabase/supabase-js';
 // BEGIN SUPABASE ;
 
 // CLIENT INITIALIZATION
@@ -47,6 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 //BEGIN LOGOUT 
 document.getElementById("logout").addEventListener("click", async (e) =>{
+   
    const { error } = await s.auth.signOut()
    if (error){
       console.error(error)
@@ -68,14 +66,14 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
      const user_name = document.getElementById("username").value
      
      
-
+      // CHECKS USERNAME
      if (profanity.exists(user_name))
      {
       alert("Hark! Thy name is an unforgivable curse...")
       document.getElementById("username").value = ""
       return}
 
-     // Switch to Home view
+     // Checks password
      if (isStrongPassword(password)){
    
       
@@ -105,11 +103,12 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
          // Remove the text boxes and instructions from the form
          document.getElementById("signup").remove();
 
-          // Add Quest Birb and check email message
+          // Add "Check Email" message
           const successMessage = document.createElement("succMsg");
           successMessage.textContent = "Check your email to confirm your account.";
           SigDiv.appendChild(successMessage);
 
+          // Add Quest Birb
           const successImage = document.createElement("img");
           successImage.src = "./images/Quest_Birb_3.png";
           successImage.alt = "Birb";
@@ -127,7 +126,7 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
 
 
 
-// Function to check the length of the user entered password
+// Function to check if user's password meets our criteria
  function isStrongPassword(password) {
    const passwordBox = document.getElementById("suPassword");
    const rePasswordBox = document.getElementById("reSuPassword");

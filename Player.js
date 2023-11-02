@@ -5,6 +5,11 @@ import { Renderer } from "./Renderer.js";
 import { Entity } from "./Entity.js";
 export {Player};
 
+/**
+ * Class representing the Player entity
+ * 
+ * @extends Entity
+ */
 class Player extends Entity
 {
     account;
@@ -15,9 +20,12 @@ class Player extends Entity
     speed = 32;
     roomSize = 512;
 
-    constructor(name = "", transform = new Transform(), renderer = new Renderer(), health=10, account=null)
+    constructor(name = "", transform = new Transform(), renderer = new Renderer(), game=undefined, health=10, account=null)
     {
-        super(name, transform, renderer);
+        super(name, transform, renderer, game);
+
+        this.moveTarget = transform.position;
+
         this.account = account;
         this.health = health;
         this.inventory = new Inventory();
