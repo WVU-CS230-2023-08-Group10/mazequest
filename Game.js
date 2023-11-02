@@ -5,6 +5,10 @@ import { Renderer } from "./Renderer.js";
 import { Player } from "./Player.js";
 export {Game};
 
+const data = await PIXI.Assets.load('./images/playerAnimation.json');
+const playerSheet = new PIXI.Spritesheet(PIXI.Texture.from('./images/playerAnimation.png'), data.data);
+await playerSheet.parse();
+
 class Game
 {
     entityList;
@@ -15,8 +19,9 @@ class Game
         this.entityList = [];
         this.stage = stage;
 
+        var sprite = new PIXI.AnimatedSprite(playerSheet.animations['default']);
         this.registerEntity(new Player("Player", new Transform(new Vector2(256, 256)), 
-            new Renderer(PIXI.Texture.from('./images/down.png'), stage)));
+            new Renderer(sprite, stage)));
     }
 
     registerEntity(entity)

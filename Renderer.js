@@ -7,18 +7,22 @@ class Renderer
     sprite;
     stage;
 
-    constructor(texture, stage, transform = new Transform())
+    constructor(sprite, stage, transform = new Transform())
     {
         if (stage == undefined)
             throw new Error('Renderer stage undefined! Was the renderer initialized correctly?');
 
-        this.sprite = new PIXI.Sprite(texture);
+        this.sprite = sprite;
         this.stage = stage;
         this.transform = transform;
         this.link();
     }
+        
     link()
     {
+        if (this.sprite == undefined)
+            throw new Error("Renderer sprite is undefined! Was there an error loading it?");
+        
         this.stage.addChild(this.sprite);
     }
     unlink()

@@ -12,18 +12,12 @@ class Player extends Entity
     inventory;
     Room;
 
-    cellSize = 32;
+    speed = 32;
     roomSize = 512;
-    
-    speed = 4;
-    moveTarget = new Vector2(0.0, 0.0);
 
     constructor(name = "", transform = new Transform(), renderer = new Renderer(), health=10, account=null)
     {
         super(name, transform, renderer);
-
-        this.moveTarget = transform.position;
-
         this.account = account;
         this.health = health;
         this.inventory = new Inventory();
@@ -53,30 +47,16 @@ class Player extends Entity
         this.room=room;
         this.tile=tile;
     }
-    update(delta)
-    {
-        var difference = Vector2.subtract(this.moveTarget, this.transform.position);
-        if (difference.getMagnitude() < 0.1)
-        {
-            this.transform.position = this.moveTarget.copy();
-        }
-        else
-        {
-            difference.normalize();
-            difference.scalarMultiply(this.speed * delta);
-            this.transform.translate(difference);
-        }
-    }
     move(direction)
     {
-        var pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.cellSize));
+        var pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.speed));
 
         if (pos.x < 0 || pos.x >= this.roomSize || pos.y < 0 || pos.y >= this.roomSize)
         {
             return;
         }
 
-        this.moveTarget = pos;
+        this.transform.position = pos;
 
         // //check case for wall
         // if(pos==wall)
@@ -113,13 +93,14 @@ class Player extends Entity
     }
     playerInput(key)
     {
-        if (!this.transform.position.equals(this.moveTarget))
-            return;
+        //const animations = PIXI.Assets.cache.get('./images/character.json').data.animations;
+        //const character = PIXI.AnimatedSprite.fromFrames(animations["playerAnimation/walk"]);
 
         switch (key) {
             case 'ArrowUp':
             case 'w':
-                this.renderer.updateSprite(PIXI.Texture.from("./images/up.png"));
+                this.renderer.updateSprite();
+                this.renderer.
                 this.move(Direction.Up);
                 break;
             case 'ArrowLeft':
@@ -140,6 +121,7 @@ class Player extends Entity
             default:
                 break;
         }
+        console.log(this.transform.position)
     }
 }
 
