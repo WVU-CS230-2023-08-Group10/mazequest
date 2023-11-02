@@ -91,9 +91,9 @@
 },
 "animations": {
 	"default": ["down"],
-	"walkup": ["upright", "upleft", "up"],
-	"walkdown": ["downleft", "downright", "down"],
-	"walkright": ["righright", "right"],
-	"walkleft": ["leftleft", "left"]
+	"walkup": ["upright", "up", "upleft", "up"],
+	"walkdown": ["downleft", "down", "downright", "down"],
+	"walkright": ["rightright", "right", "rightright", "right"],
+	"walkleft": ["leftleft", "left", "leftleft", "left"]
 }
 }

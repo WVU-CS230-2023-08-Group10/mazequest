@@ -7,7 +7,7 @@ const app = new PIXI.Application(
         view: canvas, 
         width: canvasSize, 
         height: canvasSize, 
-        backgroundColor: 0xFFFFFF
+        backgroundColor: 0xFFFFFF,
     }
 );
 document.getElementById("Gam").appendChild(app.view);

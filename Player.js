@@ -17,8 +17,12 @@ class Player extends Entity
     inventory;
     Room;
 
-    speed = 32;
+    cellSize = 32;
     roomSize = 512;
+
+    speed = 2;
+    moveTarget = new Vector2(0.0, 0.0);
+    animationSpeed = 1/6;
 
     constructor(name = "", transform = new Transform(), renderer = new Renderer(), game=undefined, health=10, account=null)
     {
@@ -55,36 +59,30 @@ class Player extends Entity
         this.room=room;
         this.tile=tile;
     }
+    update(delta)
+    {
+        var difference = Vector2.subtract(this.moveTarget, this.transform.position);
+        if (difference.getMagnitude() < 0.1)
+        {
+            this.transform.position = this.moveTarget.copy();
+        }
+        else
+        {
+            difference.normalize();
+            difference.scalarMultiply(this.speed * delta);
+            this.transform.translate(difference);
+        }
+    }
     move(direction)
     {
-        var pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.speed));
+        var pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.cellSize));
 
         if (pos.x < 0 || pos.x >= this.roomSize || pos.y < 0 || pos.y >= this.roomSize)
         {
             return;
         }
 
-        this.transform.position = pos;
-
-        // //check case for wall
-        // if(pos==wall)
-        // {
-        //     //return original position
-        // }
-        // //check case for wall
-        // if(pos==door.room)
-        // {
-        //     //return new position in new room
-        // }
-        // //check case for Mob
-        // if(pos.hasMob())
-        // {
-        //     //initiate combat then return original position
-        // }
-        // else
-        // {
-        //     //return position
-        // }
+        this.moveTarget = pos;
     }
     display()
     {
@@ -101,29 +99,27 @@ class Player extends Entity
     }
     playerInput(key)
     {
-        //const animations = PIXI.Assets.cache.get('./images/character.json').data.animations;
-        //const character = PIXI.AnimatedSprite.fromFrames(animations["playerAnimation/walk"]);
+        if (!this.transform.position.equals(this.moveTarget)) return;
 
         switch (key) {
             case 'ArrowUp':
             case 'w':
-                this.renderer.updateSprite();
-                this.renderer.
+                this.renderer.setAnimation('walkup', this.animationSpeed);
                 this.move(Direction.Up);
                 break;
             case 'ArrowLeft':
             case 'a':
-                this.renderer.updateSprite(PIXI.Texture.from("./images/left.png"));
+                this.renderer.setAnimation('walkleft', this.animationSpeed);
                 this.move(Direction.Left);
                 break;
             case 'ArrowDown':
             case 's':
-                this.renderer.updateSprite(PIXI.Texture.from("./images/down.png"));
+                this.renderer.setAnimation('walkdown', this.animationSpeed);
                 this.move(Direction.Down);
                 break;
             case 'ArrowRight':
             case 'd':
-                this.renderer.updateSprite(PIXI.Texture.from("./images/right.png"));
+                this.renderer.setAnimation('walkright', this.animationSpeed);
                 this.move(Direction.Right);
                 break;
             default:

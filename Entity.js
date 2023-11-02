@@ -38,7 +38,7 @@ class Entity
 
     render(delta)
     {
-        this.renderer.transform = this.transform.copy();
+        this.renderer.transform = this.transform;
         this.renderer.update(delta);
     }
 

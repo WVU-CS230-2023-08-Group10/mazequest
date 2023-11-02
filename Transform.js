@@ -24,9 +24,4 @@ class Transform
     {
         this.position.add(vector);
     }
-    
-    copy()
-    {
-        return new Transform(this.position, this.scale, this.rotation);
-    }
 }

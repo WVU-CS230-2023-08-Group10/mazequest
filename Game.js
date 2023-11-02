@@ -3,7 +3,6 @@ import { Transform } from "./Transform.js";
 import { Vector2 } from "./Vectors.js";
 import { Renderer } from "./Renderer.js";
 import { Player } from "./Player.js";
-import { Container } from "pixi.js";
 export {Game};
 
 const data = await PIXI.Assets.load('./images/playerAnimation.json');
@@ -27,7 +26,7 @@ class Game
 
     /**
      * Creates a new game manager instance that handles the top level game functions.
-     * This method requires a pixi.js {@link Container} (likely from the pixi Application) 
+     * This method requires a {@link PIXI.Container} (likely from the pixi Application) 
      * which allows the game to add new graphics to the canvas for rendering.
      * @param {Container} stage The application stage for the game to run on
      */
@@ -36,9 +35,8 @@ class Game
         this.entityList = [];
         this.stage = stage;
 
-        var sprite = new PIXI.AnimatedSprite(playerSheet.animations['default']);
-        this.registerEntity(new Player("Player", new Transform(new Vector2(256, 256)), 
-            new Renderer(sprite, stage)));
+        this.registerEntity(new Player("Player", new Transform(new Vector2(256, 256), new Vector2(2, 2)), 
+            new Renderer(playerSheet, stage)));
     }
 
     /**
