@@ -1,3 +1,5 @@
+import { Entity } from "./Entity.js";
+
 export {Item, Weapon, Armor, Consumable};
 
 class Item extends Entity

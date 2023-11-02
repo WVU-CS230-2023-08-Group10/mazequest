@@ -47,6 +47,11 @@ class Vector2
     {
         return Vector2.scalarMultiply(vec, 1/vec.getMagnitude());
     }
+
+    toString()
+    {
+        return "("+this.x+", "+this.y+")"
+    }
 }
 
 const Direction = {

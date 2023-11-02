@@ -9,6 +9,9 @@ class Renderer
 
     constructor(texture, stage, transform = new Transform())
     {
+        if (stage == undefined)
+            throw new Error('Renderer stage undefined! Was the renderer initialized correctly?');
+
         this.sprite = new PIXI.Sprite(texture);
         this.stage = stage;
         this.transform = transform;
@@ -31,8 +34,11 @@ class Renderer
     {
         this.sprite.texture = newTexture;
     }
-    setPosition(posVector)
+    update()
     {
-        this.transform.position = posVector;
+        var pos = this.transform.position;
+        this.sprite.x = pos.x;
+        this.sprite.y = pos.y;
+        this.sprite.rotation = this.transform.rotation;
     }
 }
