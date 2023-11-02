@@ -12,7 +12,7 @@ const app = new PIXI.Application(
 );
 document.getElementById("Gam").appendChild(app.view);
 
-const bkgTexture = PIXI.Texture.from("./images/bliss.jpg");
+const bkgTexture = PIXI.Texture.from("./images/preview.png");
 const bkg = new PIXI.Sprite(bkgTexture);
 
 app.stage.addChild(bkg);
