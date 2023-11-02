@@ -7,6 +7,12 @@ class Transform
     scale;
     rotation;
 
+    /**
+     * 
+     * @param {Vector2} position 
+     * @param {Vector2} scale
+     * @param {Vector2} rotation 
+     */
     constructor(position = new Vector2(0,0), scale = new Vector2(1,1), rotation = 0)
     {
         this.position = position;
@@ -17,5 +23,10 @@ class Transform
     translate(vector)
     {
         this.position.add(vector);
+    }
+    
+    copy()
+    {
+        return new Transform(this.position, this.scale, this.rotation);
     }
 }

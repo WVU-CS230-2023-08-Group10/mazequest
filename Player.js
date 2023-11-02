@@ -5,6 +5,11 @@ import { Renderer } from "./Renderer.js";
 import { Entity } from "./Entity.js";
 export {Player};
 
+/**
+ * Class representing the Player entity
+ * 
+ * @extends Entity
+ */
 class Player extends Entity
 {
     account;
@@ -18,9 +23,9 @@ class Player extends Entity
     speed = 4;
     moveTarget = new Vector2(0.0, 0.0);
 
-    constructor(name = "", transform = new Transform(), renderer = new Renderer(), health=10, account=null)
+    constructor(name = "", transform = new Transform(), renderer = new Renderer(), game=undefined, health=10, account=null)
     {
-        super(name, transform, renderer);
+        super(name, transform, renderer, game);
 
         this.moveTarget = transform.position;
 
