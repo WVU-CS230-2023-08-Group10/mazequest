@@ -51,10 +51,7 @@ class Armor extends Item{
         this.protection=protection;
     }
 }
-//Currently unavailable in your region
-// class Utility extends Item{
 
-// }
 class Consumable extends Item
 {
     stackCount;
