@@ -1,7 +1,8 @@
-import { Entity } from "./Entity";
-import { Transform } from "./Transform";
-import { Vector2 } from "./Vectors";
-import { Renderer } from "./Renderer";
+import { Entity } from "./Entity.js";
+import { Transform } from "./Transform.js";
+import { Vector2 } from "./Vectors.js";
+import { Renderer } from "./Renderer.js";
+import { Player } from "./Player.js";
 export {Game};
 
 class Game
@@ -14,7 +15,7 @@ class Game
         this.entityList = [];
         this.stage = stage;
 
-        this.registerEntity(new Entity("Player", new Transform(new Vector2(256, 256)), 
+        this.registerEntity(new Player("Player", new Transform(new Vector2(256, 256)), 
             new Renderer(PIXI.Texture.from('./images/down.png'), stage)));
     }
 
@@ -23,18 +24,25 @@ class Game
         this.entityList.push(entity);
     }
 
-    updateEntities()
+    updateEntities(delta)
     {
-        for (const entity in this.entities) 
-        {
-            entity.update();
+        for (const entity of this.entityList) {
+            entity.update(delta);
+            entity.render(delta);
+        }
+    }
+
+    broadcastToEntities(event)
+    {
+        for (const entity of this.entityList) {
+            entity.broadcast(event);
         }
     }
 
     /**
      * 
      * @param {String} name 
-     * @returns THe first registered entity with the given name
+     * @returns The first registered entity with the given name
      */
     getEntity(name)
     {

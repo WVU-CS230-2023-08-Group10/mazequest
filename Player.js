@@ -1,23 +1,32 @@
-import { Direction } from "./Vectors.js";
+import { Direction, Vector2 } from "./Vectors.js";
 import { Item } from "./Item.js";
+import { Transform } from "./Transform.js";
+import { Renderer } from "./Renderer.js";
+import { Entity } from "./Entity.js";
+export {Player};
 
 class Player extends Entity
 {
     account;
-    health = 10;
+    health;
     inventory;
     Room;
 
-    constructor(health)
+    cellSize = 32;
+    roomSize = 512;
+    
+    speed = 4;
+    moveTarget = new Vector2(0.0, 0.0);
+
+    constructor(name = "", transform = new Transform(), renderer = new Renderer(), health=10, account=null)
     {
-        this.account = null;
+        super(name, transform, renderer);
+
+        this.moveTarget = transform.position;
+
+        this.account = account;
         this.health = health;
         this.inventory = new Inventory();
-    }
-    constructor(account, health)
-    {
-        this.Account=account;
-        this.health=health;
     }
     pickUp(item)
     {
@@ -44,48 +53,93 @@ class Player extends Entity
         this.room=room;
         this.tile=tile;
     }
-    move(direction)
+    update(delta)
     {
-        var position;
-        switch (direction) {
-            case value: right
-                position = Direction.Right;
-            case value: left 
-                position = Direction.Left;
-            case value: down
-                position = Direction.Down;
-            case value: up
-                position = Direction.Up;
-            default: 
-                break;
-        }
-        //check case for wall
-        if(position==wall)
+        var difference = Vector2.subtract(this.moveTarget, this.transform.position);
+        if (difference.getMagnitude() < 0.1)
         {
-            //return original position
-        }
-        //check case for wall
-        if(position==door.room)
-        {
-            //return new position in new room
-        }
-        //check case for Mob
-        if(position.hasMob())
-        {
-            //initiate combat then return original position
+            this.transform.position = this.moveTarget.copy();
         }
         else
         {
-            //return position
+            difference.normalize();
+            difference.scalarMultiply(this.speed * delta);
+            this.transform.translate(difference);
         }
+    }
+    move(direction)
+    {
+        var pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.cellSize));
+
+        if (pos.x < 0 || pos.x >= this.roomSize || pos.y < 0 || pos.y >= this.roomSize)
+        {
+            return;
+        }
+
+        this.moveTarget = pos;
+
+        // //check case for wall
+        // if(pos==wall)
+        // {
+        //     //return original position
+        // }
+        // //check case for wall
+        // if(pos==door.room)
+        // {
+        //     //return new position in new room
+        // }
+        // //check case for Mob
+        // if(pos.hasMob())
+        // {
+        //     //initiate combat then return original position
+        // }
+        // else
+        // {
+        //     //return position
+        // }
     }
     display()
     {
         //returns character sprite at position
     }
-    update()
+    broadcast(event)
     {
-        
+        switch (event.type)
+        {
+            case "keydown":
+                this.playerInput(event.key);
+                break;
+        }
+    }
+    playerInput(key)
+    {
+        if (!this.transform.position.equals(this.moveTarget))
+            return;
+
+        switch (key) {
+            case 'ArrowUp':
+            case 'w':
+                this.renderer.updateSprite(PIXI.Texture.from("./images/up.png"));
+                this.move(Direction.Up);
+                break;
+            case 'ArrowLeft':
+            case 'a':
+                this.renderer.updateSprite(PIXI.Texture.from("./images/left.png"));
+                this.move(Direction.Left);
+                break;
+            case 'ArrowDown':
+            case 's':
+                this.renderer.updateSprite(PIXI.Texture.from("./images/down.png"));
+                this.move(Direction.Down);
+                break;
+            case 'ArrowRight':
+            case 'd':
+                this.renderer.updateSprite(PIXI.Texture.from("./images/right.png"));
+                this.move(Direction.Right);
+                break;
+            default:
+                break;
+        }
     }
 }
 

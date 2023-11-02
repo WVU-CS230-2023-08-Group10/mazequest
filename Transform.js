@@ -1,4 +1,4 @@
-import { Vector2 } from "./Vectors";
+import { Vector2 } from "./Vectors.js";
 export {Transform};
 
 class Transform
@@ -16,6 +16,6 @@ class Transform
 
     translate(vector)
     {
-        position.add(vector);
+        this.position.add(vector);
     }
 }

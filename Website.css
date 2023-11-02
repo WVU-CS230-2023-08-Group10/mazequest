@@ -3,16 +3,22 @@
     --theme-dark-color: #557A95;
     --primary-font-color: #F6C90E;
     --link-font-color: #white;
+
     background-image: url(./images/WebsiteBackground.png);
     background-size: cover;
     background-position: fixed;
     background-repeat: repeat-y;
+    background-attachment: scroll;
+    animation: animBg 60s linear infinite;
     -moz-animation: animBg 60s linear infinite;
     -webkit-animation: animBg 60s linear infinite;
-    animation: animBg 60s linear infinite;
-    background-attachment: scroll;
  }
  
+ @keyframes animBg {
+  from {background-position-y: 0px;}
+  to {background-position-y: -2000px;}
+}
+
  @font-face {
    font-family: 'Alagard';
    src: url('Fonts/Alagard/Alagard.eot');
@@ -46,11 +52,6 @@ body {
    margin: 20px auto;
    text-align: center;
    background-color: rgb(15, 15, 15)
-}
-
-@keyframes animBg {
-  from {background-position-y: 0px;}
-  to {background-position-y: -2000px;}
 }
 
 .form__button
