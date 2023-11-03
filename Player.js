@@ -22,7 +22,7 @@ class Player extends Entity
 
     speed = 2;
     moveTarget = new Vector2(0.0, 0.0);
-    animationSpeed = 1/6;
+    animationSpeed = 1/3;
 
     constructor(name = "", transform = new Transform(), renderer = new Renderer(), game=undefined, health=10, account=null)
     {

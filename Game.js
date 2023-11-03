@@ -5,8 +5,8 @@ import { Renderer } from "./Renderer.js";
 import { Player } from "./Player.js";
 export {Game};
 
-const data = await PIXI.Assets.load('./images/playerAnimation.json');
-const playerSheet = new PIXI.Spritesheet(PIXI.Texture.from('./images/playerAnimation.png'), data.data);
+const data = await PIXI.Assets.load('./images/armor/leatherArmor.json');
+const playerSheet = new PIXI.Spritesheet(PIXI.Texture.from('./images/armor/leatherArmor.png'), data.data);
 await playerSheet.parse();
 
 /**
