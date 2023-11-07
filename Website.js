@@ -35,7 +35,13 @@ document.addEventListener("DOMContentLoaded", async () => {
           console.error(error)
        } else {
           // successful login
-          alert("Success! Logged In")
+          alert("Success! Logged In");
+
+          // Remove login tab content
+          removeLoginForm();
+
+          // Remove sign-up tab content
+          removeSignUpForm();
        }
     });
 // END LOGIN
@@ -87,8 +93,10 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
           alert("error")
           console.log(error)
       } else {
+         // Create a success message 
+         alert("Success! Account is being created.");
          // Call sign up form removal function
-         removeSignUpform();
+         removeSignUpForm();
       }
    } else {
       // Password not entered correctly, retry
@@ -144,9 +152,7 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
 }
 
 // Function to replace the contents of the sign-up tab with confirmation message
-function removeSignUpform(){
-   // Create a success message 
-   alert("Success! Account is being created.");
+function removeSignUpForm(){
 
    // Remove the text boxes and instructions from the form
    document.getElementById("signup").remove();
@@ -163,6 +169,20 @@ function removeSignUpform(){
    successImage.alt = "Birb";
    successImage.width = "500";
    SigDiv.appendChild(successImage);
+}
+
+/**
+ * @brief This function removes the login form from the tab and adds a message showing that the user successfully logged in
+ */
+function removeLoginForm(){
+   // Remove the text boxes and intstructions from the form
+   document.getElementById("login").remove();
+
+   // Add "Logged in" message
+   const LoginDiv = document.getElementById("In");
+   const successMessage = document.createElement("succMsg");
+   successMessage.textContent = "You're logged in! Go slay the beast!";
+   LoginDiv.appendChild(successMessage);
 }
 
 //below is used for hint rotation
