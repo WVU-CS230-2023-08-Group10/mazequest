@@ -31,8 +31,6 @@ document.addEventListener("DOMContentLoaded", async () => {
  
        })
 
-       document.getElementById("liEmail").value = ""
-       document.getElementById("liPassword").value = ""
        if (error) {
           console.error(error)
        } else {
@@ -85,35 +83,12 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
           }}
       });
 
-      
-
-      // Get the form. And get the email and password text boxes.
-      document.getElementById("suEmail").value = "";
-      document.getElementById("suPassword").value = "";
-      document.getElementById("username").value = "";
-      const SigDiv = document.getElementById("Sig");
-
       if (error) {
           alert("error")
           console.log(error)
       } else {
-         // Create a success message 
-          alert("Success! Account is being created.");
-
-         // Remove the text boxes and instructions from the form
-         document.getElementById("signup").remove();
-
-          // Add "Check Email" message
-          const successMessage = document.createElement("succMsg");
-          successMessage.textContent = "Check your email to confirm your account.";
-          SigDiv.appendChild(successMessage);
-
-          // Add Quest Birb
-          const successImage = document.createElement("img");
-          successImage.src = "./images/Quest_Birb_3.png";
-          successImage.alt = "Birb";
-          successImage.width = "500";
-          SigDiv.appendChild(successImage);
+         // Call sign up form removal function
+         removeSignUpform();
       }
    } else {
       // Password not entered correctly, retry
@@ -160,10 +135,34 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
    }
    // Text boxes did not match. Make them re-enter.
    alert("Passwords do not match.")
-   passwordBox.style.backgroundColor = '';
+   passwordBox.value = "";
    rePasswordBox.value = "";
+   // Make text boxes orange
+   passwordBox.style.backgroundColor = "#E3963E";
    rePasswordBox.style.backgroundColor = "#E3963E";
    return false;
+}
+
+// Function to replace the contents of the sign-up tab with confirmation message
+function removeSignUpform(){
+   // Create a success message 
+   alert("Success! Account is being created.");
+
+   // Remove the text boxes and instructions from the form
+   document.getElementById("signup").remove();
+
+   // Add "Check Email" message
+   const SigDiv = document.getElementById("Sig");
+   const successMessage = document.createElement("succMsg");
+   successMessage.textContent = "Check your email to confirm your account.";
+   SigDiv.appendChild(successMessage);
+
+   // Add Quest Birb
+   const successImage = document.createElement("img");
+   successImage.src = "./images/Quest_Birb_3.png";
+   successImage.alt = "Birb";
+   successImage.width = "500";
+   SigDiv.appendChild(successImage);
 }
 
 //below is used for hint rotation
