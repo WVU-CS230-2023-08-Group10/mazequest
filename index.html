@@ -31,6 +31,7 @@
           <button class="tablinks" onclick="openTab(event, 'Gam')">GameWindow</button>
           <button class="tablinks" onclick="openTab(event, 'Sta')">Stat</button>
           <button class="tablinks" onclick="openTab(event, 'Out')">Log Out</button>
+          <button class="tablinks" onclick="openTab(event, 'Set')">Settings</button>
         </div>
 
         <!-- Tab content -->
@@ -39,56 +40,93 @@
             text-align: left;
           }
         </style>
+        <div id="Set" class="tabcontent">
+          <h1 >Account</h1>
+          <table style ="width:100%">
+            <th style="width:50%">
+              <h2 >Reset Password</h2>
+              <form>
+                <input type = "password" id = "newPassword" class= "form__input" autofocus placeholder="Password">
+                <input type = "password" id = "reNewPassword" class= "form__input" autofocus placeholder="Re-Enter Password">
+              </form>
+            </th>
+            <th style="width:50%">
+              <h2 >Log Out</h2>
+              <button id = "logout" class="form__button" type="submit">Here</button>
+            </th>
+          </table>
+          <h1 >Music</h1>
+          <table style ="width:100%">
+            <th style="width:50%">
+              <h2 >Sound Bar</h2>
+              <input type="range" min="1" max="100" value="50">
+            </th>
+            <th style="width:50%">
+              <h2 >Mute</h2>
+            </th>
+          </table>
+          <h1></h1>
+        </div>
         <div id="Sta" class="tabcontent">
           <!-- Under Construction -->
           <h1 class = "form__title">Leaderboards</h1>
           
           <h3>Enemies slain</h3>
-          <table style ="width:100%; border:1px solid #F6C90E">
+          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
             <tr>
-              <th id="U1">Username#1</th>
-              <th id="U1E">Enemies slain</th>
+              <th>#1</th>
+              <th style="text-align:left;" id="U1">Username#1</th>
+              <th style="text-align:right;" id="U1E">Enemies slain</th>
             </tr>
             <tr>
-              <th id="U2">Username#2</th>
-              <th id="U2E">Enemies slain</th>
+              <th>#2</th>
+              <th style="text-align:left;" id="U2">Username#2</th>
+              <th style="text-align:right;" id="U2E">Enemies slain</th>
             </tr>
             <tr>
-              <th id="U3">Username#3</th>
-              <th id="U3E">Enemies slain</th>
+              <th>#3</th>
+              <th style="text-align:left;" id="U3">Username#3</th>
+              <th style="text-align:right;" id="U3E">Enemies slain</th>
             </tr>
           </table>
           <h3>Dragons slain</h3>
-          <table style ="width:100%; border:1px solid #F6C90E">
+          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
             <tr>
-              <th id ="U1">Username#1</th>
-              <th id="U1D">Dragons slain</th>
+              <th>#1</th>
+              <th style="text-align:left;" id ="U1">Username#1</th>
+              <th style="text-align:right;" id="U1D">Dragons slain</th>
             </tr>
             <tr>
-              <th id="U2">Username#2</th>
-              <th id="U2D">Dragons slain</th>
+              <th>#2</th>
+              <th style="text-align:left;" id="U2">Username#2</th>
+              <th style="text-align:right;" id="U2D">Dragons slain</th>
             </tr>
             <tr>
-              <th id="U3">Username#3</th>
-              <th id="U3D">Dragons slain</th>
+              <th>#3</th>
+              <th style="text-align:left;" id="U3">Username#3</th>
+              <th style="text-align:right;" id="U3D">Dragons slain</th>
             </tr>
           </table>
           <h3>Mazes Escaped</h3>
-          <table style ="width:100%; border:1px solid #F6C90E">
+          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
             <tr>
-              <th id="U1">Username#1</th>
-              <th id="U1M">Mazes Escaped</th>
+              <th>#1</th>
+              <th style="text-align:left;" id="U1">Username#1</th>
+              <th style="text-align:right;" id="U1M">Mazes Escaped</th>
             </tr>
             <tr>
-              <th id="U2">Username#2</th>
-              <th id="U2M">Mazes Escaped</th>
+              <th>#2</th>
+              <th style="text-align:left;" id="U2">Username#2</th>
+              <th style="text-align:right;" id="U2M">Mazes Escaped</th>
             </tr>
             <tr>
-              <th id="U3">Username#3</th>
-              <th id="U3M">Mazes Escaped</th>
+              <th>#3</th>
+              <th style="text-align:left;" id="U3">Username#3</th>
+              <th style="text-align:right;" id="U3M">Mazes Escaped</th>
             </tr>
           </table>
         </div>
+
         <div id="Bui" class="tabcontent">
           <!-- Under Construction -->
           <h1 class = "form__title">Level Builder</h1>
