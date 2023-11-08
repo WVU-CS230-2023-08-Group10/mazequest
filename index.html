@@ -21,6 +21,18 @@
       </div>
     </header>
     <body>
+      
+      <audio src="?.mp3" autoplay loop id="myaudio"></audio>
+      
+      <!-- <script>
+        
+        var audio = document.getElementById("myaudio");
+        
+        let volume = document.getElementById('volume-slider');
+        volume.addEventListener("change", function(e) {
+            audio.volume = e.currentTarget.value / 100;
+        })
+      </script> -->
       <main> 
         <!-- Tab links -->
         <div class="tab">
@@ -59,10 +71,32 @@
           <table style ="width:100%">
             <th style="width:50%">
               <h2 >Sound Bar</h2>
-              <input type="range" min="1" max="100" value="50">
+              <input type="range" min="1" max="100" value="50" id="slider">
+              <span id="display">1</span>
+              <script>
+                var audio = document.getElementById("myaudio");
+                var slider = document.getElementById("slider");
+                var output = document.getElementById("display");
+                output.innerHTML = slider.value;
+                slider.oninput = function() {
+                  output.innerHTML = this.value;
+                  audio.volume=(output.innerHTML)/100;
+                }
+                  
+              </script>
             </th>
             <th style="width:50%">
               <h2 >Mute</h2>
+              <input type="checkBox" id="box1" name="box1"/>
+              <script>
+                var audio = document.getElementById("myaudio");
+                document.getElementById('box1').addEventListener('click', function (e)
+                {
+                    e = e || window.event;
+                    audio.muted = !audio.muted;
+                    e.preventDefault();
+                }, false);
+              </script>
             </th>
           </table>
           <h1></h1>
@@ -246,5 +280,4 @@
         var elem = document.getElementById("changeH");
       </script>
     </body>
-  
 </html>
