@@ -34,14 +34,16 @@
       <main> 
         <!-- Tab links -->
         <div class="tab">
-          <button class="tablinks active" onclick="openTab(event, 'Hom')">Home</button>
-          <button class="tablinks" onclick="openTab(event, 'Sig')">Sign Up</button>
-          <button class="tablinks" onclick="openTab(event, 'In')">Login</button>
-          <button class="tablinks" onclick="openTab(event, 'Bui')">LevelBuilder</button>
-          <button class="tablinks" onclick="openTab(event, 'Gam')">GameWindow</button>
-          <button class="tablinks" onclick="openTab(event, 'Sta')">Stat</button>
-          <button class="tablinks" onclick="openTab(event, 'Out')">Log Out</button>
-          <button class="tablinks" onclick="openTab(event, 'Set')">Settings</button>
+          <div class="btnGroup">
+            <button class="tablinks active" onclick="openTab(event, 'Hom')">Home</button>
+            <button class="tablinks" onclick="openTab(event, 'Sig')">Sign Up</button>
+            <button class="tablinks" onclick="openTab(event, 'In')">Login</button>
+            <button class="tablinks" onclick="openTab(event, 'Bui')">LevelBuilder</button>
+            <button class="tablinks" onclick="openTab(event, 'Gam')">GameWindow</button>
+            <button class="tablinks" onclick="openTab(event, 'Sta')">Stat</button>
+            <button class="tablinks" onclick="openTab(event, 'Out')">Log Out</button>
+            <button class="tablinks" onclick="openTab(event, 'Set')">Settings</button>
+          </div>
         </div>
 
         <!-- Tab content -->
@@ -50,7 +52,7 @@
             text-align: left;
           }
         </style>
-        
+
         <div id="Set" class="tabcontent">
           <h1 >Account</h1>
           <table style ="width:100%">
