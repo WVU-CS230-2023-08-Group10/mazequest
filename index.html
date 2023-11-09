@@ -10,8 +10,6 @@
     <script type="module" src = "./Website.js"></script>
     <script type="module" src="./app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-   
-   
   </head>
 
     <header>
@@ -21,16 +19,21 @@
       </div>
     </header>
     <body>
+      <audio src="250-milliseconds-of-silence.mp3" playsinline autoplay loop id="myaudio"></audio>
+      <audio src="In-the-hall-of-the-mountain-king.mp3" playsinline autoplay loop id="myaudio"></audio>
       <main> 
         <!-- Tab links -->
         <div class="tab">
-          <button class="tablinks active" onclick="openTab(event, 'Hom')">Home</button>
-          <button class="tablinks" onclick="openTab(event, 'Sig')">Sign Up</button>
-          <button class="tablinks" onclick="openTab(event, 'In')">Login</button>
-          <button class="tablinks" onclick="openTab(event, 'Bui')">LevelBuilder</button>
-          <button class="tablinks" onclick="openTab(event, 'Gam')">GameWindow</button>
-          <button class="tablinks" onclick="openTab(event, 'Sta')">Stat</button>
-          <button class="tablinks" onclick="openTab(event, 'Out')">Log Out</button>
+          <div class="btnGroup">
+            <button class="tablinks active" onclick="openTab(event, 'Hom')">Home</button>
+            <button class="tablinks" onclick="openTab(event, 'Sig')">Sign Up</button>
+            <button class="tablinks" onclick="openTab(event, 'In')">Login</button>
+            <button class="tablinks" onclick="openTab(event, 'Bui')">LevelBuilder</button>
+            <button class="tablinks" onclick="openTab(event, 'Gam')">GameWindow</button>
+            <button class="tablinks" onclick="openTab(event, 'Sta')">Stat</button>
+            <button class="tablinks" onclick="openTab(event, 'Out')">Log Out</button>
+            <button class="tablinks" onclick="openTab(event, 'Set')">Settings</button>
+          </div>
         </div>
 
         <!-- Tab content -->
@@ -39,12 +42,62 @@
             text-align: left;
           }
         </style>
+
+        <div id="Set" class="tabcontent">
+          <h1 >Account</h1>
+          <table style ="width:100%">
+            <th style="width:50%">
+              <h2 >Reset Password</h2>
+              <form>
+                <input type = "password" id = "newPassword" class= "form__input" autofocus placeholder="Password">
+                <input type = "password" id = "reNewPassword" class= "form__input" autofocus placeholder="Re-Enter Password">
+              </form>
+            </th>
+            <th style="width:50%">
+              <h2>Log Out</h2>
+              <button id = "logout" class="form__button" type="submit">Here</button>
+            </th>
+          </table>
+          <h1 >Music</h1>
+          <table style ="width:100%">
+            <th style="width:50%">
+              <h2 >Sound Bar</h2>
+              <input type="range" min="1" max="100" value="50" id="slider">
+              <span id="display">1</span>
+              <script>
+                var audio = document.getElementById("myaudio");
+                var slider = document.getElementById("slider");
+                var output = document.getElementById("display");
+                output.innerHTML = slider.value;
+                slider.oninput = function() {
+                  output.innerHTML = this.value;
+                  audio.volume=(output.innerHTML)/100;
+                }
+                  
+              </script>
+            </th>
+            <th style="width:50%">
+              <h2 >Mute</h2>
+              <input type="checkBox" id="box1" name="box1"/>
+              <script>
+                var audio = document.getElementById("myaudio");
+                document.getElementById('box1').addEventListener('click', function (e)
+                {
+                    e = e || window.event;
+                    audio.muted = !audio.muted;
+                    e.preventDefault();
+                }, false);
+              </script>
+            </th>
+          </table>
+          <h1></h1>
+        </div>
         <div id="Sta" class="tabcontent">
           <!-- Under Construction -->
           <h1 class = "form__title">Leaderboards</h1>
           
           <h3>Enemies slain</h3>
-          <table style ="width:100%; border:1px solid #F6C90E">
+          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
             <tr>
               <th id="enemySlayer1">Username#1</th>
               <th id="U1E">Enemies slain</th>
@@ -59,7 +112,7 @@
             </tr>
           </table>
           <h3>Dragons slain</h3>
-          <table style ="width:100%; border:1px solid #F6C90E">
+          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
             <tr>
               <th id ="dragonSlayer1">Username#1</th>
               <th id="U1D">Dragons slain</th>
@@ -73,8 +126,8 @@
               <th id="U3D">Dragons slain</th>
             </tr>
           </table>
-          <h3>Mazes Escaped</h3>
-          <table style ="width:100%; border:1px solid #F6C90E">
+          <h3>Mazes escaped</h3>
+          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
             <tr>
               <th id="mazeRunner1">Username#1</th>
               <th id="U1M">Mazes Escaped</th>
@@ -89,6 +142,7 @@
             </tr>
           </table>
         </div>
+
         <div id="Bui" class="tabcontent">
           <!-- Under Construction -->
           <h1 class = "form__title">Level Builder</h1>
@@ -208,5 +262,4 @@
         var elem = document.getElementById("changeH");
       </script>
     </body>
-  
 </html>
