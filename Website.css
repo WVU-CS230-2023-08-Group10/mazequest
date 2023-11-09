@@ -48,7 +48,7 @@ body {
    font-family: "Alagard";
    display: table;
    color: var(--primary-font-color);
-   padding: 40px 15px 0px 15px;
+   padding: 0px 15px 0px 15px;
    margin: 20px auto;
    text-align: center;
    background-color: rgb(15, 15, 15)
@@ -83,7 +83,7 @@ a {
 header > h1 {
    color: var(--theme-dark-color);
    font-size: 2.5rem;
-   margin: 10px 0;
+   margin: 10px 0px;
    text-shadow: 2px 2px 3px gray;
 }
 
