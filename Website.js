@@ -12,7 +12,7 @@ const s = supabase.createClient(supabaseUrl, supabaseKey);
 document.addEventListener("DOMContentLoaded", async () => {
    
    
-      
+   updateLeaderboard();
 
 // BEGIN LOGIN
    document.getElementById("login").addEventListener("submit", async (e) => {
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
        })
 
        if (error) {
-          console.error(error)
+          alert("Incorrect username or password")
        } else {
           // successful login
           alert("Success! Logged In");
@@ -102,12 +102,110 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       // Password not entered correctly, retry
       alert("Please enter a valid password.");
   }
-   });
+   });``
    // END SIGNUP
  });
 // END SUPABASE
 
+async function updateLeaderboard() {
 
+   var topDragonSlayersPromise
+   var topMazeRunnersPromise
+   var topEnemySlayersPromise
+  
+
+   topDragonSlayersPromise =  s
+   .from("player_stats")
+   .select()
+   .order("dragons_slain", {ascending:false})
+   .limit(3)
+
+  
+   topMazeRunnersPromise =  s
+   .from("player_stats")
+   .select()
+   .order("mazes_escaped", {ascending:false})
+   .limit(3)
+
+   topEnemySlayersPromise =  s
+   .from("player_stats")
+   .select()
+   .order("enemies_slain", {ascending:false})
+   .limit(3)
+
+      
+
+     const[topDragonSlayers, topEnemySlayers, topMazeRunners] = 
+     await Promise.all([
+      topDragonSlayersPromise, 
+      topEnemySlayersPromise, 
+      topMazeRunnersPromise
+   ]).catch(error => {
+      console.log(error)
+   })
+      
+
+
+
+
+      // convert data to js objects and ready to load into
+         
+            //TODO : Create dummy data to test
+           
+         
+
+         var firstDragonSlayer = topDragonSlayers.data[0].username
+         var secondDragonSlayer = topDragonSlayers.data[1].username
+         var thirdDragonSlayer = topDragonSlayers.data[2].username
+
+         var firstDragonSlayerStat = topDragonSlayers.data[0].dragons_slain
+         var secondDragonSlayerStat= topDragonSlayers.data[1].dragons_slain
+         var thirdDragonSlayerStat = topDragonSlayers.data[2].dragons_slain
+         
+         var firstMazeRunner = topMazeRunners.data[0].username
+         var secondMazeRunner = topMazeRunners.data[1].username
+         var thirdMazeRunner = topMazeRunners.data[2].username
+
+         var firstMazeRunnerStat = topMazeRunners.data[0].mazes_escaped
+         var secondMazeRunnerStat = topMazeRunners.data[1].mazes_escaped
+         var thirdMazeRunnerStat = topMazeRunners.data[2].mazes_escaped
+
+         var firstEnemySlayer = topEnemySlayers.data[0].username
+         var secondEnemySlayer = topEnemySlayers.data[1].username
+         var thirdEnemySlayer = topEnemySlayers.data[2].username
+
+         var firstEnemySlayerStat = topEnemySlayers.data[0].enemies_slain
+         var secondEnemySlayerStat = topEnemySlayers.data[1].enemies_slain
+         var thirdEnemySlayerStat = topEnemySlayers.data[2].enemies_slain
+
+         // error handling is redundant as long as 3 profiles exist, but should probably implement some try/catch or arraylength check
+
+
+      document.getElementById("dragonSlayer1").innerHTML = firstDragonSlayer
+      document.getElementById("dragonSlayer2").innerHTML = secondDragonSlayer
+      document.getElementById("dragonSlayer3").innerHTML = thirdDragonSlayer
+
+      document.getElementById("U1D").innerHTML = firstDragonSlayerStat
+      document.getElementById("U2D").innerHTML = secondDragonSlayerStat
+      document.getElementById("U3D").innerHTML = thirdDragonSlayerStat
+
+      document.getElementById("enemySlayer1").innerHTML = firstEnemySlayer
+      document.getElementById("enemySlayer2").innerHTML = secondEnemySlayer
+      document.getElementById("enemySlayer3").innerHTML = thirdEnemySlayer
+
+      document.getElementById("U1E").innerHTML = firstEnemySlayerStat
+      document.getElementById("U2E").innerHTML = secondEnemySlayerStat
+      document.getElementById("U3E").innerHTML = thirdEnemySlayerStat
+
+      document.getElementById("mazeRunner1").innerHTML = firstMazeRunner
+      document.getElementById("mazeRunner2").innerHTML = secondMazeRunner
+      document.getElementById("mazeRunner3").innerHTML = thirdMazeRunner
+
+      document.getElementById("U1M").innerHTML = firstMazeRunnerStat
+      document.getElementById("U2M").innerHTML = secondMazeRunnerStat
+      document.getElementById("U3M").innerHTML = thirdMazeRunnerStat
+           
+}
 
 // Function to check if user's password meets our criteria
  function isStrongPassword(password) {
