@@ -92,6 +92,7 @@ header > h1 {
    overflow: hidden;
    border: 1px solid rgb(30, 30, 30);
    background-color: rgb(30, 30, 30);
+   display: inline-block;
  }
  
  /* Style the buttons that are used to open the tab content */
