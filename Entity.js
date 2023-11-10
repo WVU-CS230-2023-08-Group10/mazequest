@@ -25,13 +25,14 @@ class Entity
     constructor(name = "", transform = new Transform(), renderer = new Renderer(), game = undefined) 
     {
         if (!(transform instanceof Transform))
-            throw new Error("Type mismatch: transform parameter is not of type Transform (was "+typeof transform+" instead).");
+            throw new Error("Type mismatch: transform parameter is not of type Transform (was "+transform.constructor.name+" instead).");
         if (!(renderer instanceof Renderer))
-            throw new Error("Type mismatch: renderer parameter is not of type Renderer (was "+typeof renderer+" instead).");
+            throw new Error("Type mismatch: renderer parameter is not of type Renderer (was "+renderer.constructor.name+" instead).");
         
         this.transform = transform;
         this.renderer = renderer;
         this.game = game;
+        this.name = name;
     }
 
     update(delta) {}
@@ -43,4 +44,22 @@ class Entity
     }
 
     broadcast(event) {}
+
+    serialize()
+    {
+    }
+
+    destroy()
+    {
+        if (this.game == undefined)
+            return;
+
+        this.game.unregisterEntity(this);
+        delete this;
+    }
+
+    getType()
+    {
+        return this.constructor.name;
+    }
 }

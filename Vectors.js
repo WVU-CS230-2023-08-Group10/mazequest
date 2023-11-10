@@ -72,6 +72,16 @@ class Vector2
     {
         return new Vector2(this.x, this.y);
     }
+
+    serialize()
+    {
+        return '{ "x" : '+this.x+', "y" : '+this.y+'}';
+    }
+
+    static deserialize(obj)
+    {
+        return new Vector2(obj.x, obj.y);
+    }
 }
 
 const Direction = {

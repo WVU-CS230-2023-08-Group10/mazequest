@@ -5,10 +5,6 @@ import { Renderer } from "./Renderer.js";
 import { Player } from "./Player.js";
 export {Game};
 
-const data = await PIXI.Assets.load('./images/armor/leatherArmor.json');
-const playerSheet = new PIXI.Spritesheet(PIXI.Texture.from('./images/armor/leatherArmor.png'), data.data);
-await playerSheet.parse();
-
 /**
  * Class representing the game manager.
  * 
@@ -35,18 +31,27 @@ class Game
         this.entityList = [];
         this.stage = stage;
 
-        this.registerEntity(new Player("Player", new Transform(new Vector2(256, 256), new Vector2(2, 2)), 
-            new Renderer(playerSheet, stage)));
+        var playerSpriteInfo = { json: './images/armor/leatherArmor.json', img:'./images/armor/leatherArmor.png'};
+        var player = new Player("Player", new Transform(new Vector2(256, 256), new Vector2(2, 2)), new Renderer(playerSpriteInfo, stage), this)
+        this.registerEntity(player);
+
+        console.log(this.getEntity("Player").serialize());
     }
 
     /**
      * Adds an entity to the registry. Must be done for the entity to recieve {@link Entity.update|update()}, 
      * {@link Entity.render|render()}, and {@link Entity.broadcast|broadcast()} calls.
-     * @param {Entity} entity 
+     * @param {Entity} entity Entity to be added.
      */
     registerEntity(entity)
     {
         this.entityList.push(entity);
+    }
+
+    unregisterEntity(entity)
+    {
+        const i = this.entityList.indexOf(entity);
+        this.entityList.splice(i, 1);
     }
 
     /**

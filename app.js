@@ -27,4 +27,3 @@ document.addEventListener('keydown', function(input) {
 app.ticker.add((delta) => {
     game.updateEntities(delta);
 });
-

@@ -84,12 +84,9 @@ class Player extends Entity
 
         this.moveTarget = pos;
     }
-    display()
-    {
-        //returns character sprite at position
-    }
     broadcast(event)
     {
+        console.log(this.event);
         switch (event.type)
         {
             case "keydown":
@@ -125,7 +122,7 @@ class Player extends Entity
             default:
                 break;
         }
-        console.log(this.transform.position)
+        console.log(this.transform.position);
     }
 }
 
