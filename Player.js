@@ -1,5 +1,5 @@
 import { Direction, Vector2 } from "./Vectors.js";
-import { Item } from "./Item.js";
+import { Armor, Consumable, Item, Weapon } from "./Item.js";
 import { Transform } from "./Transform.js";
 import { Renderer } from "./Renderer.js";
 import { Entity } from "./Entity.js";
@@ -213,7 +213,9 @@ class Inventory
 
     serialize()
     {
-        var str = '{ "type":"Inventory", "weapon":'+this.weapon.serialize()+', "armor":'+this.armor.serialize()+', "consumables":[';
+        var weapon_serialized = (this.weapon == null) ? null : this.weapon.serialize();
+        var armor_serialized = (this.armor == null) ? null : this.armor.serialize();
+        var str = '{ "type":"Inventory", "weapon":'+weapon_serialized+', "armor":'+armor_serialized+', "consumables":[';
         for (var i = 0; i < this.consumables.length; i++)
         {
             var c = this.consumables[i];
@@ -229,7 +231,9 @@ class Inventory
     {
         var consumables = [];
         for (c of obj.consumables)
-            consumables.push(c.deserialize());
-        return new Inventory(obj.weapon.deserialize(), obj.armor.deserialize(), consumables);
+            consumables.push(Consumable.deserialize(c));
+        var w = (obj.weapon == null) ? null : Weapon.deserialize(obj.weapon);
+        var a = (obj.armor == null) ? null : Armor.deserialize(obj.armor);
+        return new Inventory(w, a, consumables);
     }
 }
