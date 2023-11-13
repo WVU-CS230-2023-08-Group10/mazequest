@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+  <!-- Document Head -->
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MazeQuest</title>
     <link rel="stylesheet" href="./Website.css">
-    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pixelify Sans">-->
     <script type="module" src = "./Website.js"></script>
     <script type="module" src="./app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
   </head>
-
+    <!-- Header that displays web banner -->
     <header>
       <div id="headerContainer">
         <h1>Welcome to</h1>
         <img src="./images/MazeQuest.png" alt="maze-quest-title-image">
       </div>
     </header>
+    <!-- Body that contains methods for tabs -->
     <body>
-      <audio src="250-milliseconds-of-silence.mp3" playsinline autoplay loop id="myaudio"></audio>
-      <audio src="In-the-hall-of-the-mountain-king.mp3" playsinline autoplay loop id="myaudio"></audio>
+      
       <main> 
+        <audio src="250-milliseconds-of-silence.mp3" playsinline autoplay loop id="myaudio1"></audio>
+        <audio src="In-the-hall-of-the-mountain-king.mp3" playsinline autoplay loop id="myaudio"></audio>
         <!-- Tab links -->
         <div class="tab">
           <div class="btnGroup">
@@ -48,7 +51,7 @@
           <table style ="width:100%">
             <th style="width:50%">
               <h2 >Sound Bar</h2>
-              <input type="range" min="1" max="100" value="50" id="slider">
+              <input type="range" min="1" max="100" value="100" id="slider">
               <span id="display">1</span>
               <script>
                 var audio = document.getElementById("myaudio");
@@ -57,7 +60,7 @@
                 output.innerHTML = slider.value;
                 slider.oninput = function() {
                   output.innerHTML = this.value;
-                  audio.volume=(output.innerHTML)/100;
+                  audio.volume=(this.value)/100;
                 }
                   
               </script>
@@ -71,7 +74,7 @@
                 {
                     e = e || window.event;
                     audio.muted = !audio.muted;
-                    e.preventDefault();
+                     e.preventDefault();
                 }, false);
               </script>
             </th>
