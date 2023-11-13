@@ -11,7 +11,25 @@ const s = supabase.createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener("DOMContentLoaded", async () => {
    
-   
+   // Save the initial contents of login form
+   const loginForm = document.getElementById("login");
+   const loginInitialFormContent = loginForm.innerHTML;
+
+   // Save the initial contents of signup form
+   const signupForm = document.getElementById("signup");
+   const signupInitialFormContent = signupForm.innerHTML;
+
+
+   // Check to see if user is logged in
+   const { data: { user } } = await s.auth.getUser()
+   if (user) {
+      // User is signed in. Enable access to account tab
+      document.getElementById("Account").disabled = false;
+   }
+   else {
+      // User is not signed in. Do nothing
+   }
+
    updateLeaderboard();
 
 // BEGIN LOGIN
@@ -37,11 +55,14 @@ document.addEventListener("DOMContentLoaded", async () => {
           // successful login
           alert("Success! Logged In");
 
+          // Enable access to Account tab
+          document.getElementById("Account").disabled = false;
+
           // Remove login tab content
-          removeLoginForm();
+          removeLoginForm(loginForm);
 
           // Remove sign-up tab content
-          removeSignUpForm();
+          removeSignUpForm(signupForm);
        }
     });
 // END LOGIN
@@ -54,6 +75,12 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       console.error(error)
    } else {
       alert("You have been successfully signed out")
+      // User is logged out. Disable the Account tab
+      document.getElementById("Account").disabled = true;
+
+      // Restore inital contents of sign-up and login forms
+      loginForm.innerHTML = loginInitialFormContent;
+      signupForm.innerHTML = signupInitialFormContent;
    }
 });
 
@@ -207,7 +234,11 @@ async function updateLeaderboard() {
            
 }
 
-// Function to check if user's password meets our criteria
+/**
+ * Function to check if the user's password meets the criteria to be a strong enough password.
+ * @param {*} password - users password to check
+ * @returns returns true if the user's password meets the criteria. False otherwise.
+ */
  function isStrongPassword(password) {
    const passwordBox = document.getElementById("suPassword");
    const rePasswordBox = document.getElementById("reSuPassword");
@@ -249,14 +280,16 @@ async function updateLeaderboard() {
    return false;
 }
 
-// Function to replace the contents of the sign-up tab with confirmation message
-function removeSignUpForm(){
+/**
+ * Function to replace the contents of the sign-up tab with confirmation message
+ */
+function removeSignUpForm(form){
 
    // Remove the text boxes and instructions from the form
-   document.getElementById("signup").remove();
+   form.innerHTML = ' ';
 
    // Add "Check Email" message
-   const SigDiv = document.getElementById("Sig");
+   const SigDiv = document.getElementById("signup");
    const successMessage = document.createElement("succMsg");
    successMessage.textContent = "Check your email to confirm your account.";
    SigDiv.appendChild(successMessage);
@@ -272,15 +305,22 @@ function removeSignUpForm(){
 /**
  * @brief This function removes the login form from the tab and adds a message showing that the user successfully logged in
  */
-function removeLoginForm(){
+function removeLoginForm(form){
    // Remove the text boxes and intstructions from the form
-   document.getElementById("login").remove();
+   form.innerHTML = ' ';
 
    // Add "Logged in" message
-   const LoginDiv = document.getElementById("In");
+   const LoginDiv = document.getElementById("login");
    const successMessage = document.createElement("succMsg");
    successMessage.textContent = "You're logged in! Go slay the beast!";
    LoginDiv.appendChild(successMessage);
+
+   // Add Magic Portal Image
+   const successImage = document.createElement("img");
+   successImage.src = "./images/portal.png";
+   LoginDiv.appendChild(successImage);
+   successImage.alt = "Magic Portal";
+   successImage.width = "1000";
 }
 
 //below is used for hint rotation

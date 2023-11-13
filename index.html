@@ -31,8 +31,8 @@
             <button class="tablinks" onclick="openTab(event, 'Bui')">LevelBuilder</button>
             <button class="tablinks" onclick="openTab(event, 'Gam')">GameWindow</button>
             <button class="tablinks" onclick="openTab(event, 'Sta')">Stat</button>
-            <button class="tablinks" onclick="openTab(event, 'Out')">Log Out</button>
             <button class="tablinks" onclick="openTab(event, 'Set')">Settings</button>
+            <button id = "Account" class="tablinks" onclick="openTab(event, 'Acc')" disabled>Account</button>
           </div>
         </div>
 
@@ -44,20 +44,6 @@
         </style>
 
         <div id="Set" class="tabcontent">
-          <h1 >Account</h1>
-          <table style ="width:100%">
-            <th style="width:50%">
-              <h2 >Reset Password</h2>
-              <form>
-                <input type = "password" id = "newPassword" class= "form__input" autofocus placeholder="Password">
-                <input type = "password" id = "reNewPassword" class= "form__input" autofocus placeholder="Re-Enter Password">
-              </form>
-            </th>
-            <th style="width:50%">
-              <h2>Log Out</h2>
-              <button id = "logout" class="form__button" type="submit">Here</button>
-            </th>
-          </table>
           <h1 >Music</h1>
           <table style ="width:100%">
             <th style="width:50%">
@@ -153,6 +139,8 @@
             that either will contain nothing, an item, or a wall placement
            -->
         </div>
+
+        <!--Home tab. Contains game synopsis and controls-->
         <div id="Hom" class="tabcontent">
           <h2><u>Synopsis</u></h2>
           <p>MazeQuest is an action-packed exploration game! Your journey begins as you wake up in the middle of an isolated room
@@ -175,6 +163,8 @@
           <h3>Inventory Bar</h3>
           <p>Use Keys 1-7 or your mouse's scroll wheel to access inventory slots.</p>
         </div>
+
+        <!--Login tab-->
         <div id="In" class="tabcontent">
           <form class="form" id="login">
             <h1 class = "form__title">Login</h1>
@@ -188,15 +178,13 @@
               <p id = "passwordErrorMsg" class="form__input-error-message"></p>
             </div>
             <button class="form__button" type="submit">Continue</button>
+            
+            <p>Forgot your password?</p>
+            <P>Enter your email below to reset password</P>
           </form>
         </div>
 
-        <div id="Out" class="tabcontent">
-          <!-- Under Construction -->
-          <h1 class = "form__title">Log Out</h1>
-          <button id = "logout" class="form__button" type="submit">Here</button>
-        </div>
-
+        <!--Sign-up tab-->
         <div id="Sig" class="tabcontent">
           <form class="form" id="signup">
             <form class="form" id = "signupContents">
@@ -223,6 +211,26 @@
            </form>
           </form>
         </div>
+
+        <!-- Account tab. Contains Log out button and reset password fuctionality. Disabled by default-->
+        <div id="Acc" class="tabcontent">
+          <h1 >Account</h1>
+          <table style ="width:100%">
+            <th style="width:50%">
+              <h2 >Reset Password</h2>
+              <form>
+                <input type = "password" id = "newPassword" class= "form__input" autofocus placeholder="Password">
+                <input type = "password" id = "reNewPassword" class= "form__input" autofocus placeholder="Re-Enter Password">
+              </form>
+            </th>
+            <th style="width:50%">
+              <h2>Log Out</h2>
+              <button id = "logout" class="form__button" type="submit">Here</button>
+            </th>
+          </table>
+        </div>
+
+
         <div id="Gam" class="tabcontent">
           <script src="https://pixijs.download/release/pixi.js"></script>
           <canvas id="canvas"></canvas>
