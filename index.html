@@ -136,62 +136,48 @@
           <!-- Under Construction -->
           <h1 class = "form__title">Level Builder</h1>
           <p>CAUTION Construction in Progress.</p>
-          <div class="dropdown">
-            <button class="dropbtn">Add Player</button>
-            <div class="dropdown-content">
-              
-              <button class="form__button" type="submit">Player</button>
-              <button class="form__button" type="submit">Player</button>
-              <button class="form__button" type="submit">Player</button>
+          <div class="grid-container">
+            <div class="entities grid-item">
+              <h4>Entities</h4>
+            </div>
+            <script src="https://pixijs.download/release/pixi.js"></script>
+            <div id="lbCanvasAnchor" class="canvas grid-item">
+              <canvas id="levelBuilderCanvas"></canvas>
+            </div>
+            <div class="vars grid-item">
+              <h4>Transform</h4>
+            </div>
+            <div class="prefabs grid-item">
+              <h3>Prefabs</h3>
+              <div class="dropdown">
+                <button class="dropbtn">Add Player</button>
+                <div class="dropdown-content">
+                  
+                  <button class="dropbtn" type="submit">Player</button>
+                  <button class="dropbtn" type="submit">Player</button>
+                  <button class="dropbtn" type="submit">Player</button>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Add Enemies</button>
+                <div class="dropdown-content">
+                  
+                  <button class="dropbtn" type="submit">Enemy</button>
+                  <button class="dropbtn" type="submit">Enemy</button>
+                  <button class="dropbtn" type="submit">Enemy</button>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Add Tiles</button>
+                <div class="dropdown-content">
+                  
+                  <button class="dropbtn" type="submit">Tiles</button>
+                  <button class="dropbtn" type="submit">Tiles</button>
+                  <button class="dropbtn" type="submit">Tiles</button>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="dropdown">
-            <button class="dropbtn">Add Enemies</button>
-            <div class="dropdown-content">
-              
-              <button class="form__button" type="submit">Enemy</button>
-              <button class="form__button" type="submit">Enemy</button>
-              <button class="form__button" type="submit">Enemy</button>
-            </div>
-          </div>
-          <div class="dropdown">
-            <button class="dropbtn">Add Tiles</button>
-            <div class="dropdown-content">
-              
-              <button class="form__button" type="submit">Tiles</button>
-              <button class="form__button" type="submit">Tiles</button>
-              <button class="form__button" type="submit">Tiles</button>
-            </div>
-          </div>
-          <script src="https://pixijs.download/release/pixi.js"></script>
-          <canvas id="levelBuilderCanves"></canvas>
-          <style>
-            .dropbtn {
-            padding: 16px;
-            font-size: 16px;
-            border: none;
-          }
-          /* The container <div> - needed to position the dropdown content */
-          .dropdown {
-            position: relative;
-            display: inline-block;
-          }
-          /* Dropdown Content (Hidden by Default) */
-          .dropdown-content {
-            display: none;
-            position: absolute;
-            
-          }
-          /* Links inside the dropdown */
-          .dropdown-content a {
-            
-            text-decoration: none;
-            display: block;
-          }
-          /* Show the dropdown menu on hover */
-          .dropdown:hover .dropdown-content {display: block;}
-          </style>
-          
         </div>
 
         <!--Home tab. Contains game synopsis and controls-->

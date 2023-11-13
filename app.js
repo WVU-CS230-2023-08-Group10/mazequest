@@ -27,3 +27,24 @@ document.addEventListener('keydown', function(input) {
 app.ticker.add((delta) => {
     game.updateEntities(delta);
 });
+
+/**
+ *  Level Builder Stuff
+ */
+
+const lbcanvas = document.getElementById("levelBuilderCanvas");
+const lbapp = new PIXI.Application(
+    { 
+        view: lbcanvas, 
+        width: canvasSize, 
+        height: canvasSize, 
+        backgroundColor: 0x000000,
+    }
+)
+document.getElementById("lbCanvasAnchor").appendChild(lbapp.view);
+
+const levelBuilder = new Game(lbapp.stage);
+
+lbapp.ticker.add((delta) => {
+    levelBuilder.renderEntities(delta);
+});
