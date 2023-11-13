@@ -78,9 +78,16 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       // User is logged out. Disable the Account tab
       document.getElementById("Account").disabled = true;
 
+      // Remove focus from the currently focused element
+      document.activeElement.blur();
+
       // Restore inital contents of sign-up and login forms
       loginForm.innerHTML = loginInitialFormContent;
       signupForm.innerHTML = signupInitialFormContent;
+
+      // Move the user off of the Account tab
+      // Explicitly call openTab with the 'In' tab as an argument
+      openTab({ currentTarget: document.getElementById('In') }, 'In');
    }
 });
 
@@ -282,6 +289,7 @@ async function updateLeaderboard() {
 
 /**
  * Function to replace the contents of the sign-up tab with confirmation message
+ * @param {*} form - signup form to remove contents of
  */
 function removeSignUpForm(form){
 
@@ -303,7 +311,8 @@ function removeSignUpForm(form){
 }
 
 /**
- * @brief This function removes the login form from the tab and adds a message showing that the user successfully logged in
+ * This function removes the login form from the tab and adds a message showing that the user successfully logged in
+ * @param {*} form - login form to remove contents of
  */
 function removeLoginForm(form){
    // Remove the text boxes and intstructions from the form
