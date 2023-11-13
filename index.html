@@ -135,12 +135,63 @@
         <div id="Bui" class="tabcontent">
           <!-- Under Construction -->
           <h1 class = "form__title">Level Builder</h1>
-          <p>We will have an upload file button that will take users inputed rooms to be added into maze layout.</p>
-          <!-- 
-            Zip file upload where the contents of file have background image,
-            (js?) file that contains 2d array of tile objects
-            that either will contain nothing, an item, or a wall placement
-           -->
+          <p>CAUTION Construction in Progress.</p>
+          <div class="dropdown">
+            <button class="dropbtn">Add Player</button>
+            <div class="dropdown-content">
+              
+              <button class="form__button" type="submit">Player</button>
+              <button class="form__button" type="submit">Player</button>
+              <button class="form__button" type="submit">Player</button>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="dropbtn">Add Enemies</button>
+            <div class="dropdown-content">
+              
+              <button class="form__button" type="submit">Enemy</button>
+              <button class="form__button" type="submit">Enemy</button>
+              <button class="form__button" type="submit">Enemy</button>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="dropbtn">Add Tiles</button>
+            <div class="dropdown-content">
+              
+              <button class="form__button" type="submit">Tiles</button>
+              <button class="form__button" type="submit">Tiles</button>
+              <button class="form__button" type="submit">Tiles</button>
+            </div>
+          </div>
+          <script src="https://pixijs.download/release/pixi.js"></script>
+          <canvas id="levelBuilderCanves"></canvas>
+          <style>
+            .dropbtn {
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+          }
+          /* The container <div> - needed to position the dropdown content */
+          .dropdown {
+            position: relative;
+            display: inline-block;
+          }
+          /* Dropdown Content (Hidden by Default) */
+          .dropdown-content {
+            display: none;
+            position: absolute;
+            
+          }
+          /* Links inside the dropdown */
+          .dropdown-content a {
+            
+            text-decoration: none;
+            display: block;
+          }
+          /* Show the dropdown menu on hover */
+          .dropdown:hover .dropdown-content {display: block;}
+          </style>
+          
         </div>
 
         <!--Home tab. Contains game synopsis and controls-->
