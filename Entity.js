@@ -22,6 +22,15 @@ class Entity
     renderer;
     game;
 
+    /**
+     * Construct a new abstract Entity. Considering as a base, Entity only contains renderer and transform information,
+     * you should probably only do this to render images that have no implicit behaviour.
+     * 
+     * @param {String} name Name of the entity.
+     * @param {Transform} transform Entity position, scale, and rotation.
+     * @param {Renderer} renderer Entity renderer
+     * @param {Game} game The Game this is attached to (if any)
+     */
     constructor(name = "", transform = new Transform(), renderer = new Renderer(), game = undefined) 
     {
         if (!(transform instanceof Transform))
@@ -37,6 +46,11 @@ class Entity
 
     update(delta) {}
 
+    /**
+     * Updates the renderer's transform member to match this entities transform member,
+     * then renders the renderer.
+     * @param {number} delta The time passed since the last render call. 
+     */
     render(delta)
     {
         this.renderer.transform = this.transform;
@@ -45,15 +59,24 @@ class Entity
 
     broadcast(event) {}
 
+    /**
+     * Unregisters this entity from its respective game's registry, disposes its renderer,
+     * and deletes itself.
+     */
     destroy()
     {
         if (this.game == undefined)
             return;
 
         this.game.unregisterEntity(this);
+        this.renderer.dispose();
         delete this;
     }
 
+    /**
+     * Simple shorthand for `this.constructor.name`
+     * @returns The Type of this Entity.
+     */
     getType()
     {
         return this.constructor.name;

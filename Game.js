@@ -15,11 +15,14 @@ export {Game};
  *  - {@link broadcastToEntities} : Broadcasts an event to all registered entities.
  *  - {@link getEntity} : Gets an entity by name.
  *  - {@link getEntities} : Gets a list of entities by name.
+ *  - {@link serializeGameState} : Makes a JSON string to represent the current game state.
+ *  - {@link deserializeGameState} : Loads a previously saved game state.
  */
 class Game
 {
     entityList;
     stage;
+    isInEditMode;
 
     /**
      * Creates a new game manager instance that handles the top level game functions.
@@ -27,10 +30,12 @@ class Game
      * which allows the game to add new graphics to the canvas for rendering.
      * @param {Container} stage The application stage for the game to run on
      */
-    constructor(stage) 
+    constructor(stage, editMode = false) 
     {
         this.entityList = [];
         this.stage = stage;
+
+        this.isInEditMode = editMode;
 
         var playerSpriteInfo = { json: './images/armor/leatherArmor.json', img:'./images/armor/leatherArmor.png'};
         var player = new Player("Player", new Transform(new Vector2(256, 256), new Vector2(2, 2)), new Renderer(playerSpriteInfo, stage), this)
