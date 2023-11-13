@@ -3,6 +3,7 @@ import { Transform } from "./Transform.js";
 import { Vector2 } from "./Vectors.js";
 import { Renderer } from "./Renderer.js";
 import { Player } from "./Player.js";
+import { Weapon, Armor, Consumable } from "./Item.js";
 export {Game};
 
 /**
@@ -48,6 +49,12 @@ class Game
         this.entityList.push(entity);
     }
 
+    /**
+     * Removes an entity from the registry. This only prevents {@link Entity.update|update()}, 
+     * {@link Entity.render|render()}, and {@link Entity.broadcast|broadcast()} calls from reaching the entity, but will
+     * not delete the entity or remove it from the canvas.
+     * @param {Entity} entity The entity to unregister
+     */
     unregisterEntity(entity)
     {
         const i = this.entityList.indexOf(entity);
@@ -62,6 +69,18 @@ class Game
     {
         for (const entity of this.entityList) {
             entity.update(delta);
+            entity.render(delta);
+        }
+    }
+
+    /**
+     * Similar to {@link updateEntities}, except it only calls {@link Entity.render|render()} on all entities in the 
+     * registry.
+     * @param {Number} delta Should theoretically be the time elapsed since the last render call
+     */
+    renderEntities(delta)
+    {
+        for (const entity of this.entityList) {
             entity.render(delta);
         }
     }
@@ -109,6 +128,10 @@ class Game
         return output
     }
 
+    /**
+     * Serializes all entities in the registry, returning them as a stringified JSON array.
+     * @returns {String} A JSON array as a string
+     */
     serializeGameState()
     {
         var str = "[";
@@ -123,8 +146,39 @@ class Game
         return str;
     }
 
+    /**
+     * Constructs a new entity registry from a provided game state string. The game state string should
+     * probably be constructed via {@link serializeGameState}. If constructed otherwise, ensure that the
+     * string represents a JSON array of deserializable {@link Entity} objects.
+     * 
+     * Note: The registry is cleared to load the game state. Clean up is not handled in this step, but it
+     * insures the registry is empty. You absolutely should properly dispose of all entities before calling this method.
+     * @param {String} str A serialized Game state string.
+     */
     deserializeGameState(str)
     {
-        
+        this.entityList = [];
+        var json = JSON.parse(str);
+        for (var o of json)
+        {
+            var e;
+            switch (o.type)
+            {
+                case "Player":
+                    e = Player.deserialize(o);
+                    break;
+                case "Weapon":
+                    e = Weapon.deserialize(o);
+                    break;
+                case "Armor":
+                    e = Armor.deserialize(o);
+                    break;
+                case "Consumable":
+                    e = Consumable.deserialize(o);
+                    break;
+            }
+            e.game = this;
+            this.registerEntity(e);
+        }
     }
 }

@@ -1,6 +1,9 @@
 import { Transform } from "./Transform.js";
 export {Renderer};
 
+/**
+ * 
+ */
 class Renderer
 {
     transform;
