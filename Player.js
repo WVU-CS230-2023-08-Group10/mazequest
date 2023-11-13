@@ -124,6 +124,19 @@ class Player extends Entity
         }
         console.log(this.transform.position);
     }
+
+    serialize()
+    {
+        return '{ "type":"Player", "name": "'+this.name+'", "transform": '+this.transform.serialize()+', "renderer": '
+            +this.renderer.serialize() + ', "inventory":'+this.inventory.serialize()+'}';
+    }
+
+    static deserialize(obj)
+    {
+        var p = new Player(obj.name, obj.transform.deserialize(), obj.renderer.deserialize())
+        p.inventory = obj.inventory.deserialize();
+        return p;
+    }
 }
 
 
@@ -133,7 +146,7 @@ class Inventory
     armor;
     consumables;
 
-    constructor()
+    constructor(weapon = null, armor = null, consumables = [])
     {
         this.weapon = null;
         this.armor = null;
@@ -196,5 +209,27 @@ class Inventory
             }
             return false;
         }
+    }
+
+    serialize()
+    {
+        var str = '{ "type":"Inventory", "weapon":'+this.weapon.serialize()+', "armor":'+this.armor.serialize()+', "consumables":[';
+        for (var i = 0; i < this.consumables.length; i++)
+        {
+            var c = this.consumables[i];
+            str += c.serialize();
+            if (i != this.consumables.length-1)
+                str += ', ';
+        }
+        str += ']}';
+        return str;
+    }
+
+    static deserialize(obj)
+    {
+        var consumables = [];
+        for (c of obj.consumables)
+            consumables.push(c.deserialize());
+        return new Inventory(obj.weapon.deserialize(), obj.armor.deserialize(), consumables);
     }
 }

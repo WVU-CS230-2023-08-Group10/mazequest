@@ -35,7 +35,8 @@ class Item extends Entity
             return true;
     }
 }
-class Weapon extends Item{
+class Weapon extends Item
+{
     constructor(name, lowDamage, highDamage){
         super(name);
         this.lowDamage = lowDamage;
@@ -44,11 +45,31 @@ class Weapon extends Item{
     damage(){
         return Math.random()*(highDamage-lowDamage) + lowDamage;
     }
+
+    serialize()
+    {
+        return '{ "type":"Weapon", "name" : "'+this.name+'", "damage": { "low":'+this.lowDamage+', "high":'+this.highDamage+'}}';
+    }
+
+    static deserialize(obj)
+    {
+        return new Weapon(obj.name, obj.damage.low, obj.damage.high);
+    }
 }
 class Armor extends Item{
     constructor(name, protection){
         super(name);
         this.protection=protection;
+    }
+
+    serialize()
+    {
+        return '{ "type":"Armor", "name" : "'+this.name+'", "protection":'+this.protection+'}';
+    }
+
+    static deserialize(obj)
+    {
+        return new Armor(obj.name, obj.protection);
     }
 }
 
@@ -56,10 +77,10 @@ class Consumable extends Item
 {
     stackCount;
 
-    constructor(name)
+    constructor(name, count = 1)
     {
         super(name);
-        stackCount = 1;
+        this.stackCount = count;
     }
 
     /**
@@ -70,5 +91,15 @@ class Consumable extends Item
     stack(consumable)
     {
         this.stackCount += consumable.stackCount;
+    }
+
+    serialize()
+    {
+        return '{ "type":"Consumable", "name" : "'+this.name+'", "count":'+this.stackCount+'}';
+    }
+
+    static deserialize(obj)
+    {
+        return new Consumable(obj.name, obj.count);
     }
 }

@@ -43,7 +43,7 @@ class Renderer
     {
         this.spriteSheetInfo = spriteSheetInfo;
         var data = await PIXI.Assets.load(spriteSheetInfo.json);
-        this.spriteSheet = new PIXI.Spritesheet(PIXI.Texture.from('./images/armor/leatherArmor.png'), data.data);
+        this.spriteSheet = new PIXI.Spritesheet(PIXI.Texture.from(spriteSheetInfo.img), data.data);
         await this.spriteSheet.parse();
     }
     setAnimation(animationId, speed=1, loop=false)
@@ -67,7 +67,8 @@ class Renderer
 
     serialize()
     {
-        return '{ "spriteSheetInfo": ' + this.spriteSheetInfo + ', "transform": ' + this.transform.serialize() + '}';
+        return '{ "type":"Renderer", "spriteSheetInfo": { "json":"' + this.spriteSheetInfo.json +
+         '", "img":"'+this.spriteSheetInfo.img+'"}, "transform": ' + this.transform.serialize() + '}';
     }
 
     static deserialize(obj, stage)

@@ -108,4 +108,23 @@ class Game
         }
         return output
     }
+
+    serializeGameState()
+    {
+        var str = "[";
+        for (var i = 0; i < this.entityList.length; i++)
+        {
+            const e = this.entityList[i];
+            str += e.serialize();
+            if (i == this.entityList.length-1)
+                str += ", ";
+        }
+        str += "]";
+        return str;
+    }
+
+    deserializeGameState(str)
+    {
+        
+    }
 }

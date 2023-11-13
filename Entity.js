@@ -45,10 +45,6 @@ class Entity
 
     broadcast(event) {}
 
-    serialize()
-    {
-    }
-
     destroy()
     {
         if (this.game == undefined)
