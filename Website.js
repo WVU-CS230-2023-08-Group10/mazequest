@@ -26,6 +26,11 @@ document.addEventListener("DOMContentLoaded", async () => {
    if (user) {
       // User is signed in. Enable access to account tab
       document.getElementById("Account").disabled = false;
+
+      // Remove sign-up and login forms
+      removeLoginForm(loginForm);
+      removeSignUpForm(signupForm);
+
    }
    else {
       // User is not signed in. Do nothing
@@ -113,7 +118,7 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       return}
 
      // Checks password
-     if (isStrongPassword(password)){
+     if (isStrongPassword(password, document.getElementById("suPassword"), document.getElementById("reSuPassword"))){
    
       
       const { data, error } = await s.auth.signUp({
@@ -139,6 +144,24 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
   }
    });``
    // END SIGNUP
+
+   // BEGIN RESET PASSWORD
+   document.getElementById("resetPassword").addEventListener("click", async (e) =>{
+
+      e.preventDefault();
+
+      // Get the user's entered password
+      const new_password = document.getElementById("newPassword").value;
+
+      // Check to see if new password is strong enough
+      if (isStrongPassword(new_password, document.getElementById("newPassword"), document.getElementById("reNewPassword"))){
+
+         if(await s.auth.updateUser({ password: new_password })){
+            alert("Password was changed!");
+         }
+      }
+   });
+
  });
 // END SUPABASE
 
@@ -247,10 +270,7 @@ async function updateLeaderboard() {
  * @param {*} password - users password to check
  * @returns returns true if the user's password meets the criteria. False otherwise.
  */
- function isStrongPassword(password) {
-   const passwordBox = document.getElementById("suPassword");
-   const rePasswordBox = document.getElementById("reSuPassword");
-   const passwordErrMsg = document.getElementById("passwordErrorMsg");
+ function isStrongPassword(password, passwordBox, rePasswordBox) {
 
    // Check if the two password boxes contain the same text
    if (passwordBox.value == rePasswordBox.value){
@@ -258,7 +278,6 @@ async function updateLeaderboard() {
       // Passwords match, check other requirements
       // Check password length
       if (password.length < 8) {
-         passwordErrMsg.textContent = "Password is not long enough";
          passwordBox.value = "";
          rePasswordBox.value = "";
          passwordBox.style.backgroundColor = "#E3963E";
@@ -266,7 +285,6 @@ async function updateLeaderboard() {
        }
       // Check password to see if contains "password"
       if (password.includes("password")) {
-         passwordErrMsg.innerHTML = "Password cannot contain the word 'password'";
          passwordBox.value = "";
          rePasswordBox.value = "";
          passwordBox.style.backgroundColor = "#E3963E";
