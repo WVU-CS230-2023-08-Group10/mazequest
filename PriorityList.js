@@ -1,6 +1,5 @@
 export {PriorityList};
 
-// actionDict = {"Attack":0, "AttackBase":0, "AttackWeight":0, "Move":0, "moveWeight":0, "Item":0, "Wait":0};
 class PriorityList 
 {
     attack;
