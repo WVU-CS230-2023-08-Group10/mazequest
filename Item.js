@@ -51,7 +51,7 @@ class Weapon extends Item
         return '{ "type":"Weapon", "name" : "'+this.name+'", "damage": { "low":'+this.lowDamage+', "high":'+this.highDamage+'}}';
     }
 
-    static deserialize(obj)
+    static deserialize(obj, game)
     {
         return new Weapon(obj.name, obj.damage.low, obj.damage.high);
     }
@@ -67,7 +67,7 @@ class Armor extends Item{
         return '{ "type":"Armor", "name" : "'+this.name+'", "protection":'+this.protection+'}';
     }
 
-    static deserialize(obj)
+    static deserialize(obj, game)
     {
         return new Armor(obj.name, obj.protection);
     }
@@ -98,7 +98,7 @@ class Consumable extends Item
         return '{ "type":"Consumable", "name" : "'+this.name+'", "count":'+this.stackCount+'}';
     }
 
-    static deserialize(obj)
+    static deserialize(obj, game)
     {
         return new Consumable(obj.name, obj.count);
     }

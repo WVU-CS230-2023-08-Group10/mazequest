@@ -61,7 +61,7 @@ class Player extends Entity
     }
     update(delta)
     {
-        var difference = Vector2.subtract(this.moveTarget, this.transform.position);
+        const difference = Vector2.subtract(this.moveTarget, this.transform.position);
         if (difference.getMagnitude() < 0.1)
         {
             this.transform.position = this.moveTarget.copy();
@@ -75,7 +75,7 @@ class Player extends Entity
     }
     move(direction)
     {
-        var pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.cellSize));
+        const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.cellSize));
 
         if (pos.x < 0 || pos.x >= this.roomSize || pos.y < 0 || pos.y >= this.roomSize)
         {
@@ -131,10 +131,10 @@ class Player extends Entity
             +this.renderer.serialize() + ', "inventory":'+this.inventory.serialize()+'}';
     }
 
-    static deserialize(obj)
+    static deserialize(obj, game)
     {
-        var p = new Player(obj.name, obj.transform.deserialize(), obj.renderer.deserialize())
-        p.inventory = obj.inventory.deserialize();
+        const p = new Player(obj.name, Transform.deserialize(obj.transform), Renderer.deserialize(obj.renderer, game.stage))
+        p.inventory = Inventory.deserialize(obj.inventory);
         return p;
     }
 }
@@ -148,9 +148,9 @@ class Inventory
 
     constructor(weapon = null, armor = null, consumables = [])
     {
-        this.weapon = null;
-        this.armor = null;
-        this.consumables = [];
+        this.weapon = weapon;
+        this.armor = armor;
+        this.consumables = consumables;
     }
 
     /**
@@ -163,19 +163,19 @@ class Inventory
     {
         if (item.isWeapon())
         {
-            var currentWeapon = this.weapon;
+            const currentWeapon = this.weapon;
             this.weapon = item;
             return currentWeapon;
         }
         else if (item.isArmor())
         {
-            var currentArmor = this.armor;
+            const currentArmor = this.armor;
             this.armor = item;
             return currentArmor;
         }
         else if (item.isConsumable())
         {
-            var stackableItem = this.consumables.find((e) => e.equals(item));
+            const stackableItem = this.consumables.find((e) => e.equals(item));
             if (stackableItem == undefined)
             {
                 this.consumables.push(item);
@@ -201,7 +201,7 @@ class Inventory
         }
         else
         {
-            var index = this.consumables.findIndex((e) => e.equals(item));
+            const index = this.consumables.findIndex((e) => e.equals(item));
             if (index != -1)
             {
                 this.consumables.splice(index, 1);
@@ -213,12 +213,12 @@ class Inventory
 
     serialize()
     {
-        var weapon_serialized = (this.weapon == null) ? null : this.weapon.serialize();
-        var armor_serialized = (this.armor == null) ? null : this.armor.serialize();
-        var str = '{ "type":"Inventory", "weapon":'+weapon_serialized+', "armor":'+armor_serialized+', "consumables":[';
-        for (var i = 0; i < this.consumables.length; i++)
+        const weapon_serialized = (this.weapon == null) ? null : this.weapon.serialize();
+        const armor_serialized = (this.armor == null) ? null : this.armor.serialize();
+        const str = '{ "type":"Inventory", "weapon":'+weapon_serialized+', "armor":'+armor_serialized+', "consumables":[';
+        for (let i = 0; i < this.consumables.length; i++)
         {
-            var c = this.consumables[i];
+            const c = this.consumables[i];
             str += c.serialize();
             if (i != this.consumables.length-1)
                 str += ', ';
@@ -229,11 +229,11 @@ class Inventory
 
     static deserialize(obj)
     {
-        var consumables = [];
+        const consumables = [];
         for (c of obj.consumables)
             consumables.push(Consumable.deserialize(c));
-        var w = (obj.weapon == null) ? null : Weapon.deserialize(obj.weapon);
-        var a = (obj.armor == null) ? null : Armor.deserialize(obj.armor);
+        const w = (obj.weapon == null) ? null : Weapon.deserialize(obj.weapon);
+        const a = (obj.armor == null) ? null : Armor.deserialize(obj.armor);
         return new Inventory(w, a, consumables);
     }
 }
