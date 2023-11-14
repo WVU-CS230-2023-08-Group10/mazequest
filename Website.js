@@ -21,8 +21,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
    // Check to see if user is logged in
-   const { data: { user } } = await s.auth.getUser()
-   if (user) {
+   
+   const { data, error } = await s.auth.getSession()
+   if (data) {
       // User is signed in. Enable access to account tab
       document.getElementById("Account").disabled = false;
    }
