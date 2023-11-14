@@ -1,9 +1,10 @@
 import { Direction, Vector2 } from "./Vectors.js";
 import { Armor, Consumable, Item, Weapon } from "./Item.js";
-import { Inventory } from "./Player.js";
+import { Inventory } from "./Inventory.js";
 import { Transform } from "./Transform.js";
 import { Renderer } from "./Renderer.js";
 import { Entity } from "./Entity.js";
+import { PriorityList } from "./PriorityList.js";
 
 export {Enemy, NPC};
 
@@ -22,8 +23,10 @@ class Mob extends Entity
     speed = 2;
     moveTarget = new Vector2(0.0, 0.0);
     animationSpeed = 1/3;
-    
-    constructor(name, health, hostile, transform = new Transform(), renderer = new Renderer(), game = undefined){
+
+    actionDict = new PriorityList();
+
+    constructor(name, health, hostile, AIDict, transform = new Transform(), renderer = new Renderer(), game = undefined) {
         
         super(name, transform, renderer, game);
         
@@ -31,45 +34,56 @@ class Mob extends Entity
         this.mobHealth = health;
         this.mobInventory = new Inventory();
         this.mobHostile = hostile;
+        this.actionDict = AIDict;
     }
 
-    get getName(){
+    get getName() 
+    {
         return this.mobName;
     }
 
-    set setName(name){
+    set setName(name) 
+    {
         this.mobName = name;
     }
 
-    get getHealth() {
+    get getHealth() 
+    {
         return this.mobHealth;
     }
 
-    set setHealth(health) {
+    set setHealth(health) 
+    {
         this.mobHealth = health;
     }
 
-    get getInventory() {
+    get getInventory() 
+    {
         return this.mobInventory;
     }
 
-    set setInventory(inventory) {
+    set setInventory(inventory) 
+    {
         this.mobInventory = inventory;
     }
 
-    get getHostile() {
+    get getHostile() 
+    {
         return this.mobHostile;
     }
 
-    set setHostile(hostile) {
+    set setHostile(hostile) 
+    {
         this.mobHostile = hostile;
     }
 
-    isEnemy(Mob){
+    isEnemy(Mob) 
+    {
         return Mob instanceof Enemy;
     }
 
-    isNPC(Mob){
+    isNPC(Mob) 
+    {
         return Mob instanceof NPC;
     }
 
@@ -86,27 +100,32 @@ class Mob extends Entity
     {
         this.inventory.store(item);
     }
+
     drop(item)
     {
         this.inventory.drop(item);
     }
+
     damage(damageDone)
     {
-        health-damageDone;
-        if(health<1)
+        health -= damageDone;
+        if(health < 1)
         {
             //enemy dies
         }
     }
+
     initializeCombat() 
     {
         //call combat
     }
+
     position(room,tile)
     {
         this.room = room;
         this.tile = tile;
     }
+
     update(delta)
     {
         const difference = Vector2.subtract(this.moveTarget, this.transform.position);
@@ -121,6 +140,7 @@ class Mob extends Entity
             this.transform.translate(difference);
         }
     }
+
     move(direction)
     {
         const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.cellSize));
@@ -132,16 +152,19 @@ class Mob extends Entity
 
         this.moveTarget = pos;
     }
+
     broadcast(event)
     {
         console.log(this.event);
         switch (event.type)
         {
             case "keydown":
+                // update action dictionary
                 mobAction();
                 break;
         }
     }
+    
     mobAction(action)
     {
         switch (action) {
@@ -150,6 +173,7 @@ class Mob extends Entity
                 // if yes, combat
                 // if not, call method again with next index of action dictionary
                 initializeCombat();
+                // call weight reset method
                 break;
             case 'Move':
                 // find any valid, empty tile
@@ -158,12 +182,15 @@ class Mob extends Entity
                 // if not, call method again with next index of action dictionary
                 this.renderer.setAnimation('animation', this.animationSpeed);
                 this.move(Direction.valid);
+                // call weight reset method
                 break;
             case 'Item':
                 // use consumable
+                // call weight reset method
                 break;
             case 'Wait':
                 // do nothing
+                // call weight reset method
                 break;
         }
     }
