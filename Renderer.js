@@ -23,6 +23,11 @@ class Renderer
      */
     constructor(spriteSheetInfo, stage, transform = new Transform())
     {
+        this.initialize(spriteSheetInfo, stage, transform);
+    }
+
+    initialize(spriteSheetInfo, stage, transform = new Transform())
+    {
         if (stage == undefined)
             throw new Error('Renderer stage undefined! Was the renderer initialized correctly?');
         

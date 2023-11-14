@@ -35,11 +35,11 @@ class Game
         this.entityList = [];
         this.stage = stage;
 
-        var playerSpriteInfo = { json: './images/armor/leatherArmor.json', img:'./images/armor/leatherArmor.png'};
-        var player = new Player("Player", new Transform(new Vector2(256, 256), new Vector2(2, 2)), new Renderer(playerSpriteInfo, stage), this)
-        this.registerEntity(player);
+        // var playerSpriteInfo = { json: './images/armor/leatherArmor.json', img:'./images/armor/leatherArmor.png'};
+        // var player = new Player("Player", new Transform(new Vector2(256, 256), new Vector2(2, 2)), new Renderer(playerSpriteInfo, stage), this)
+        // this.registerEntity(player);
 
-        console.log(this.getEntity("Player").serialize());
+        // console.log(this.getEntity("Player").serialize());
     }
 
     /**
@@ -164,24 +164,34 @@ class Game
         var json = JSON.parse(str);
         for (var o of json)
         {
-            var e;
-            switch (o.type)
-            {
-                case "Player":
-                    e = Player.deserialize(o);
-                    break;
-                case "Weapon":
-                    e = Weapon.deserialize(o);
-                    break;
-                case "Armor":
-                    e = Armor.deserialize(o);
-                    break;
-                case "Consumable":
-                    e = Consumable.deserialize(o);
-                    break;
-            }
-            e.game = this;
-            this.registerEntity(e);
+            this.deserializeObject(o);
         }
+    }
+
+    /**
+     * Deserializes a JSON object, creating the respective entity. The JSON Object must be a representation of
+     * an object extending {@link Entity}.
+     * 
+     * @param {Object} obj Object to deserialize.
+     */
+    deserializeEntity(obj)
+    {
+        let e;
+        switch (obj.type)
+        {
+            case "Player":
+                e = Player.deserialize(obj, this);
+                break;
+            case "Weapon":
+                e = Weapon.deserialize(obj, this);
+                break;
+            case "Armor":
+                e = Armor.deserialize(obj, this);
+                break;
+            case "Consumable":
+                e = Consumable.deserialize(obj, this);
+                break;
+        }
+        this.registerEntity(e);
     }
 }
