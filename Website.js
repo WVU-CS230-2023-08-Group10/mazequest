@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
    // Check to see if user is logged in
    
-   const { data, error } = await s.auth.getSession()
-   if (data) {
+   const { data: { user } } = await s.auth.getUser()
+   if (user) {
       // User is signed in. Enable access to account tab
       document.getElementById("Account").disabled = false;
    }
@@ -131,7 +131,7 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
          // Create a success message 
          alert("Success! Account is being created.");
          // Call sign up form removal function
-         removeSignUpForm();
+         removeSignUpForm(signupForm);
       }
    } else {
       // Password not entered correctly, retry
