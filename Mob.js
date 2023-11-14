@@ -19,8 +19,9 @@ class Mob extends Entity
     mobInventory;
     mobHostile;
 
-    mobSpawn;
-    
+    speed = 2;
+    moveTarget = new Vector2(0.0, 0.0);
+    animationSpeed = 1/3;
     
     constructor(name, health, hostile, transform = new Transform(), renderer = new Renderer(), game = undefined){
         
@@ -95,6 +96,75 @@ class Mob extends Entity
         if(health<1)
         {
             //enemy dies
+        }
+    }
+    initializeCombat() 
+    {
+        //call combat
+    }
+    position(room,tile)
+    {
+        this.room = room;
+        this.tile = tile;
+    }
+    update(delta)
+    {
+        const difference = Vector2.subtract(this.moveTarget, this.transform.position);
+        if (difference.getMagnitude() < 0.1)
+        {
+            this.transform.position = this.moveTarget.copy();
+        }
+        else
+        {
+            difference.normalize();
+            difference.scalarMultiply(this.speed * delta);
+            this.transform.translate(difference);
+        }
+    }
+    move(direction)
+    {
+        const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.cellSize));
+
+        if (pos.x < 0 || pos.x >= this.roomSize || pos.y < 0 || pos.y >= this.roomSize)
+        {
+            return;
+        }
+
+        this.moveTarget = pos;
+    }
+    broadcast(event)
+    {
+        console.log(this.event);
+        switch (event.type)
+        {
+            case "keydown":
+                mobAction();
+                break;
+        }
+    }
+    mobAction(action)
+    {
+        switch (action) {
+            case 'Attack':
+                // check if attack is valid
+                // if yes, combat
+                // if not, call method again with next index of action dictionary
+                initializeCombat();
+                break;
+            case 'Move':
+                // find any valid, empty tile
+                // empty tile is required to not call combat
+                // if yes, move to that tile
+                // if not, call method again with next index of action dictionary
+                this.renderer.setAnimation('animation', this.animationSpeed);
+                this.move(Direction.valid);
+                break;
+            case 'Item':
+                // use consumable
+                break;
+            case 'Wait':
+                // do nothing
+                break;
         }
     }
 }
