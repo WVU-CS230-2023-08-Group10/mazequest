@@ -160,6 +160,10 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
             alert("Password was changed!");
          }
       }
+      else{
+         // Password not entered correctly, retry
+         alert("Please enter a valid password.");
+      }
    });
 
  });
@@ -278,6 +282,7 @@ async function updateLeaderboard() {
       // Passwords match, check other requirements
       // Check password length
       if (password.length < 8) {
+         // Not long enough
          passwordBox.value = "";
          rePasswordBox.value = "";
          passwordBox.style.backgroundColor = "#E3963E";
@@ -285,6 +290,7 @@ async function updateLeaderboard() {
        }
       // Check password to see if contains "password"
       if (password.includes("password")) {
+         // Can't contain 'password'
          passwordBox.value = "";
          rePasswordBox.value = "";
          passwordBox.style.backgroundColor = "#E3963E";
