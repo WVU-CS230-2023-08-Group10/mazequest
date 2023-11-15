@@ -19,6 +19,10 @@ document.addEventListener("DOMContentLoaded", async () => {
    const signupForm = document.getElementById("signup");
    const signupInitialFormContent = signupForm.innerHTML;
 
+   // Constants to pass to form removal methods to specify what the user should do
+   const CHECK_EMAIL = "Check your email to confirm your account.";
+   const SIGNED_IN = "Your signed in! Go slay the beast!";
+
 
    // Check to see if user is logged in
    
@@ -28,12 +32,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("Account").disabled = false;
 
       // Remove sign-up and login forms
-      removeLoginForm(loginForm);
-      removeSignUpForm(signupForm);
+      removeLoginForm(loginForm, SIGNED_IN);
+      removeSignUpForm(signupForm, SIGNED_IN);
 
    }
    else {
       // User is not signed in. Do nothing
+      // Remove focus from the currently focused element
+      document.activeElement.blur();
+      // Move the user to the sign-in tab
+      // Explicitly call openTab with the 'In' tab as an argument
+      openTab({ currentTarget: document.getElementById('In') }, 'In');
    }
 
    updateLeaderboard();
@@ -65,10 +74,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           document.getElementById("Account").disabled = false;
 
           // Remove login tab content
-          removeLoginForm(loginForm);
+          removeLoginForm(loginForm, SIGNED_IN);
 
           // Remove sign-up tab content
-          removeSignUpForm(signupForm);
+          removeSignUpForm(signupForm, SIGNED_IN);
        }
     });
 // END LOGIN
@@ -136,7 +145,7 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
          // Create a success message 
          alert("Success! Account is being created.");
          // Call sign up form removal function
-         removeSignUpForm(signupForm);
+         removeSignUpForm(signupForm, CHECK_EMAIL);
       }
    } else {
       // Password not entered correctly, retry
@@ -316,15 +325,15 @@ async function updateLeaderboard() {
  * Function to replace the contents of the sign-up tab with confirmation message
  * @param {*} form - signup form to remove contents of
  */
-function removeSignUpForm(form){
+function removeSignUpForm(form, message){
 
    // Remove the text boxes and instructions from the form
    form.innerHTML = ' ';
 
    // Add "Check Email" message
    const SigDiv = document.getElementById("signup");
-   const successMessage = document.createElement("succMsg");
-   successMessage.textContent = "Check your email to confirm your account.";
+   const successMessage = document.createElement("h2");
+   successMessage.textContent = message;
    SigDiv.appendChild(successMessage);
 
    // Add Quest Birb
@@ -332,6 +341,8 @@ function removeSignUpForm(form){
    successImage.src = "./images/Quest_Birb_3.png";
    successImage.alt = "Birb";
    successImage.width = "500";
+   successImage.style.display = "block";
+   successImage.style.margin = "auto";
    SigDiv.appendChild(successImage);
 }
 
@@ -339,14 +350,14 @@ function removeSignUpForm(form){
  * This function removes the login form from the tab and adds a message showing that the user successfully logged in
  * @param {*} form - login form to remove contents of
  */
-function removeLoginForm(form){
+function removeLoginForm(form, message){
    // Remove the text boxes and intstructions from the form
    form.innerHTML = ' ';
 
    // Add "Logged in" message
    const LoginDiv = document.getElementById("login");
-   const successMessage = document.createElement("succMsg");
-   successMessage.textContent = "You're logged in! Go slay the beast!";
+   const successMessage = document.createElement("h2");
+   successMessage.textContent = message;
    LoginDiv.appendChild(successMessage);
 
    // Add Magic Portal Image
@@ -354,7 +365,9 @@ function removeLoginForm(form){
    successImage.src = "./images/portal.png";
    LoginDiv.appendChild(successImage);
    successImage.alt = "Magic Portal";
-   successImage.width = "1000";
+   successImage.width = "500";
+   successImage.style.display = "block";
+   successImage.style.margin = "auto";
 }
 
 //below is used for hint rotation
