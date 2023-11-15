@@ -195,7 +195,7 @@ header > h1 {
 /* Style the tab */
 .tab {
    overflow: hidden;
-   border: 1px solid rgb(30, 30, 30);
+   /* border: 1px solid rgb(30, 30, 30); */
    background-color: rgb(30, 30, 30);
  }
 

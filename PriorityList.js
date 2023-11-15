@@ -1,6 +1,5 @@
 export {PriorityList};
 
-// actionDict = {"Attack":0, "AttackBase":0, "AttackWeight":0, "Move":0, "moveWeight":0, "Item":0, "Wait":0};
 class PriorityList 
 {
     attack;
@@ -19,7 +18,7 @@ class PriorityList
     waitBase;
     waitWeight;
 
-    PriorityList(attackBase=0, attackweight=0, moveBase=0, moveWeight=0, itemBase=0, itemWeight=0, waitBase=0, waitWeight=0) 
+    PriorityList(attackBase=0, attackWeight=0, moveBase=0, moveWeight=0, itemBase=0, itemWeight=0, waitBase=0, waitWeight=0) 
     {
         this.attack, this.attackBase = attackBase;
         this.move, this.moveBase = moveBase;
