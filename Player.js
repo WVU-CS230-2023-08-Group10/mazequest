@@ -18,9 +18,6 @@ class Player extends Entity
     inventory;
     Room;
 
-    cellSize = 32;
-    roomSize = 512;
-
     speed = 2;
     moveTarget = new Vector2(0.0, 0.0);
     animationSpeed = 1/3;
@@ -76,12 +73,12 @@ class Player extends Entity
     }
     move(direction)
     {
-        const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.cellSize));
+        const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.game.grid.cellSize));
 
-        if (pos.x < 0 || pos.x >= this.roomSize || pos.y < 0 || pos.y >= this.roomSize)
-        {
+        const roomWidth = this.game.grid.cellSize * this.game.grid.width;
+        const roomHeight = this.game.grid.cellSize * this.game.grid.height;
+        if (pos.x < 0 || pos.x >= roomWidth || pos.y < 0 || pos.y >= roomHeight)
             return;
-        }
 
         this.moveTarget = pos;
     }
@@ -134,7 +131,7 @@ class Player extends Entity
 
     static deserialize(obj, game)
     {
-        const p = new Player(obj.name, Transform.deserialize(obj.transform), Renderer.deserialize(obj.renderer, game.stage))
+        const p = new Player(obj.name, Transform.deserialize(obj.transform), Renderer.deserialize(obj.renderer, game.stage), game)
         p.inventory = Inventory.deserialize(obj.inventory);
         return p;
     }

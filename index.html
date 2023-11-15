@@ -10,6 +10,7 @@
     <script type="module" src = "./Website.js"></script>
     <script type="module" src="./app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://pixijs.download/release/pixi.js"></script>
     
   </head>
     <!-- Header that displays web banner -->
@@ -139,8 +140,10 @@
           <div class="grid-container">
             <div class="entities grid-item">
               <h4>Entities</h4>
+              <div id="entityList">
+
+              </div>
             </div>
-            <script src="https://pixijs.download/release/pixi.js"></script>
             <div id="lbCanvasAnchor" class="canvas grid-item">
               <canvas id="levelBuilderCanvas"></canvas>
             </div>
@@ -152,23 +155,23 @@
               <div class="dropdown">
                 <button class="dropbtn">Player</button>
                 <div class="dropdown-content">
-                  <button class="dropbtn" type="submit">Player</button>
+                  <button class="prefab-button dropbtn" type="submit">Player</button>
                 </div>
               </div>
               <div class="dropdown">
                 <button class="dropbtn">Enemies</button>
                 <div class="dropdown-content">
-                  <button class="dropbtn" type="submit">Goblin</button>
-                  <button class="dropbtn" type="submit">Minotaur</button>
-                  <button class="dropbtn" type="submit">Dragon</button>
+                  <button class="prefab-button dropbtn" type="submit">Goblin</button>
+                  <button class="prefab-button dropbtn" type="submit">Minotaur</button>
+                  <button class="prefab-button dropbtn" type="submit">Dragon</button>
                 </div>
               </div>
               <div class="dropdown">
                 <button class="dropbtn">Environment</button>
                 <div class="dropdown-content">
-                  <button class="dropbtn" type="submit">Wall</button>
-                  <button class="dropbtn" type="submit">Grass</button>
-                  <button class="dropbtn" type="submit">Path</button>
+                  <button class="prefab-button dropbtn" type="submit">Wall</button>
+                  <button class="prefab-button dropbtn" type="submit">Grass</button>
+                  <button class="prefab-button dropbtn" type="submit">Path</button>
                 </div>
               </div>
               <div class="dropdown">
@@ -274,7 +277,6 @@
 
 
         <div id="Gam" class="tabcontent">
-          <script src="https://pixijs.download/release/pixi.js"></script>
           <canvas id="canvas"></canvas>
         </div>
         <script>

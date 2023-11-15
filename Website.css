@@ -2,6 +2,7 @@
   --theme-color: #7395AE;
   --theme-dark-color: #557A95;
   --primary-font-color: #F6C90E;
+  --secondary-font-color: #E3963E;
   --link-font-color: #white;
 
   background-image: url(./images/WebsiteBackground.png);
@@ -55,6 +56,47 @@ body {
   margin: 20px auto;
   text-align: center;
   background-color: rgb(15, 15, 15)
+}
+
+#entityList
+{
+  width: 100%;
+  height: 200px;
+  display: grid;
+  overflow-y: scroll;
+}
+#entityList button
+{
+  height: 40px;
+  font-family:"Alagard";
+  color: #F6C90E;
+  background-color: rgb(30, 30, 30);
+  border-color: #F6C90E;
+  text-align: left;
+}
+#entityList button:hover
+{
+  background-color: var(--secondary-font-color);
+  color: black;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #71797E2F;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-font-color);
 }
 
 .canvas{ grid-area: canvas;}
@@ -113,7 +155,7 @@ body {
 }
 .dropdown button:hover
 {
-  background-color: #E3963E;
+  background-color: var(--secondary-font-color);
   color: black;
 }
 
@@ -135,7 +177,7 @@ body {
 
 #changeH {
    color:black;
-   background-color:#E3963E;
+   background-color:var(--secondary-font-color);
 }
 
 a {
@@ -176,13 +218,13 @@ header > h1 {
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-  background-color: #E3963E;
+  background-color: var(--secondary-font-color);
   color: black;
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
-  background-color: #E3963E;
+  background-color: var(--secondary-font-color);
   color: black;
 }
  
@@ -195,7 +237,7 @@ header > h1 {
 }
 
 p {
-  color: #E3963E;
+  color: var(--secondary-font-color);
 }
 
 canvas {

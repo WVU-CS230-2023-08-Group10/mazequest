@@ -21,12 +21,7 @@ class Renderer
      * @param {Stage} stage PIXI.Stage to be rendered to.
      * @param {Transform} transform Transform defining position, rotation, and scale of the sprite.
      */
-    constructor(spriteSheetInfo, stage, transform = new Transform())
-    {
-        this.initialize(spriteSheetInfo, stage, transform);
-    }
-
-    initialize(spriteSheetInfo, stage, transform = new Transform())
+    constructor(spriteSheetInfo, stage, transform = new Transform(), animation='default')
     {
         if (stage == undefined)
             throw new Error('Renderer stage undefined! Was the renderer initialized correctly?');
@@ -34,10 +29,15 @@ class Renderer
         this.stage = stage;
         this.transform = transform;
         this.updateSpriteSheet(spriteSheetInfo).then(() => {
-            this.setAnimation('default');
+            this.setAnimation(animation);
             this.sprite.textures[0].baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
             this.link();
         });
+    }
+
+    getAnimation()
+    {
+        return this.currentAnimation;
     }
     
     /**
@@ -103,11 +103,12 @@ class Renderer
     serialize()
     {
         return '{ "type":"Renderer", "spriteSheetInfo": { "json":"' + this.spriteSheetInfo.json +
-         '", "img":"'+this.spriteSheetInfo.img+'"}, "transform": ' + this.transform.serialize() + '}';
+         '", "img":"'+this.spriteSheetInfo.img+'"}, "transform": ' + this.transform.serialize() + 
+         '"animation": '+this.getAnimation()+'}';
     }
 
     static deserialize(obj, stage)
     {
-        return new Renderer(obj.spriteSheetInfo, stage, Transform.deserialize(obj.transform));
+        return new Renderer(obj.spriteSheetInfo, stage, Transform.deserialize(obj.transform), obj.animation);
     }
 }

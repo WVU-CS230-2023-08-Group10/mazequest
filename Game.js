@@ -4,6 +4,7 @@ import { Vector2 } from "./Vectors.js";
 import { Renderer } from "./Renderer.js";
 import { Player } from "./Player.js";
 import { Weapon, Armor, Consumable } from "./Item.js";
+import { Collider } from "./LevelElements.js";
 export {Game};
 
 /**
@@ -23,6 +24,7 @@ class Game
     entityList;
     stage;
     isInEditMode;
+    grid;
 
     /**
      * Creates a new game manager instance that handles the top level game functions.
@@ -34,6 +36,12 @@ class Game
     {
         this.entityList = [];
         this.stage = stage;
+
+        this.grid = {
+            cellSize: 32,
+            width: 16,
+            height: 16
+        }
 
         // var playerSpriteInfo = { json: './images/armor/leatherArmor.json', img:'./images/armor/leatherArmor.png'};
         // var player = new Player("Player", new Transform(new Vector2(256, 256), new Vector2(2, 2)), new Renderer(playerSpriteInfo, stage), this)
@@ -100,32 +108,30 @@ class Game
     }
 
     /**
-     * Finds and returns the first entity in the registry with a given name.
-     * This method should be sufficient for finding singleton Entities, but for objects that may have identical
-     * names, consider using {@link getEntities|getEntities()} instead.
-     * @param {String} name Name of the entity to find
-     * @returns The first registered entity with the given name
+     * Finds and returns the first entity in the registry that fulfills the given predicate.
+     * @param {Predicate} predicate Function that takes an {@link Entity} and returns a {@link Boolean}
+     * @returns The first registered entity that meets the predicate
      */
-    getEntity(name)
+    getEntity(predicate)
     {
         for (const entity of this.entityList)
         {
-            if (entity.name == name)
+            if (predicate(entity))
                 return entity;
         }
     }
 
     /**
-     * Finds and returns an array of Entities in the registry with a given name.
-     * @param {String} name Name of the entities to find
-     * @returns {Array<Entity>} A list of the registered entities found to have the given name
+     * Finds and returns an array of Entities in the registry that fulfill the given predicate.
+     * @param {Predicate} predicate Function that takes an {@link Entity} and returns a {@link Boolean}
+     * @returns {Array<Entity>} A list of the registered entities that meet the predicate
      */
-    getEntities(name)
+    getEntities(predicate)
     {
         var output = [];
         for (const entity of this.entityList)
         {
-            if (entity.name == name)
+            if (predicate(entity))
                 output.add(entity);
         }
         return output
@@ -191,7 +197,11 @@ class Game
             case "Consumable":
                 e = Consumable.deserialize(obj, this);
                 break;
+            case "Collider":
+                e = Collider.deserialize(obj, this);
+                break;
         }
         this.registerEntity(e);
+        return e;
     }
 }

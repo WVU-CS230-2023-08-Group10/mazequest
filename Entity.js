@@ -21,6 +21,7 @@ class Entity
     transform;
     renderer;
     game;
+    uuid;
 
     /**
      * Construct a new abstract Entity. Considering as a base, Entity only contains renderer and transform information,
@@ -42,6 +43,13 @@ class Entity
         this.renderer = renderer;
         this.game = game;
         this.name = name;
+        
+        this.uuid = crypto.randomUUID();
+    }
+
+    getID()
+    {
+        return this.uuid;
     }
 
     update(delta) {}
