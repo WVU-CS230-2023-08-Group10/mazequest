@@ -89,4 +89,18 @@ class Entity
     {
         return this.constructor.name;
     }
+
+    getEditableProperties()
+    {
+        let propList = [];
+        const names = Object.getOwnPropertyNames(this);
+        for (const name of names)
+        {
+            if (name.charAt(0) == name.charAt(o).toUpperCase())
+            {
+                propList.push(name);
+            }
+        }
+        return propList();
+    }
 }

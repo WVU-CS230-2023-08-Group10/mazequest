@@ -54,17 +54,17 @@ const levelBuilder = new Game(lbapp.stage);
 const lbui = new PIXI.Graphics();
 lbui.eventMode = 'static';
 lbui.cursor = 'pointer';
-lbapp.stage.on('pointerdown', onDragStart, lbui);
 lbapp.stage.addChild(lbui);
 
-let selectedEntity = undefined;
+let selectedEntity = null;
 
 lbapp.ticker.add((delta) => {
     levelBuilder.renderEntities(delta);
 
-    if (selectedEntity != undefined)
+    lbui.clear();
+    if (selectedEntity != null)
     {
-        lbui.clear();
+        lbapp.stage.on('pointerdown', onDragStart, lbui);
         lbui.lineStyle(1, 0xFF0000, 1);
         lbui.drawRect(selectedEntity.transform.position.x, selectedEntity.transform.position.y, 32, 32);
     }
@@ -102,15 +102,32 @@ function addToLevelBuilder(id)
     const eList = document.querySelector('#entityList');
     const button = document.createElement('button');
     button.textContent = entity.name;
-    button.setAttribute('id',entity.getID());
-    button.setAttribute('class','dropbtn');
+    button.setAttribute('id','id'+entity.getID());
+    button.setAttribute('class','entity-select dropbtn');
     button.addEventListener('click', highlightEntity);
     eList.appendChild(button);
 }
 
 function highlightEntity()
 {
-    selectedEntity = levelBuilder.getEntity((e) => e.getID() == this.id);
+    const newEntity = levelBuilder.getEntity((e) => e.getID() == this.id.substring(2));
+    if (selectedEntity != null)
+    {
+        if (newEntity.getID() == selectedEntity.getID())
+        {
+            this.setAttribute('class','entity-select dropbtn');
+            selectedEntity = null;
+            onDragEnd();
+            lbapp.stage.off('pointerdown', onDragStart, lbui);
+            return;
+        }
+
+        const previouslySelected = document.querySelector(`#id${selectedEntity.getID()}`);     
+        previouslySelected.setAttribute('class','entity-select dropbtn');
+    }
+
+    this.setAttribute('class','entity-select dropbtn selected-entity');
+    selectedEntity = newEntity;
 }
 
 function onDragMove(event)
@@ -122,11 +139,14 @@ function onDragMove(event)
 function onDragStart()
 {
     lbapp.stage.on('pointermove', onDragMove);
-    console.log("drag start");
 }
 
 function onDragEnd()
 {
-    lbapp.stage.off('pointermove', onDragMove); 
-    console.log("drag end");
+    lbapp.stage.off('pointermove', onDragMove);
+}
+
+function loadEditorUI(entity)
+{
+
 }

@@ -73,12 +73,18 @@ body {
   background-color: rgb(30, 30, 30);
   border-color: #F6C90E;
   text-align: left;
+  position: sticky;
 }
 #entityList button:hover
 {
   background-color: var(--secondary-font-color);
   color: black;
 }
+#entityList > .selected-entity
+{
+  background-color: rgb(60, 60, 60);
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;

@@ -16,7 +16,7 @@ class Player extends Entity
     account;
     health;
     inventory;
-    Room;
+    room;
 
     speed = 2;
     moveTarget = new Vector2(0.0, 0.0);
@@ -84,7 +84,6 @@ class Player extends Entity
     }
     broadcast(event)
     {
-        console.log(this.event);
         switch (event.type)
         {
             case "keydown":
