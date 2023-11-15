@@ -223,8 +223,8 @@
             </div>
             <button class="form__button" type="submit">Continue</button>
             
-            <p>Forgot your password?</p>
-            <P>Enter your email below to reset password</P>
+            <!--<p>Forgot your password?</p>
+            <P>Enter your email below to reset password</P>-->  <!--Not yet implemented-->
           </form>
         </div>
 
@@ -263,6 +263,11 @@
             <th style="width:50%">
               <h2 >Reset Password</h2>
               <form>
+                <p>Password Must:</p>
+                <l style="width: 80%; height: 80%;">
+                  <li>Be Greater than 8 Characters</li>
+                  <li>Not Contain the Word "Password"</li>
+                </l>
                 <input type = "password" id = "newPassword" class= "form__input" autofocus placeholder="Password">
                 <input type = "password" id = "reNewPassword" class= "form__input" autofocus placeholder="Re-Enter Password">
                 <button id = "resetPassword" class="form__button" type="submit">Reset Password</button>
