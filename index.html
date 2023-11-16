@@ -11,22 +11,29 @@
     <script type="module" src="./app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://pixijs.download/release/pixi.js"></script>
-    
   </head>
-    <!-- Header that displays web banner -->
+    <!-- 
+      Website Banner 
+    -->
     <header>
       <div id="headerContainer">
         <h1>Welcome to</h1>
         <img src="./images/MazeQuest.png" alt="maze-quest-title-image">
       </div>
     </header>
-    <!-- Body that contains methods for tabs -->
+    <!-- 
+      Tab Contents 
+    -->
     <body>
-      
       <main> 
+        <!-- 
+          Background audio initialization 
+        -->
         <audio src="250-milliseconds-of-silence.mp3" playsinline autoplay loop id="myaudio1"></audio>
         <audio src="In-the-hall-of-the-mountain-king.mp3" playsinline autoplay loop id="myaudio"></audio>
-        <!-- Tab links -->
+        <!--         
+          Tab Links 
+        -->
         <div class="tab">
           <div class="btnGroup">
             <button class="tablinks active" onclick="openTab(event, 'Hom')">Home</button>
@@ -36,105 +43,93 @@
             <button class="tablinks" onclick="openTab(event, 'Gam')">GameWindow</button>
             <button class="tablinks" onclick="openTab(event, 'Sta')">Stat</button>
             <button class="tablinks" onclick="openTab(event, 'Set')">Settings</button>
-            <button id = "Account" class="tablinks" onclick="openTab(event, 'Acc')" disabled>Account</button>
+            <button class="tablinks" id = "Account" onclick="openTab(event, 'Acc')" disabled>Account</button>
           </div>
         </div>
-
-        <!-- Tab content -->
         <style>
           #Hom {
             text-align: left;
           }
         </style>
-        <div id="Set" class="tabcontent">
-          <h1 >Music</h1>
-          <h3>Experimental, may not work in chrome browser</h3>
-          <table style ="width:100%">
-            <th style="width:50%">
-              <h2 >Sound Bar</h2>
-              <input type="range" min="1" max="100" value="100" id="slider">
-              <span id="display">1</span>
-              <script>
-                var audio = document.getElementById("myaudio");
-                var slider = document.getElementById("slider");
-                var output = document.getElementById("display");
-                output.innerHTML = slider.value;
-                slider.oninput = function() {
-                  output.innerHTML = this.value;
-                  audio.volume=(this.value)/100;
-                }
-                  
-              </script>
-            </th>
-            <th style="width:50%">
-              <h2 >Mute</h2>
-              <input type="checkBox" id="box1" name="box1"/>
-              <script>
-                var audio = document.getElementById("myaudio");
-                document.getElementById('box1').addEventListener('click', function (e)
-                {
-                    e = e || window.event;
-                    audio.muted = !audio.muted;
-                     e.preventDefault();
-                }, false);
-              </script>
-            </th>
-          </table>
-          <h1></h1>
+        <!-- 
+          Home Tab 
+        -->
+        <div id="Hom" class="tabcontent">
+          <h2><u>Synopsis</u></h2>
+          <p>MazeQuest is an action-packed exploration game! Your journey begins as you wake up in the middle of an isolated room
+            with only a single door ahead of you. Your only choice? ESCAPE. On this journey, you will encounter numerous challenging 
+            puzzles, resilient enemies, and mysterious rooms as you fight to find the way forward.</p>
+          <h2><u>How To Play</u></h2>
+          <h3>Level Builder</h3>
+          <p>Upload room templates to the site, and it will be added to your level's room layout. 
+            While the template room is custom made by you, the user, the level will still possess a 
+            uniquely-random layout that may contain base elements from the game.</p>
+          <h3>Game Window</h3>
+          <p>Greetings new player!
+             Your journey is just starting as you embark on this brand-new adventure! This game is comprised of many rooms that contain 
+             mazes full of secrets and enemies. These paths can branch off from the exit, but they may contain helpful items that will 
+             strengthen your character. Although, this can also make it a dangerous journey; be on the lookout for helpful items as you 
+             choose to avoid or fight enemies.</p>
+          <h2><u>Controls</u></h2>
+          <h3>Movement</h3>
+          <p>Up: W<br>Down: S<br>Left: A<br>Right: D</p>
+          <h3>Inventory Bar</h3>
+          <p>Use Keys 1-7 or your mouse's scroll wheel to access inventory slots.</p>
         </div>
-        <div id="Sta" class="tabcontent">
-          <!-- Under Construction -->
-          <h1 class = "form__title">Leaderboards</h1>
-          
-          <h3>Enemies slain</h3>
-          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
-            <tr>
-              <th id="enemySlayer1">Username#1</th>
-              <th id="U1E">Enemies slain</th>
-            </tr>
-            <tr>
-              <th id="enemySlayer2">Username#2</th>
-              <th id="U2E">Enemies slain</th>
-            </tr>
-            <tr>
-              <th id="enemySlayer3">Username#3</th>
-              <th id="U3E">Enemies slain</th>
-            </tr>
-          </table>
-          <h3>Dragons slain</h3>
-          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
-            <tr>
-              <th id ="dragonSlayer1">Username#1</th>
-              <th id="U1D">Dragons slain</th>
-            </tr>
-            <tr>
-              <th id="dragonSlayer2">Username#2</th>
-              <th id="U2D">Dragons slain</th>
-            </tr>
-            <tr>
-              <th id="dragonSlayer3">Username#3</th>
-              <th id="U3D">Dragons slain</th>
-            </tr>
-          </table>
-          <h3>Mazes escaped</h3>
-          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
-            <tr>
-              <th id="mazeRunner1">Username#1</th>
-              <th id="U1M">Mazes Escaped</th>
-            </tr>
-            <tr>
-              <th id="mazeRunner2">Username#2</th>
-              <th id="U2M">Mazes Escaped</th>
-            </tr>
-            <tr>
-              <th id="mazeRunner3">Username#3</th>
-              <th id="U3M">Mazes Escaped</th>
-            </tr>
-          </table>
+        <!-- 
+          Account Creation 
+        -->
+        <div id="Sig" class="tabcontent">
+          <form class="form" id="signup">
+            <form class="form" id = "signupContents">
+            <h1 class = "form__title">Create Account</h1>
+            <p class="form__input-message">Input Your Email with Your New Username and Password Below</p>
+            <div class = "form__input-group">
+              <input type = "email" id = "suEmail" class= "form__input" autofocus placeholder="Email">
+            </div>
+            <div class = "form__input-group">
+              <input type = "text" id ="username" class= "form__input" autofocus placeholder="Username">
+            </div>
+            <div class = "form__input-group">
+              <p>Password Must:</p>
+              <l style="width: 80%; height: 80%;">
+                <li>Be Greater than 8 Characters</li>
+                <li>Not Contain the Word "Password"</li>
+              </l>
+              <br />
+              <input type = "password" id = "suPassword" class= "form__input" autofocus placeholder="Password">
+              <input type = "password" id = "reSuPassword" class= "form__input" autofocus placeholder="Re-Enter Password">
+              <p id = "passwordErrorMsg"></p>
+            </div>
+            <button class="form__button" type="submit">Continue</button>
+           </form>
+          </form>
         </div>
-
+        <!-- 
+          Login Tab 
+        -->
+        <div id="In" class="tabcontent">
+          <form class="form" id="login">
+            <h1 class = "form__title">Login</h1>
+            <p class="form__input-message">Input Your Email and Password Below</p>
+            <div class = "form__input-group">
+              <input type = "text" id = "liEmail" class= "form__input" autofocus placeholder="Email">
+              <p id = "emailErrorMsg" class="form__input-error-message"></p>
+            </div>
+            <div class = "form__input-group">
+              <input type = "password" id = "liPassword" class= "form__input" autofocus placeholder="Password">
+              <p id = "passwordErrorMsg" class="form__input-error-message"></p>
+            </div>
+            <button class="form__button" type="submit">Continue</button>
+            
+            <!--<p>Forgot your password?</p>
+            <P>Enter your email below to reset password</P>-->  <!--Not yet implemented-->
+          </form>
+        </div>
+        <!-- 
+          LevelBuilder Tab 
+        -->
         <div id="Bui" class="tabcontent">
-          <!-- Under Construction -->
           <h1 class = "form__title">Level Builder</h1>
           <p>CAUTION Construction in Progress.</p>
           <div class="grid-container">
@@ -183,80 +178,120 @@
             </div>
           </div>
         </div>
-
-        <!--Home tab. Contains game synopsis and controls-->
-        <div id="Hom" class="tabcontent">
-          <h2><u>Synopsis</u></h2>
-          <p>MazeQuest is an action-packed exploration game! Your journey begins as you wake up in the middle of an isolated room
-            with only a single door ahead of you. Your only choice? ESCAPE. On this journey, you will encounter numerous challenging 
-            puzzles, resilient enemies, and mysterious rooms as you fight to find the way forward.</p>
-          <h2><u>How To Play</u></h2>
-          <h3>Level Builder</h3>
-          <p>Upload room templates to the site, and it will be added to your level's room layout. 
-            While the template room is custom made by you, the user, the level will still possess a 
-            uniquely-random layout that may contain base elements from the game.</p>
-          <h3>Game Window</h3>
-          <p>Greetings new player!
-             Your journey is just starting as you embark on this brand-new adventure! This game is comprised of many rooms that contain 
-             mazes full of secrets and enemies. These paths can branch off from the exit, but they may contain helpful items that will 
-             strengthen your character. Although, this can also make it a dangerous journey; be on the lookout for helpful items as you 
-             choose to avoid or fight enemies.</p>
-          <h2><u>Controls</u></h2>
-          <h3>Movement</h3>
-          <p>Up: W<br>Down: S<br>Left: A<br>Right: D</p>
-          <h3>Inventory Bar</h3>
-          <p>Use Keys 1-7 or your mouse's scroll wheel to access inventory slots.</p>
+        <!-- 
+          Game Window Tab 
+        -->
+        <div id="Gam" class="tabcontent">
+          <canvas id="canvas"></canvas>
         </div>
-
-        <!--Login tab-->
-        <div id="In" class="tabcontent">
-          <form class="form" id="login">
-            <h1 class = "form__title">Login</h1>
-            <p class="form__input-message">Input Your Email and Password Below</p>
-            <div class = "form__input-group">
-              <input type = "text" id = "liEmail" class= "form__input" autofocus placeholder="Email">
-              <p id = "emailErrorMsg" class="form__input-error-message"></p>
-            </div>
-            <div class = "form__input-group">
-              <input type = "password" id = "liPassword" class= "form__input" autofocus placeholder="Password">
-              <p id = "passwordErrorMsg" class="form__input-error-message"></p>
-            </div>
-            <button class="form__button" type="submit">Continue</button>
-            
-            <!--<p>Forgot your password?</p>
-            <P>Enter your email below to reset password</P>-->  <!--Not yet implemented-->
-          </form>
+        <!-- 
+          LeaderBoard and Personal Statistics Tab Data 
+        -->
+        <div id="Sta" class="tabcontent">
+          <h1 class = "form__title">Leaderboards</h1>
+          
+          <h3>Enemies slain</h3>
+          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
+            <tr>
+              <th id="enemySlayer1">Username#1</th>
+              <th id="U1E">Enemies slain</th>
+            </tr>
+            <tr>
+              <th id="enemySlayer2">Username#2</th>
+              <th id="U2E">Enemies slain</th>
+            </tr>
+            <tr>
+              <th id="enemySlayer3">Username#3</th>
+              <th id="U3E">Enemies slain</th>
+            </tr>
+          </table>
+          <h3>Dragons slain</h3>
+          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
+            <tr>
+              <th id ="dragonSlayer1">Username#1</th>
+              <th id="U1D">Dragons slain</th>
+            </tr>
+            <tr>
+              <th id="dragonSlayer2">Username#2</th>
+              <th id="U2D">Dragons slain</th>
+            </tr>
+            <tr>
+              <th id="dragonSlayer3">Username#3</th>
+              <th id="U3D">Dragons slain</th>
+            </tr>
+          </table>
+          <h3>Mazes escaped</h3>
+          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
+            <tr>
+              <th id="mazeRunner1">Username#1</th>
+              <th id="U1M">Mazes Escaped</th>
+            </tr>
+            <tr>
+              <th id="mazeRunner2">Username#2</th>
+              <th id="U2M">Mazes Escaped</th>
+            </tr>
+            <tr>
+              <th id="mazeRunner3">Username#3</th>
+              <th id="U3M">Mazes Escaped</th>
+            </tr>
+          </table>
+          <h1 class = "form__title">Personal Stats</h1>
+          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
+            <tr>
+              <th >Enemies slain</th>
+              <th id="PE">0</th>
+            </tr>
+            <tr>
+              <th >Dragons slain</th>
+              <th id="PD">0</th>
+            </tr>
+            <tr>
+              <th >Mazes Escaped</th>
+              <th id="PM">0</th>
+            </tr>
+          </table>
         </div>
-
-        <!--Sign-up tab-->
-        <div id="Sig" class="tabcontent">
-          <form class="form" id="signup">
-            <form class="form" id = "signupContents">
-            <h1 class = "form__title">Create Account</h1>
-            <p class="form__input-message">Input Your Email with Your New Username and Password Below</p>
-            <div class = "form__input-group">
-              <input type = "email" id = "suEmail" class= "form__input" autofocus placeholder="Email">
-            </div>
-            <div class = "form__input-group">
-              <input type = "text" id ="username" class= "form__input" autofocus placeholder="Username">
-            </div>
-            <div class = "form__input-group">
-              <p>Password Must:</p>
-              <l style="width: 80%; height: 80%;">
-                <li>Be Greater than 8 Characters</li>
-                <li>Not Contain the Word "Password"</li>
-              </l>
-              <br />
-              <input type = "password" id = "suPassword" class= "form__input" autofocus placeholder="Password">
-              <input type = "password" id = "reSuPassword" class= "form__input" autofocus placeholder="Re-Enter Password">
-              <p id = "passwordErrorMsg"></p>
-            </div>
-            <button class="form__button" type="submit">Continue</button>
-           </form>
-          </form>
+        <!-- 
+          Settings Tab 
+        -->
+        <div id="Set" class="tabcontent">
+          <h1 >Music</h1>
+          <h3>Experimental, music may not play in chrome browser</h3>
+          <table style ="width:100%">
+            <th style="width:50%">
+              <h2 >Sound Bar</h2>
+              <input type="range" min="1" max="100" value="100" id="slider">
+              <span id="display">1</span>
+              <script>
+                var audio = document.getElementById("myaudio");
+                var slider = document.getElementById("slider");
+                var output = document.getElementById("display");
+                output.innerHTML = slider.value;
+                slider.oninput = function() {
+                  output.innerHTML = this.value;
+                  audio.volume=(this.value)/100;
+                }     
+              </script>
+            </th>
+            <th style="width:50%">
+              <h2 >Mute</h2>
+              <input type="checkBox" id="box1" name="box1"/>
+              <script>
+                var audio = document.getElementById("myaudio");
+                document.getElementById('box1').addEventListener('click', function (e)
+                {
+                    e = e || window.event;
+                    audio.muted = !audio.muted;
+                     e.preventDefault();
+                }, false);
+              </script>
+            </th>
+          </table>
+          <h1></h1>
         </div>
-
-        <!-- Account tab. Contains Log out button and reset password fuctionality. Disabled by default-->
+        <!-- 
+          Account tab. Contains Log out button and reset password fuctionality. Disabled by default 
+        -->
         <div id="Acc" class="tabcontent">
           <h1 >Account</h1>
           <table style ="width:100%">
@@ -279,11 +314,9 @@
             </th>
           </table>
         </div>
-
-
-        <div id="Gam" class="tabcontent">
-          <canvas id="canvas"></canvas>
-        </div>
+        <!--         
+          OpenTab Function, used in tab links 
+        -->
         <script>
           function openTab(evt, name) {
             var i, tabcontent, tablinks;
@@ -312,8 +345,10 @@
           }
           openTab(new Event('PointerEvent'), 'Hom');
         </script>
-
       </main>
+      <!--       
+        Hint Box 
+      -->
       <div id="changeH">You found the secret hint! Nothing's hidden here though... Look harder in The Maze!</div>
       <script>
         var elem = document.getElementById("changeH");
