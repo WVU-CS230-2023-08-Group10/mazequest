@@ -42,8 +42,8 @@ class Player extends Entity
     }
     damage(damageDone)
     {
-        health-damageDone;
-        if(health<1)
+        health = health - damageDone;
+        if(health < 1)
         {
             //game over
         }

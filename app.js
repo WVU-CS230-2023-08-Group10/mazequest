@@ -2,13 +2,14 @@ import { Entity } from "./Entity.js";
 import { Game } from "./Game.js";
 import { Renderer } from "./Renderer.js";
 
-const canvasSize = 512;
+const canvasWidth = 640;
+const canvasHeight = 512;
 const canvas = document.getElementById("canvas");
 const app = new PIXI.Application(
     { 
         view: canvas, 
-        width: canvasSize, 
-        height: canvasSize, 
+        width: canvasWidth, 
+        height: canvasHeight, 
         backgroundColor: 0xFFFFFF,
     }
 );
@@ -17,7 +18,119 @@ document.getElementById("Gam").appendChild(app.view);
 const bkgTexture = PIXI.Texture.from("./images/preview.png");
 const bkg = new PIXI.Sprite(bkgTexture);
 
+// Temporary implementation of sidebar with loaded elements
+const loadSidebar = async () =>
+{
+    const sheet = await PIXI.Assets.load('./images/sb/sidebar.json');
+    const sidebar = new PIXI.Sprite(sheet.textures['sidebar']);
+        sidebar.anchor.set(-4, 0);
+        sidebar.height = 512;
+        sidebar.width = 128;
+        sidebar.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(sidebar);
+    const battleBkg = new PIXI.Sprite(PIXI.Texture.from('./images/sb/frutiger.png'));
+        battleBkg.anchor.set(-4.145, -0.01);
+        battleBkg.height = 172;
+        battleBkg.width = 124;
+        battleBkg.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(battleBkg);
+    const goblin = new PIXI.Sprite(PIXI.Texture.from('./images/sb/goblin.png'));
+        goblin.anchor.set(-4.94, -0.4);
+        goblin.height = 106;
+        goblin.width = 106;
+        goblin.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(goblin);
+    // const screen = new PIXI.Sprite(sheet.textures['screen']);
+    //     screen.anchor.set(-4, 0);
+    //     screen.height = 176;
+    //     screen.width = 128;
+    //     screen.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    // app.stage.addChild(screen);
+    // const testTxt = new PIXI.Sprite(sheet.textures['test_text']);
+    //     testTxt.anchor.set(-8.5, -2);
+    //     testTxt.height = 32;
+    //     testTxt.width = 64;
+    //     testTxt.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    // app.stage.addChild(testTxt);
+    const invTxt = new PIXI.Sprite(sheet.textures['inv_text']);
+        invTxt.anchor.set(-4, -5.5);
+        invTxt.height = 32;
+        invTxt.width = 128;
+        invTxt.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(invTxt);
+    const invSlot = new PIXI.Sprite(sheet.textures['circle_slot']);
+        invSlot.anchor.set(-16.2, -6.65);
+        invSlot.height = 32;
+        invSlot.width = 32;
+        invSlot.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(invSlot);
+    const invSlot2 = new PIXI.Sprite(sheet.textures['circle_slot']);
+        invSlot2.anchor.set(-17.5, -6.65);
+        invSlot2.height = 32;
+        invSlot2.width = 32;
+        invSlot2.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(invSlot2);
+    const invSlot3 = new PIXI.Sprite(sheet.textures['circle_slot']);
+        invSlot3.anchor.set(-18.8, -6.65);
+        invSlot3.height = 32;
+        invSlot3.width = 32;
+        invSlot3.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(invSlot3);
+    const invSlot4 = new PIXI.Sprite(sheet.textures['circle_slot']);
+        invSlot4.anchor.set(-16.2, -7.9);
+        invSlot4.height = 32;
+        invSlot4.width = 32;
+        invSlot4.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(invSlot4);
+    const invSlot5 = new PIXI.Sprite(sheet.textures['circle_slot']);
+        invSlot5.anchor.set(-17.5, -7.9);
+        invSlot5.height = 32;
+        invSlot5.width = 32;
+        invSlot5.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(invSlot5);
+    const invSlot6 = new PIXI.Sprite(sheet.textures['circle_slot']);
+        invSlot6.anchor.set(-18.8, -7.9);
+        invSlot6.height = 32;
+        invSlot6.width = 32;
+        invSlot6.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(invSlot6);
+    const armorTxt = new PIXI.Sprite(sheet.textures['armor_text']);
+        armorTxt.anchor.set(-5.5, -9.1);
+        armorTxt.height = 32;
+        armorTxt.width = 96;
+        armorTxt.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(armorTxt);
+    const armorSlot = new PIXI.Sprite(sheet.textures['square_slot_big']);
+        armorSlot.anchor.set(-8.5, -5.1);
+        armorSlot.height = 64;
+        armorSlot.width = 64;
+        armorSlot.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(armorSlot);
+    const weaponTxt = new PIXI.Sprite(sheet.textures['weapon_text']);
+        weaponTxt.anchor.set(-4, -12.3);
+        weaponTxt.height = 32;
+        weaponTxt.width = 128;
+        weaponTxt.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(weaponTxt);
+    const weaponSlot = new PIXI.Sprite(sheet.textures['circle_slot_big']);
+        weaponSlot.anchor.set(-8.5, -6.75);
+        weaponSlot.height = 64;
+        weaponSlot.width = 64;
+        weaponSlot.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(weaponSlot);
+}
+
+// Custom background + sprite for screen
+const encounterScreen = () => 
+{
+    
+}
+
 app.stage.addChild(bkg);
+loadSidebar();
+encounterScreen();
+
+
 
 const game = new Game(app.stage);
 
@@ -45,8 +158,8 @@ const lbcanvas = document.getElementById("levelBuilderCanvas");
 const lbapp = new PIXI.Application(
     { 
         view: lbcanvas, 
-        width: canvasSize, 
-        height: canvasSize, 
+        width: canvasHeight, 
+        height: canvasHeight, 
         backgroundColor: 0x000000,
     }
 )
