@@ -185,26 +185,13 @@ async function updateLeaderboard() {
    var topEnemySlayersPromise
    var personalStatsPromise
 
-   const user = await s.auth.getUser()
    
-   var stringId= JSON.stringify(user["data"]["user"]["id"])
- 
-   const id = stringId.substring(1,stringId.length-1)
-
-  const usernameString = JSON.stringify(user.data.user.user_metadata.username)
-  const username = usernameString.substring(1,usernameString.length-1)
-
-
 
    topDragonSlayersPromise =  s
    .from("player_stats")
    .select()
    .order("dragons_slain", {ascending:false})
    .limit(3)
-
-   
-   
-
   
    topMazeRunnersPromise =  s
    .from("player_stats")
@@ -218,18 +205,15 @@ async function updateLeaderboard() {
    .order("enemies_slain", {ascending:false})
    .limit(3)
 
-   personalStatsPromise= s
-   .from("player_stats")
-   .select()
-   .eq("id", id)
+   
    
 
-     const[topDragonSlayers, topEnemySlayers, topMazeRunners, personalStats] = 
+     const[topDragonSlayers, topEnemySlayers, topMazeRunners] = 
      await Promise.all([
       topDragonSlayersPromise, 
       topEnemySlayersPromise, 
       topMazeRunnersPromise,
-      personalStatsPromise
+     
    ]).catch(error => {
       console.log(error)
    })
@@ -268,11 +252,50 @@ async function updateLeaderboard() {
          var secondEnemySlayerStat = topEnemySlayers.data[1].enemies_slain
          var thirdEnemySlayerStat = topEnemySlayers.data[2].enemies_slain
 
+  
+   
+     
+      const user =  await s.auth.getUser()
+     
+  if (user.data.user){
+      
+      
+   console.log(JSON.stringify(user))
+   var stringId= JSON.stringify(user.data.user.id)
+   
+ 
+   const id = stringId.substring(1,stringId.length-1)
+
+   
+
+  const personalStats = await s
+   .from("player_stats")
+   .select()
+   .eq("id", id)
+
+   
+
+   console.log(JSON.stringify(personalStats.data[0].username))
+   const usernameString = JSON.stringify(personalStats.data[0].username)
+
+   const username = usernameString.substring(1,usernameString.length-1)
+   document.getElementById("personal_stat").innerHTML = username + "'s conquests..."
+
+  
+      console.log(JSON.stringify(personalStats))
        var personalDragons =  personalStats.data[0].dragons_slain
        var personalMazes = personalStats.data[0].mazes_escaped
        var personalenemies = personalStats.data[0].enemies_slain
 
-         // error handling is redundant as long as 3 profiles exist, but should probably implement some try/catch or arraylength check
+      document.getElementById("PD").innerHTML = personalDragons
+      document.getElementById("PM").innerHTML = personalMazes
+      document.getElementById("PE").innerHTML = personalenemies
+
+     
+   }
+                  
+
+          //error handling is redundant as long as 3 profiles exist, but should probably implement some try/catch or arraylength check
 
 
       document.getElementById("dragonSlayer1").innerHTML = firstDragonSlayer
@@ -299,11 +322,7 @@ async function updateLeaderboard() {
       document.getElementById("U2M").innerHTML = secondMazeRunnerStat
       document.getElementById("U3M").innerHTML = thirdMazeRunnerStat
            
-      document.getElementById("PD").innerHTML = personalDragons
-      document.getElementById("PM").innerHTML = personalMazes
-      document.getElementById("PE").innerHTML = personalenemies
-
-      document.getElementById("personal_stat").innerHTML = username + "'s conquests..."
+      
 }
 
 /**
