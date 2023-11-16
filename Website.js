@@ -186,15 +186,24 @@ async function updateLeaderboard() {
    var personalStatsPromise
 
    const user = await s.auth.getUser()
-   //const id = JSON.stringify(user).data.id
+   
    var stringId= JSON.stringify(user["data"]["user"]["id"])
  
-   var id = stringId.substring(1,stringId.length-1)
+   const id = stringId.substring(1,stringId.length-1)
+
+  const usernameString = JSON.stringify(user.data.user.user_metadata.username)
+  const username = usernameString.substring(1,usernameString.length-1)
+
+
+
    topDragonSlayersPromise =  s
    .from("player_stats")
    .select()
    .order("dragons_slain", {ascending:false})
    .limit(3)
+
+   
+   
 
   
    topMazeRunnersPromise =  s
@@ -226,7 +235,7 @@ async function updateLeaderboard() {
    })
       
 
-console.log(JSON.stringify(topDragonSlayers))
+
 
 
       // convert data to js objects and ready to load into
@@ -293,6 +302,8 @@ console.log(JSON.stringify(topDragonSlayers))
       document.getElementById("PD").innerHTML = personalDragons
       document.getElementById("PM").innerHTML = personalMazes
       document.getElementById("PE").innerHTML = personalenemies
+
+      document.getElementById("personal_stat").innerHTML = username + "'s conquests..."
 }
 
 /**
