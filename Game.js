@@ -134,7 +134,7 @@ class Game
             if (predicate(entity))
                 output.add(entity);
         }
-        return output
+        return output;
     }
 
     /**

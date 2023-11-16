@@ -6,17 +6,18 @@ export {Renderer};
  */
 class Renderer
 {
+    _SpriteSheetInfo;
+    _CurrentAnimation;
+
     transform;
     sprite;
     spriteSheet;
-    spriteSheetInfo;
-    currentAnimation;
     stage;
 
     /**
      * Constructs a new Renderer on the provided staage, with the provided spriteSheetInfo.
      * 
-     * @param {Object} spriteSheetInfo An object with a "json" key and a "img" key, providing the animation
+     * @param {Object} spriteSheetInfo An object with a "_Json" key and a "_Img" key, providing the animation
      * and frame data and the base texture, respectively.
      * @param {Stage} stage PIXI.Stage to be rendered to.
      * @param {Transform} transform Transform defining position, rotation, and scale of the sprite.
@@ -37,7 +38,7 @@ class Renderer
 
     getAnimation()
     {
-        return this.currentAnimation;
+        return this._CurrentAnimation;
     }
     
     /**
@@ -64,14 +65,14 @@ class Renderer
     /**
      * So long as all your animations and frames are contained on a single sheet, you should be able
      * to avoid using this method.
-     * @param {Object} spriteSheetInfo An object with a "json" key and a "img" key, providing the animation
+     * @param {Object} spriteSheetInfo An object with a "_Json" key and a "_Img" key, providing the animation
      * and frame data and the base texture, respectively.
      */
     async updateSpriteSheet(spriteSheetInfo)
     {
-        this.spriteSheetInfo = spriteSheetInfo;
-        var data = await PIXI.Assets.load(spriteSheetInfo.json);
-        this.spriteSheet = new PIXI.Spritesheet(PIXI.Texture.from(spriteSheetInfo.img), data.data);
+        this._SpriteSheetInfo = spriteSheetInfo;
+        var data = await PIXI.Assets.load(spriteSheetInfo._Json);
+        this.spriteSheet = new PIXI.Spritesheet(PIXI.Texture.from(spriteSheetInfo._Img), data.data);
         await this.spriteSheet.parse();
     }
     /**
@@ -83,7 +84,7 @@ class Renderer
      */
     setAnimation(animationId, speed=1, loop=false)
     {
-        this.currentAnimation = animationId;
+        this._CurrentAnimation = animationId;
         this.unlink();
         this.sprite = new PIXI.AnimatedSprite(this.spriteSheet.animations[animationId]);
         this.link();
@@ -97,18 +98,26 @@ class Renderer
         if (this.sprite == undefined) return;
 
         var t = this.transform;
-        this.sprite.setTransform(t.position.x, t.position.y, t.scale.x, t.scale.y, t.rotation);
+        this.sprite.setTransform(t._Position._X, t._Position._Y, t._Scale._X, t._Scale._Y, t._Rotation);
     }
 
     serialize()
     {
-        return '{ "type":"Renderer", "spriteSheetInfo": { "json":"' + this.spriteSheetInfo.json +
-         '", "img":"'+this.spriteSheetInfo.img+'"}, "transform": ' + this.transform.serialize() + 
+        return '{ "type":"Renderer", "spriteSheetInfo": { json":"' + this._SpriteSheetInfo._Json +
+         '", "img":"'+this._SpriteSheetInfo._Img+'"}, "transform": ' + this.transform.serialize() + 
          '"animation": '+this.getAnimation()+'}';
     }
 
     static deserialize(obj, stage)
     {
-        return new Renderer(obj.spriteSheetInfo, stage, Transform.deserialize(obj.transform), obj.animation);
+        return new Renderer(
+            {
+                _Json : obj.spriteSheetInfo.json,
+                _Img : obj.spriteSheetInfo.img
+            }, 
+            stage,
+            Transform.deserialize(obj.transform), 
+            obj.animation
+        );
     }
 }

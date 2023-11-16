@@ -1,0 +1,142 @@
+{ "frames": {
+   "sidebar": 
+   {
+    "frame": { "x": 0, "y": 0, "w": 64, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 256 },
+    "sourceSize": { "w": 64, "h": 256 }
+   },
+   "screen": 
+   {
+    "frame": { "x": 64, "y": 0, "w": 64, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 80 },
+    "sourceSize": { "w": 64, "h": 80 }
+   },
+   "inv_text": 
+   {
+    "frame": { "x": 128, "y": 0, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 }
+   },
+   "weapon_text": 
+   {
+    "frame": { "x": 192, "y": 0, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 }
+   },
+   "circle_slot": 
+   {
+    "frame": { "x": 128, "y": 16, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 }
+   },
+   "circle_slot_highlight": 
+   {
+    "frame": { "x": 144, "y": 16, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 }
+   },
+   "square_slot": 
+   {
+    "frame": { "x": 128, "y": 32, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 }
+   },
+   "square_slot_highlight": 
+   {
+    "frame": { "x": 144, "y": 32, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 }
+   },
+   "circle_slot_big": 
+   {
+    "frame": { "x": 160, "y": 16, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 }
+   },
+   "circle_slot_big_highlight": 
+   {
+    "frame": { "x": 192, "y": 16, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 }
+   },
+   "square_slot_big": 
+   {
+    "frame": { "x": 224, "y": 16, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 }
+   },
+   "square_slot_big_highlight": 
+   {
+    "frame": { "x": 224, "y": 48, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 }
+   },
+   "circle_slot_bigger": 
+   {
+    "frame": { "x": 128, "y": 48, "w": 48, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+    "sourceSize": { "w": 48, "h": 48 }
+   },
+   "circle_slot_bigger_highlight": 
+   {
+    "frame": { "x": 176, "y": 48, "w": 48, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+    "sourceSize": { "w": 48, "h": 48 }
+   },
+   "armor_text": 
+   {
+    "frame": { "x": 64, "y": 80, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 }
+   },
+   "test_text": 
+   {
+    "frame": { "x": 64, "y": 96, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 }
+   }
+   },
+   "meta": {
+      "app": "https://www.aseprite.org/",
+      "version": "1.3-rc6-dev",
+      "image": "sidebar.png",
+      "format": "RGBA8888",
+      "size": { "w": 256, "h": 256 },
+      "scale": "1"
+   },
+   "animations:": {
+      "default": ["sidebar"]
+   }
+}

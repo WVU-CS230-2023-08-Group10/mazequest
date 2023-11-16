@@ -48,7 +48,7 @@ class Weapon extends Item
 
     serialize()
     {
-        return '{ "type":"Weapon", "name" : "'+this.name+'", "damage": { "low":'+this.lowDamage+', "high":'+this.highDamage+'}}';
+        return '{ "type":"Weapon", "name" : "'+this._Name+'", "damage": { "low":'+this.lowDamage+', "high":'+this.highDamage+'}}';
     }
 
     static deserialize(obj, game)
@@ -64,7 +64,7 @@ class Armor extends Item{
 
     serialize()
     {
-        return '{ "type":"Armor", "name" : "'+this.name+'", "protection":'+this.protection+'}';
+        return '{ "type":"Armor", "name" : "'+this._Name+'", "protection":'+this.protection+'}';
     }
 
     static deserialize(obj, game)
@@ -95,7 +95,7 @@ class Consumable extends Item
 
     serialize()
     {
-        return '{ "type":"Consumable", "name" : "'+this.name+'", "count":'+this.stackCount+'}';
+        return '{ "type":"Consumable", "name" : "'+this._Name+'", "count":'+this.stackCount+'}';
     }
 
     static deserialize(obj, game)

@@ -3,9 +3,9 @@ export {Transform};
 
 class Transform
 {
-    position;
-    scale;
-    rotation;
+    _Position;
+    _Scale;
+    _Rotation;
 
     /**
      * 
@@ -15,19 +15,19 @@ class Transform
      */
     constructor(position = new Vector2(0,0), scale = new Vector2(1,1), rotation = 0)
     {
-        this.position = position;
-        this.scale = scale;
-        this.rotation = rotation;
+        this._Position = position;
+        this._Scale = scale;
+        this._Rotation = rotation;
     }
 
     translate(vector)
     {
-        this.position.add(vector);
+        this._Position.add(vector);
     }
 
     serialize()
     {
-        return '{ "position" : '+this.position.serialize()+', "scale" : '+this.scale.serialize()+', "rotation" : '+this.rotation+'}';
+        return '{ "position" : '+this._Position.serialize()+', "scale" : '+this._Scale.serialize()+', "rotation" : '+this._Rotation+'}';
     }
 
     static deserialize(obj)

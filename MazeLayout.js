@@ -62,7 +62,7 @@ class MazeLayout
                 const pos = batch[i];
 
                 // Generate the batch element
-                toBeGenerated[pos.y][pos.x] = 1;
+                toBeGenerated[pos._Y][pos._X] = 1;
                 
                 // Get the adjacent rooms
                 var up = Vector2.add(pos, Direction.Up);
@@ -79,7 +79,7 @@ class MazeLayout
                     if (!this.isPositionInMaze(adj))
                         continue;
                     // If the room has already been generated, skip
-                    if (toBeGenerated[adj.y][adj.x] != -1)
+                    if (toBeGenerated[adj._Y][adj._X] != -1)
                         continue;
                     // Should the room be generated?
                     if (this.params.isGenerated())
@@ -90,7 +90,7 @@ class MazeLayout
                     else
                     {
                         // If no, set toBeGenerated to 0;
-                        toBeGenerated[adj.y][adj.x] = 0;
+                        toBeGenerated[adj._Y][adj._X] = 0;
                     }
                 }
             }
@@ -120,7 +120,7 @@ class MazeLayout
                 for (let a = 0; a < adjacent.length; a++) {
                     const adj = adjacent[a];
                     if (!this.isPositionInMaze(adj)) continue;
-                    if (toBeGenerated[adj.y][adj.x] > 0)
+                    if (toBeGenerated[adj._Y][adj._X] > 0)
                     {
                         toBeGenerated[i][j] += 1 << a;
                     }

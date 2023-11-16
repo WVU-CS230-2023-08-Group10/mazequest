@@ -62,7 +62,6 @@ body {
 {
   width: 100%;
   height: 200px;
-  display: grid;
   overflow-y: scroll;
 }
 #entityList button
@@ -73,7 +72,8 @@ body {
   background-color: rgb(30, 30, 30);
   border-color: #F6C90E;
   text-align: left;
-  position: sticky;
+  display: block;
+  width: 100%;
 }
 #entityList button:hover
 {
@@ -108,7 +108,45 @@ body {
 .canvas{ grid-area: canvas;}
 .entities{ grid-area: entities;}
 .prefabs{ grid-area: prefabs;}
-.vars{grid-area: vars;}
+.vars
+{
+  grid-area: vars;
+  text-align: left;
+  margin: 0px;
+  padding: 0% 10%;
+  position: absolute;
+  right: 0;
+  overflow-y: scroll;
+  height: 100%;
+  width: 110%;
+}
+.vars div{
+  display: flex;
+}
+.vars input{
+  margin: 10px 0px 10px 10px;
+  width: 100%;
+  float: right;
+}
+.vars h3
+{
+  font-size: 20px;
+}
+.vars h4
+{
+  font-size: 18px;
+  margin-left: 40px;
+}
+.vars h5
+{
+  font-size: 16px;
+  margin-left: 40px;
+}
+.vars h6
+{
+  font-size: 14px;
+  margin-left: 40px;
+}
 .grid-container
 {
   display: grid;
@@ -116,10 +154,7 @@ body {
     'entities canvas vars'
     'prefabs canvas vars';
   height: 512;
-}
-.grid-item
-{
-  border: 1px solid rgba(0, 0, 0, 0.8);
+  position: relative;
 }
 
 .dropbtn {
