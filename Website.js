@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
    // Constants to pass to form removal methods to specify what the user should do
    const CHECK_EMAIL = "Check your email to confirm your account.";
-   const SIGNED_IN = "Your signed in! Go slay the beast!";
+   const SIGNED_IN = "You're signed in! Go slay the beast!";
 
 
    // Check to see if user is logged in
@@ -183,8 +183,13 @@ async function updateLeaderboard() {
    var topDragonSlayersPromise
    var topMazeRunnersPromise
    var topEnemySlayersPromise
-  
+   var personalStatsPromise
 
+   const user = await s.auth.getUser()
+   //const id = JSON.stringify(user).data.id
+   var stringId= JSON.stringify(user["data"]["user"]["id"])
+ 
+   var id = stringId.substring(1,stringId.length-1)
    topDragonSlayersPromise =  s
    .from("player_stats")
    .select()
@@ -204,19 +209,24 @@ async function updateLeaderboard() {
    .order("enemies_slain", {ascending:false})
    .limit(3)
 
-      
+   personalStatsPromise= s
+   .from("player_stats")
+   .select()
+   .eq("id", id)
+   
 
-     const[topDragonSlayers, topEnemySlayers, topMazeRunners] = 
+     const[topDragonSlayers, topEnemySlayers, topMazeRunners, personalStats] = 
      await Promise.all([
       topDragonSlayersPromise, 
       topEnemySlayersPromise, 
-      topMazeRunnersPromise
+      topMazeRunnersPromise,
+      personalStatsPromise
    ]).catch(error => {
       console.log(error)
    })
       
 
-
+console.log(JSON.stringify(topDragonSlayers))
 
 
       // convert data to js objects and ready to load into
@@ -249,6 +259,10 @@ async function updateLeaderboard() {
          var secondEnemySlayerStat = topEnemySlayers.data[1].enemies_slain
          var thirdEnemySlayerStat = topEnemySlayers.data[2].enemies_slain
 
+       var personalDragons =  personalStats.data[0].dragons_slain
+       var personalMazes = personalStats.data[0].mazes_escaped
+       var personalenemies = personalStats.data[0].enemies_slain
+
          // error handling is redundant as long as 3 profiles exist, but should probably implement some try/catch or arraylength check
 
 
@@ -276,6 +290,9 @@ async function updateLeaderboard() {
       document.getElementById("U2M").innerHTML = secondMazeRunnerStat
       document.getElementById("U3M").innerHTML = thirdMazeRunnerStat
            
+      document.getElementById("PD").innerHTML = personalDragons
+      document.getElementById("PM").innerHTML = personalMazes
+      document.getElementById("PE").innerHTML = personalenemies
 }
 
 /**
