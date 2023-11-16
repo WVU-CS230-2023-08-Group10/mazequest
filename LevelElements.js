@@ -10,8 +10,8 @@ class Collider extends Entity
 
     serialize()
     {
-        return '{ "type":"Collider", "name": "' + this.name + '", "transform": ' + this.transform.serialize() + ', "renderer": '
-            + this.renderer.serialize() + ', "inventory":' + this.inventory.serialize() + '}';
+        return '{ "type":"Collider", "name": "' + this._Name + '", "transform": ' + this._Transform.serialize() + ', "renderer": '
+            + this._Renderer.serialize() + ', "inventory":' + this.inventory.serialize() + '}';
     }
 
     static deserialize(obj, game)

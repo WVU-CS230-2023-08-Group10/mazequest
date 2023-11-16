@@ -17,9 +17,9 @@ export {Entity};
  */
 class Entity
 {
-    name;
-    transform;
-    renderer;
+    _Name;
+    _Transform;
+    _Renderer;
     game;
     uuid;
 
@@ -39,10 +39,10 @@ class Entity
         if (!(renderer instanceof Renderer))
             throw new Error("Type mismatch: renderer parameter is not of type Renderer (was "+renderer.constructor.name+" instead).");
         
-        this.transform = transform;
-        this.renderer = renderer;
+        this._Transform = transform;
+        this._Renderer = renderer;
         this.game = game;
-        this.name = name;
+        this._Name = name;
         
         this.uuid = crypto.randomUUID();
     }
@@ -61,8 +61,8 @@ class Entity
      */
     render(delta)
     {
-        this.renderer.transform = this.transform;
-        this.renderer.update(delta);
+        this._Renderer.transform = this._Transform;
+        this._Renderer.update(delta);
     }
 
     broadcast(event) {}
@@ -77,7 +77,7 @@ class Entity
             return;
 
         this.game.unregisterEntity(this);
-        this.renderer.dispose();
+        this._Renderer.dispose();
         delete this;
     }
 
@@ -88,19 +88,5 @@ class Entity
     getType()
     {
         return this.constructor.name;
-    }
-
-    getEditableProperties()
-    {
-        let propList = [];
-        const names = Object.getOwnPropertyNames(this);
-        for (const name of names)
-        {
-            if (name.charAt(0) == name.charAt(o).toUpperCase())
-            {
-                propList.push(name);
-            }
-        }
-        return propList();
     }
 }

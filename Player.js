@@ -26,7 +26,7 @@ class Player extends Entity
     {
         super(name, transform, renderer, game);
 
-        this.moveTarget = transform.position;
+        this.moveTarget = transform._Position;
 
         this.account = account;
         this.health = health;
@@ -59,25 +59,25 @@ class Player extends Entity
     }
     update(delta)
     {
-        const difference = Vector2.subtract(this.moveTarget, this.transform.position);
+        const difference = Vector2.subtract(this.moveTarget, this._Transform._Position);
         if (difference.getMagnitude() < 0.1)
         {
-            this.transform.position = this.moveTarget.copy();
+            this._Transform._Position = this.moveTarget.copy();
         }
         else
         {
             difference.normalize();
             difference.scalarMultiply(this.speed * delta);
-            this.transform.translate(difference);
+            this._Transform.translate(difference);
         }
     }
     move(direction)
     {
-        const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.game.grid.cellSize));
+        const pos = Vector2.add(this._Transform._Position, Vector2.scalarMultiply(direction, this.game.grid.cellSize));
 
         const roomWidth = this.game.grid.cellSize * this.game.grid.width;
         const roomHeight = this.game.grid.cellSize * this.game.grid.height;
-        if (pos.x < 0 || pos.x >= roomWidth || pos.y < 0 || pos.y >= roomHeight)
+        if (pos._X < 0 || pos._X >= roomWidth || pos._Y < 0 || pos._Y >= roomHeight)
             return;
 
         this.moveTarget = pos;
@@ -93,39 +93,39 @@ class Player extends Entity
     }
     playerInput(key)
     {
-        if (!this.transform.position.equals(this.moveTarget)) return;
+        if (!this._Transform._Position.equals(this.moveTarget)) return;
 
         switch (key) {
             case 'ArrowUp':
             case 'w':
-                this.renderer.setAnimation('walkup', this.animationSpeed);
+                this._Renderer.setAnimation('walkup', this.animationSpeed);
                 this.move(Direction.Up);
                 break;
             case 'ArrowLeft':
             case 'a':
-                this.renderer.setAnimation('walkleft', this.animationSpeed);
+                this._Renderer.setAnimation('walkleft', this.animationSpeed);
                 this.move(Direction.Left);
                 break;
             case 'ArrowDown':
             case 's':
-                this.renderer.setAnimation('walkdown', this.animationSpeed);
+                this._Renderer.setAnimation('walkdown', this.animationSpeed);
                 this.move(Direction.Down);
                 break;
             case 'ArrowRight':
             case 'd':
-                this.renderer.setAnimation('walkright', this.animationSpeed);
+                this._Renderer.setAnimation('walkright', this.animationSpeed);
                 this.move(Direction.Right);
                 break;
             default:
                 break;
         }
-        console.log(this.transform.position);
+        console.log(this._Transform._Position);
     }
 
     serialize()
     {
-        return '{ "type":"Player", "name": "' + this.name + '", "transform": ' + this.transform.serialize() + ', "renderer": '
-            + this.renderer.serialize() + ', "inventory":' + this.inventory.serialize() + '}';
+        return '{ "type":"Player", "name": "' + this._Name + '", "transform": ' + this._Transform.serialize() + ', "renderer": '
+            + this._Renderer.serialize() + ', "inventory":' + this.inventory.serialize() + '}';
     }
 
     static deserialize(obj, game)

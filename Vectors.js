@@ -2,24 +2,44 @@ export {Vector2, Direction};
 
 class Vector2
 {
-    x;
-    y;
+    _X;
+    _Y;
 
     constructor(x = 0.0, y = 0.0)
     {
-        this.x = x;
-        this.y = y;
+        this._X = x;
+        this._Y = y;
+    }
+
+    get x()
+    { 
+        return this._X;
+    };
+
+    set x(x)
+    {
+        this._X = x;
+    }
+
+    get y()
+    {
+        return this._Y;
+    }
+    
+    set y(y)
+    {
+        this._Y = y;
     }
 
     getMagnitude()
     {
-        return Math.sqrt(this.x**2 + this.y**2);
+        return Math.sqrt(this._X**2 + this._Y**2);
     }
 
     add(other)
     {
-        this.x += other.x;
-        this.y += other.y;
+        this._X += other.x;
+        this._Y += other.y;
     }
 
     static add(v1, v2)
@@ -39,8 +59,8 @@ class Vector2
 
     scalarMultiply(scalar)
     {
-        this.x *= scalar;
-        this.y *= scalar;
+        this._X *= scalar;
+        this._Y *= scalar;
     }
 
     static scalarMultiply(vec, scalar)
@@ -60,22 +80,22 @@ class Vector2
 
     equals(vec)
     {
-        return (this.x == vec.x && this.y == vec.y);
+        return (this._X == vec.x && this._Y == vec.y);
     }
 
     toString()
     {
-        return "("+this.x+", "+this.y+")"
+        return "("+this._X+", "+this._Y+")"
     }
 
     copy()
     {
-        return new Vector2(this.x, this.y);
+        return new Vector2(this._X, this._Y);
     }
 
     serialize()
     {
-        return '{ "x" : '+this.x+', "y" : '+this.y+'}';
+        return '{ "x" : '+this._X+', "y" : '+this._Y+'}';
     }
 
     static deserialize(obj)
