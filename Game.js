@@ -170,7 +170,7 @@ class Game
         var json = JSON.parse(str);
         for (var o of json)
         {
-            this.deserializeObject(o);
+            this.deserializeEntity(o);
         }
     }
 
