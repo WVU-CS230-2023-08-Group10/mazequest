@@ -6,7 +6,7 @@ import { Renderer } from "./Renderer.js";
 import { Entity } from "./Entity.js";
 import { PriorityList } from "./PriorityList.js";
 
-export {Enemy, NPC};
+export {Mob};
 
 /**
  * Class representing generic mobs
@@ -193,12 +193,5 @@ class Mob extends Entity
     }
 }
 
-class Enemy extends Mob 
-{
-    //enemy class
-}
 
-class NPC extends Mob 
-{
-    //NPC class
-}
+

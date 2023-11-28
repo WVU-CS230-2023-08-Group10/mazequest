@@ -29,7 +29,6 @@
         <!-- 
           Background audio initialization 
         -->
-        
         <audio src="In-the-hall-of-the-mountain-king.mp3" playsinline muted loop id="myaudio"></audio>
         <!--         
           Tab Links 
@@ -121,9 +120,6 @@
               <p id = "passwordErrorMsg" class="form__input-error-message"></p>
             </div>
             <button class="form__button" type="submit">Continue</button>
-            
-            <!--<p>Forgot your password?</p>
-            <P>Enter your email below to reset password</P>-->  <!--Not yet implemented-->
           </form>
         </div>
         <!-- 
@@ -334,15 +330,6 @@
               evt.currentTarget.className += " active";
             }
             document.getElementById(name).style.display = "block";
-
-            // If Game tab is pressed, load the game canvas
-            // if (name == "Gam")
-            // {
-            //   var script = document.createElement('script'),
-            //     scripts = document.getElementsByTagName('script')[0];
-            //   script.src = "./app.js";
-            //   scripts.parentNode.insertBefore(script, scripts);
-            // }
           }
           openTab(new Event('PointerEvent'), 'Hom');
         </script>
