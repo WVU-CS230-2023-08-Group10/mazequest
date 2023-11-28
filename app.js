@@ -141,12 +141,18 @@ game.deserializeEntity(JSON.parse(`{ "type":"Player", "name": "Player", "transfo
 "scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"default"}, "inventory":{ "type":"Inventory", "weapon":null, 
 "armor":null, "consumables":[]}}`));
 
+const gameWindowTab = document.querySelector("#GameWindow");
+
 document.addEventListener('keydown', function(input) {
+    if (!gameWindowTab.classList.contains("active")) return;
+
     if (!input.repeat)
         game.broadcastToEntities({type:'keydown', key:input.key});
 });
 
 app.ticker.add((delta) => {
+    if (!gameWindowTab.classList.contains("active")) return;
+
     game.updateEntities(delta);
 });
 
@@ -283,12 +289,11 @@ function loadEditorUI(parent, entity, indent=0)
         }
         else
         {
-            
             const div = document.createElement('div');
             const form = document.createElement('input');
             form.setAttribute('type', val instanceof Number ? 'number' : 'text');
             form.value = val;
-            form.addEventListener('input', () => {updateEntityValues(entity, prop, form)});
+            form.addEventListener('input', () => {updateEntityValues(entity, prop, form);});
             div.appendChild(newElement);
             div.appendChild(form);
             parent.appendChild(div);

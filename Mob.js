@@ -173,7 +173,6 @@ class Mob extends Entity
                 // if yes, combat
                 // if not, call method again with next index of action dictionary
                 initializeCombat();
-                // call weight reset method
                 break;
             case 'Move':
                 // find any valid, empty tile
@@ -182,17 +181,15 @@ class Mob extends Entity
                 // if not, call method again with next index of action dictionary
                 this.renderer.setAnimation('animation', this.animationSpeed);
                 this.move(Direction.valid);
-                // call weight reset method
                 break;
             case 'Item':
                 // use consumable
-                // call weight reset method
                 break;
             case 'Wait':
                 // do nothing
-                // call weight reset method
                 break;
         }
+        // call weight reset method
     }
 }
 
