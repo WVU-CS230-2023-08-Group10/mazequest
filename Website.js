@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
    if (user) {
       // User is signed in. Enable access to account tab
       document.getElementById("Account").disabled = false;
+      document.getElementById("Level_Builder").disabled = false;
 
       // Remove sign-up and login forms
       removeLoginForm(loginForm, SIGNED_IN);
@@ -72,6 +73,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           // Enable access to Account tab
           document.getElementById("Account").disabled = false;
+          document.getElementById("Level_Builder").disabled = false;
 
           // Remove login tab content
           removeLoginForm(loginForm, SIGNED_IN);
@@ -92,6 +94,8 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       alert("You have been successfully signed out")
       // User is logged out. Disable the Account tab
       document.getElementById("Account").disabled = true;
+      document.getElementById("Level_Builder").disabled = true;
+
 
       // Remove focus from the currently focused element
       document.activeElement.blur();
