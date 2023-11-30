@@ -93,17 +93,17 @@ class Combat
 }
 let mouseTracePoints = new Array();
 
-function handleMouseMove(e) 
+function handleMouseMove(event) 
 {
-    mouseTracePoints.push(new Vector2(e.clientX, e.clientY));
+    mouseTracePoints.push(new Vector2(event.clientX, event.clientY));
     //console.log(mouseTracePoints);
 }
 
-window.addEventListener("mousedown", function(e) {
+window.addEventListener("mousedown", function() {
     window.addEventListener("mousemove", handleMouseMove);
 });
 
-window.addEventListener("mouseup", function(e) {
+window.addEventListener("mouseup", function() {
     // Unregister the mouse move listener
     window.removeEventListener("mousemove", handleMouseMove);
     // Clear the mouse trace array
