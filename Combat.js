@@ -57,31 +57,8 @@ class Combat
         return;
     }
     traceGame(){
-        const mouseTracePoints = new Array;
+        
         canvasE = document.getElementById('game');
-        
-        // window.addEventListener("mousemove",function(e){
-        //     const interval = setInterval(() => mousePosition(e),250);
-        //     setTimeout(function(){ clearInterval(interval);},1000);
-        // })
-        // function mousePosition(e){
-        //     const cords = {x:0, y:0};
-        //     cords.x= e.pageX ;
-        //     cords.y= e.pageY ;
-        //     mouseTracePoints.push({x,y});
-        //     console.log(x,y);
-        // }
-        const cords = { x:0, y:0};
-        window.addEventListener("mousemove",function(e){
-            cords.x= e.clientX ;
-            cords.y= e.clientY ;
-            // mouseTracePoints.push({x,y});
-            console.log(cords);
-        });
-        
-            
-            
-        
         
         // Get pixel length of mouseTrace
         // Split up mouseTrace based on number of points in the pattern trace
@@ -113,33 +90,32 @@ class Combat
     }
 
 }
+const mouseTracePoints = new Array;
 const cords = { x:0, y:0};
-    // function point(e){
-    //     cords.x= e.clientX ;
-    //     cords.y= e.clientY ;
-    //         // mouseTracePoints.push({x,y});
-    //         console.log(cords);
-    // }
-    
+   
     window.addEventListener("mousedown",function(){    
         
-         
+        var index=0;
+        var maxIndex=640;
+        var nice= this.setInterval(function(){
+            cords.x= m_pos_x ;
+            cords.y= m_pos_y ;
             
-            window.addEventListener("mousemove",function(e){
-                // const interval = setInterval(() => function(e){
+            console.log(cords);
+            mouseTracePoints.push(cords);
+            console.log(mouseTracePoints);
+            index++;
+            if(index==maxIndex){
+                clearInterval(nice);
+            }
+        },1);
+        this.setTimeout(function(){
+            console.log(mouseTracePoints);
+        },4000)
         
-                cords.x= e.clientX ;
-                    cords.y= e.clientY ;
-                    // mouseTracePoints.push({x,y});
-                    console.log(cords);
-                
-            });
-
-        
-        // window.addEventListener("mousemove",point(j));
-        // window.removeEventListener("mousemove", function(e){});
-        // setTimeout(function(){ clearInterval(interval);},1000);
-    });
-    window.addEventListener("mouseup",function(e){
-        this.window.removeEventListener("mousemove", function(){});
-    }) 
+    },false);
+    
+    var m_pos_x,m_pos_y;
+    window.onmousemove = function(e) { m_pos_x = e.pageX;m_pos_y = e.pageY; }
+   
+    
