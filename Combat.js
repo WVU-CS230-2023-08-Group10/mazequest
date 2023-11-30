@@ -56,17 +56,33 @@ class Combat
         //endCombat
         return;
     }
-    traceGame(pattern, minDistance, maxDistance){
-        const mouseTrace = new Map;
-        // if(Mouse :: isButtonPressed(Mouse::Left)){
-
+    traceGame(){
+        const mouseTracePoints = new Array;
+        canvasE = document.getElementById('game');
+        
+        // window.addEventListener("mousemove",function(e){
+        //     const interval = setInterval(() => mousePosition(e),250);
+        //     setTimeout(function(){ clearInterval(interval);},1000);
+        // })
+        // function mousePosition(e){
+        //     const cords = {x:0, y:0};
+        //     cords.x= e.pageX ;
+        //     cords.y= e.pageY ;
+        //     mouseTracePoints.push({x,y});
+        //     console.log(x,y);
         // }
-        // this.endStopwatch();
-        // mouseTrace.add()
-        // While (mouse held down){
-        //     mouseTrace.add(point)
-        // }
-
+        const cords = { x:0, y:0};
+        window.addEventListener("mousemove",function(e){
+            cords.x= e.clientX ;
+            cords.y= e.clientY ;
+            // mouseTracePoints.push({x,y});
+            console.log(cords);
+        });
+        
+            
+            
+        
+        
         // Get pixel length of mouseTrace
         // Split up mouseTrace based on number of points in the pattern trace
         
@@ -80,13 +96,7 @@ class Combat
         // Return the average of the accuracies
 
     }
-    startStopwatch(){
-        return new Date().getTime();
-    }
-    endStopwatch(startTime){
-        endTime = new Date().getTime();
-        return startTime - endTime;
-    }
+    
     //might need adjustment
     isAttackerPlayer(){
         if(typeof this.attacker === "Player"){
@@ -103,3 +113,33 @@ class Combat
     }
 
 }
+const cords = { x:0, y:0};
+    // function point(e){
+    //     cords.x= e.clientX ;
+    //     cords.y= e.clientY ;
+    //         // mouseTracePoints.push({x,y});
+    //         console.log(cords);
+    // }
+    
+    window.addEventListener("mousedown",function(){    
+        
+         
+            
+            window.addEventListener("mousemove",function(e){
+                // const interval = setInterval(() => function(e){
+        
+                cords.x= e.clientX ;
+                    cords.y= e.clientY ;
+                    // mouseTracePoints.push({x,y});
+                    console.log(cords);
+                
+            });
+
+        
+        // window.addEventListener("mousemove",point(j));
+        // window.removeEventListener("mousemove", function(e){});
+        // setTimeout(function(){ clearInterval(interval);},1000);
+    });
+    window.addEventListener("mouseup",function(e){
+        this.window.removeEventListener("mousemove", function(){});
+    }) 
