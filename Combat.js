@@ -1,5 +1,6 @@
 import { Player } from "./Player.js";
 import { Renderer } from "./Renderer.js";
+import { Vector2 } from "./Vectors.js";
 
 
 
@@ -90,32 +91,21 @@ class Combat
     }
 
 }
-const mouseTracePoints = new Array;
-const cords = { x:0, y:0};
-   
-    window.addEventListener("mousedown",function(){    
-        
-        var index=0;
-        var maxIndex=640;
-        var nice= this.setInterval(function(){
-            cords.x= m_pos_x ;
-            cords.y= m_pos_y ;
-            
-            console.log(cords);
-            mouseTracePoints.push(cords);
-            console.log(mouseTracePoints);
-            index++;
-            if(index==maxIndex){
-                clearInterval(nice);
-            }
-        },1);
-        this.setTimeout(function(){
-            console.log(mouseTracePoints);
-        },4000)
-        
-    },false);
-    
-    var m_pos_x,m_pos_y;
-    window.onmousemove = function(e) { m_pos_x = e.pageX;m_pos_y = e.pageY; }
-   
-    
+let mouseTracePoints = new Array();
+
+function handleMouseMove(e) 
+{
+    mouseTracePoints.push(new Vector2(e.clientX, e.clientY));
+    //console.log(mouseTracePoints);
+}
+
+window.addEventListener("mousedown", function(e) {
+    window.addEventListener("mousemove", handleMouseMove);
+});
+
+window.addEventListener("mouseup", function(e) {
+    // Unregister the mouse move listener
+    window.removeEventListener("mousemove", handleMouseMove);
+    // Clear the mouse trace array
+    mouseTracePoints = new Array();
+});
