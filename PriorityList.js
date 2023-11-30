@@ -1,43 +1,53 @@
-export {PriorityList};
+export {PriorityList, action};
 
-class PriorityList 
+
+class action
 {
-    attack;
-    attackBase;
-    attackweight;
+    name;
+    priority;
+    base;
+    increment;
 
-    move;
-    moveBase;
-    moveWeight;
+    action(name="", priority=0, base=0, increment=0) {
 
-    item;
-    itemBase;
-    itemWeight;
-
-    wait;
-    waitBase;
-    waitWeight;
-
-    PriorityList(attackBase=0, attackWeight=0, moveBase=0, moveWeight=0, itemBase=0, itemWeight=0, waitBase=0, waitWeight=0) 
-    {
-        this.attack, this.attackBase = attackBase;
-        this.move, this.moveBase = moveBase;
-        this.item, this.itemBase = itemBase;
-        this.wait, this.waitBase = waitBase;
-
-        this.attackWeight = attackWeight;
-        this.moveWeight = moveWeight;
-        this.itemWeight = itemWeight;
-        this.waitWeight = waitWeight;
+        this.name = name;
+        this.priority = priority;
+        this.base = base;
+        this.increment = increment;
     }
 
-    updatePriority() 
-    {
-        this.attack += this.attackWeight;
-        this.move += this.moveWeight;
-        this.item += this.itemWeight;
-        this.wait += this.waitWeight;
+    addPriority(){
+        this.priority += this.increment;
     }
 
-    
+    resetPriority(){
+        this.priority = this.base;
+    }
+}
+
+class PriorityList
+{
+    AIDict;
+
+    PriorityList(actions){
+        this.AIDict = actions;
+    }
+
+    addPriority(){
+        for (let i = 0; i < this.AIDict.size(); i++){
+            this.AIDict[i].priority += this.AIDict[i].increment;
+        }
+
+        this.sortPriority();
+    }
+
+    resetPriority(i=0){
+        this.AIDict[i].priority = this.AIDict[i].base;
+
+        this.sortPriority();
+    }
+
+    sortPriority(){
+        this.AIDict.sort((a, b) => b.priority - a.priority);
+    }
 }
