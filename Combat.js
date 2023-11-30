@@ -36,17 +36,16 @@ class Combat
         //originally put "initialize combat UI", might just keep to side of screen
         combatDamage;
         //needs establishment of attackers high/low damage of weapon
-        lowDamageAttacker;
-        highDamageAttacker;
+        const attackingWeapon = this.attacker.inventory.getWeapon();
         //needs establishment of defenders high/low damage of weapon
-        lowDamageDefender;
-        highDamageDefender;
+        const defendingArmor = this.defender.inventory.getArmor();
+        
         if(this.isAttackerPlayer()){
             //floatAccuracy = traceGame(vertical swipe)
-            combatDamage = floatAccuracy * (highDamageAttacker - lowDamageAttacker) + lowDamageAttacker;
+            combatDamage = attackingWeapon.damage(floatAccuracy);
         }
         else{
-            combatDamage = Math.random() * (highDamageAttacker - lowDamageAttacker) + lowDamageAttacker;
+            combatDamage = attackingWeapon.damage(Math.random());
         }
 
         if(isDefenderPlayer()){

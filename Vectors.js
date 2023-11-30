@@ -1,5 +1,8 @@
 export {Vector2, Direction};
 
+/**
+ * Class for creating Vector2 objects (2d points)
+ */
 class Vector2
 {
     _X;

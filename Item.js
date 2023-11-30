@@ -42,8 +42,10 @@ class Weapon extends Item
         this.lowDamage = lowDamage;
         this.highDamage = highDamage;
     }
-    damage(){
-        return Math.random()*(highDamage-lowDamage) + lowDamage;
+
+    damage(accuracy)
+    {
+        return accuracy*(highDamage-lowDamage) + lowDamage;
     }
 
     serialize()
@@ -56,7 +58,8 @@ class Weapon extends Item
         return new Weapon(obj.name, obj.damage.low, obj.damage.high);
     }
 }
-class Armor extends Item{
+class Armor extends Item
+{
     constructor(name, protection){
         super(name);
         this.protection=protection;
