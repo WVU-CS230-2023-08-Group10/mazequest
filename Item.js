@@ -37,6 +37,9 @@ class Item extends Entity
 }
 class Weapon extends Item
 {
+    lowDamage;
+    highDamage;
+
     constructor(name, lowDamage, highDamage){
         super(name);
         this.lowDamage = lowDamage;
@@ -56,7 +59,10 @@ class Weapon extends Item
         return new Weapon(obj.name, obj.damage.low, obj.damage.high);
     }
 }
-class Armor extends Item{
+class Armor extends Item
+{
+    protection;
+
     constructor(name, protection){
         super(name);
         this.protection=protection;
