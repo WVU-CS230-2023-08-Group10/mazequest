@@ -4,7 +4,7 @@ import { Inventory } from "./Inventory.js";
 import { Transform } from "./Transform.js";
 import { Renderer } from "./Renderer.js";
 import { Entity } from "./Entity.js";
-import { PriorityList } from "./PriorityList.js";
+import { actions } from "./PriorityList.js";
 
 export {Mob};
 
@@ -153,13 +153,19 @@ class Mob extends Entity
         this.moveTarget = pos;
     }
 
+    updateAction() {
+        for (let i = 0; i < this.AIDict.size(); i++) {
+            this.AIDict[i].addPriority();
+        }
+    }
+
     broadcast(event)
     {
         console.log(this.event);
         switch (event.type)
         {
             case "keydown":
-                // update action dictionary
+                updateAction(this.AIDict);
                 mobAction();
                 break;
         }
@@ -167,8 +173,9 @@ class Mob extends Entity
     
     mobAction(action)
     {
-        switch (action) {
+        switch (action.name) {
             case 'Attack':
+                
                 // check if attack is valid
                 // if yes, combat
                 // if not, call method again with next index of action dictionary
@@ -186,10 +193,10 @@ class Mob extends Entity
                 // use consumable
                 break;
             case 'Wait':
-                // do nothing
+            default:
                 break;
         }
-        // call weight reset method
+        
     }
 }
 

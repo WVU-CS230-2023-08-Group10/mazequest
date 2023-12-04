@@ -1,5 +1,6 @@
 import { Player } from "./Player.js";
 import { Renderer } from "./Renderer.js";
+import { Vector2 } from "./Vectors.js";
 
 
 
@@ -35,17 +36,16 @@ class Combat
         //originally put "initialize combat UI", might just keep to side of screen
         combatDamage;
         //needs establishment of attackers high/low damage of weapon
-        lowDamageAttacker;
-        highDamageAttacker;
+        const attackingWeapon = this.attacker.inventory.getWeapon();
         //needs establishment of defenders high/low damage of weapon
-        lowDamageDefender;
-        highDamageDefender;
+        const defendingArmor = this.defender.inventory.getArmor();
+        
         if(this.isAttackerPlayer()){
             //floatAccuracy = traceGame(vertical swipe)
-            combatDamage = floatAccuracy * (highDamageAttacker - lowDamageAttacker) + lowDamageAttacker;
+            combatDamage = attackingWeapon.damage(floatAccuracy);
         }
         else{
-            combatDamage = Math.random() * (highDamageAttacker - lowDamageAttacker) + lowDamageAttacker;
+            combatDamage = attackingWeapon.damage(Math.random());
         }
 
         if(isDefenderPlayer()){
@@ -57,7 +57,7 @@ class Combat
         return;
     }
     traceGame(){
-        const mouseTracePoints = new Array;
+        
         canvasE = document.getElementById('game');
         
         // window.addEventListener("mousemove",function(e){
@@ -76,7 +76,7 @@ class Combat
             cords.x= e.clientX ;
             cords.y= e.clientY ;
             // mouseTracePoints.push({x,y});
-           // console.log(cords);
+            console.log(cords);
         });
         
             
@@ -131,15 +131,13 @@ const cords = { x:0, y:0};
                 cords.x= e.clientX ;
                     cords.y= e.clientY ;
                     // mouseTracePoints.push({x,y});
-                  //  console.log(cords);
+                    console.log(cords);
                 
             });
 
-        
-        // window.addEventListener("mousemove",point(j));
-        // window.removeEventListener("mousemove", function(e){});
-        // setTimeout(function(){ clearInterval(interval);},1000);
-    });
-    window.addEventListener("mouseup",function(e){
-        this.window.removeEventListener("mousemove", function(){});
-    }) 
+window.addEventListener("mouseup", function() {
+    // Unregister the mouse move listener
+    window.removeEventListener("mousemove", handleMouseMove);
+    // Clear the mouse trace array
+    mouseTracePoints = new Array();
+});

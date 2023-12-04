@@ -37,13 +37,27 @@ class Item extends Entity
 }
 class Weapon extends Item
 {
-    constructor(name, lowDamage, highDamage){
+    lowDamage;
+    highDamage;
+
+    constructor(name, lowDamage, highDamage)
+    {
         super(name);
         this.lowDamage = lowDamage;
         this.highDamage = highDamage;
     }
-    damage(){
-        return Math.random()*(highDamage-lowDamage) + lowDamage;
+
+    /**
+     * Returns the amount of damage this weapon should deal, based on an external accuracy value.
+     * The accuracy number, which should be between 0 and 1, scales the damage from the weapons
+     * predefined minimum damage to its maximum damage.
+     * 
+     * @param {Number} accuracy A number (float) between 0 and 1 that determines how much to scale the damage
+     * @returns Returns a number that represents the amount of damage to be dealt based on the given accuracy.
+     */
+    damage(accuracy)
+    {
+        return accuracy * (highDamage-lowDamage) + lowDamage;
     }
 
     serialize()
@@ -56,8 +70,12 @@ class Weapon extends Item
         return new Weapon(obj.name, obj.damage.low, obj.damage.high);
     }
 }
-class Armor extends Item{
-    constructor(name, protection){
+class Armor extends Item
+{
+    protection;
+
+    constructor(name, protection)
+    {
         super(name);
         this.protection=protection;
     }
