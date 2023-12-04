@@ -95,10 +95,10 @@ let mouseTracePoints = new Array();
 function handleMouseMove(event) 
 {
     mouseTracePoints.push(new Vector2(event.clientX, event.clientY));
-    //console.log(mouseTracePoints);
 }
 
 window.addEventListener("mousedown", function() {
+    //register the mouse move listener
     window.addEventListener("mousemove", handleMouseMove);
 });
 
