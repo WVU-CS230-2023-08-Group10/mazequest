@@ -76,7 +76,7 @@ class Combat
             cords.x= e.clientX ;
             cords.y= e.clientY ;
             // mouseTracePoints.push({x,y});
-            console.log(cords);
+           // console.log(cords);
         });
         
             
@@ -131,7 +131,7 @@ const cords = { x:0, y:0};
                 cords.x= e.clientX ;
                     cords.y= e.clientY ;
                     // mouseTracePoints.push({x,y});
-                    console.log(cords);
+                  //  console.log(cords);
                 
             });
 
