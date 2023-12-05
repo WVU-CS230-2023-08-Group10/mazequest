@@ -172,7 +172,6 @@ class Game
         var roomId = 0;
 
         return {
-            username : "user",
             level_file : this.serializeGameState(),
             index : roomId
         };

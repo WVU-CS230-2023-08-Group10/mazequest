@@ -2,6 +2,7 @@
 
 import { MazeLayout, GenerationParameters } from "./MazeLayout.js";
 import { profanity } from "https://cdn.skypack.dev/@2toad/profanity";
+import { Game } from "./Game.js";
 // BEGIN SUPABASE ;
 
 // CLIENT INITIALIZATION
@@ -206,6 +207,45 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
          alert("Error: Level name is too long. Please enter a new name.");
          levelNameTextBox.style.backgroundColor = "#E3963E";
       }
+
+      // Get the user's level name
+      const level_name = levelNameTextBox.value;
+
+      // Get the user's username
+      // Need creeks help *cry*
+      const user =  await s.auth.getUser()
+      console.log(JSON.stringify(user))
+      var stringId= JSON.stringify(user.data.user.id)
+
+      // Create a new Game object
+      const game = new Game;
+
+      // Call the saveRoom() function to get the level file and index
+      const levelObject = game.saveRoom();
+
+      // Insert data into Supabase
+      const { data, error } = await s.from('levels').insert([
+         {
+            username: stringId,
+            level_file: levelObject.level_file,
+            index: levelObject.index,
+            level_name: level_name,
+            published: false,
+         },
+      ])
+
+      if (error){
+         // Error saving to database
+         alert("Error: There was an error saving your level. Please retry.");
+      }
+      else{
+         // Level was successfully added
+         alert("Level saved!");
+         // Change text box color back to original (if necessary)
+         levelNameTextBox.style.backgroundColor = '';
+      }
+      
+      
    });
 
  });
