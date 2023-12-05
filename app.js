@@ -140,6 +140,11 @@ game.deserializeEntity(JSON.parse(`{ "type":"Player", "name": "Player", "transfo
 "img":"./images/armor/leatherArmor.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
 "scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"default"}, "inventory":{ "type":"Inventory", "weapon":null, 
 "armor":null, "consumables":[]}}`));
+game.deserializeEntity(JSON.parse(`{ "type":"Collider", "name": "Wall", "transform": 
+{ "position" : { "x" : 128, "y" : 256}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
+"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/armor/leatherArmor.json", 
+"img":"./images/armor/leatherArmor.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
+"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"default"}}`));
 
 const gameWindowTab = document.querySelector("#GameWindow");
 

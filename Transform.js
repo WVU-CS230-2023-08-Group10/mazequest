@@ -20,6 +20,27 @@ class Transform
         this._Rotation = rotation;
     }
 
+    get position() {
+        return this._Position;
+    }
+    set position(pos) {
+        this._Position = pos;
+    }
+
+    get scale() {
+        return this._Scale;
+    }
+    set scale(scale) {
+        this._Scale = scale
+    }
+
+    get rotation() {
+        return this._Rotation
+    }
+    set rotation(rot) {
+        this._Rotation = rot;
+    }
+
     translate(vector)
     {
         this._Position.add(vector);

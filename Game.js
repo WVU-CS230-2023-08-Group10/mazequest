@@ -5,6 +5,7 @@ import { Renderer } from "./Renderer.js";
 import { Player } from "./Player.js";
 import { Weapon, Armor, Consumable } from "./Item.js";
 import { Collider } from "./LevelElements.js";
+import { Enemy } from "./Enemy.js";
 export {Game};
 
 /**
@@ -143,7 +144,7 @@ class Game
         for (const entity of this.entityList)
         {
             if (predicate(entity))
-                output.add(entity);
+                output.push(entity);
         }
         return output;
     }
@@ -221,6 +222,9 @@ class Game
                 break;
             case "Collider":
                 e = Collider.deserialize(obj, this);
+                break;
+            case "Enemy":
+                e = Enemy.deserialize(obj, this);
                 break;
         }
         this.registerEntity(e);
