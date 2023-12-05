@@ -119,6 +119,17 @@ class Game
             if (predicate(entity))
                 return entity;
         }
+        return null;
+    }
+
+    /**
+     * Returns whether an entity in the registry fulfills the given predicate.
+     * @param {Predicate} predicate Function that takes an {@link Entity} and returns a {@link Boolean}
+     * @returns Whether an entity was found
+     */
+    entityExists(predicate)
+    {
+        return (this.getEntity(predicate) != null);
     }
 
     /**
@@ -153,6 +164,17 @@ class Game
         }
         str += "]";
         return str;
+    }
+
+    saveRoom()
+    {
+        var roomId = 0;
+
+        return {
+            username : "user",
+            level_file : this.serializeGameState(),
+            index : roomId
+        };
     }
 
     /**

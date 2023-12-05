@@ -263,12 +263,13 @@ function onDragMove(event)
 function onDragStart()
 {
     lbapp.stage.on('pointermove', onDragMove);
-    clearEditorUI()
+    clearEditorUI();
 }
 
 function onDragEnd()
 {
     lbapp.stage.off('pointermove', onDragMove);
+    clearEditorUI();
     loadEditorUI(document.querySelector('.vars'), selectedEntity);
 }
 
