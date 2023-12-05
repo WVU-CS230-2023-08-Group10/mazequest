@@ -4,7 +4,7 @@ import { Inventory } from "./Inventory.js";
 import { Transform } from "./Transform.js";
 import { Renderer } from "./Renderer.js";
 import { Entity } from "./Entity.js";
-import { actions } from "./PriorityList.js";
+// import { actions } from "./PriorityList.js";
 
 export {Mob};
 

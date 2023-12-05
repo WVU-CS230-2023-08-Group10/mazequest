@@ -115,6 +115,25 @@ window.addEventListener("mouseup", function() {
     window.removeEventListener("mousemove", handleMouseMove);
     this.window.removeEventListener("mousedown",handleMouseDown);
     console.log(mouseTracePoints.length);
+    if(tracePoints.length>0)
+    {
+        tracePoints = new Array();  
+    }
+    tracePoints = mouseTracePoints;
     // Clear the mouse trace array
     mouseTracePoints = new Array();
 });
+function Accuracy()
+{
+    extra = tracePoints%3;
+    for(let i=0;i<extra;i++)
+    {
+        tracePoints.pop();
+    }
+    var point1 = tracePoints.at(0);
+    let p2Index = tracePoints.length/3;
+    var point2 = tracePoints.at(p2Index);
+    let p3Index = p2Index*2;
+    var point3 = tracePoints.at(p3Index);
+    var point4 = tracePoints.at(tracePoints.length-1);
+}

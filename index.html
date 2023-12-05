@@ -182,17 +182,23 @@
           Game Window Tab 
         -->
         <div id="Gam" class="tabcontent" >
-          <div style="position:absolute">
-            <div id="hitbox" style="background-color:#f7f7f7;position: relative;z-index: 1;"></div>
+          <div id="HitboxContainer" style="display:flex;justify-content:center;z-index: 1;">
+            <div id="hitbox" style="display:flex;justify-content:center;background-color:#f7f7f7;"></div>
           </div>
           <canvas id="canvas" style="position: relative;z-index: 0;"></canvas>
         </div>
         <style>
+          #HitboxContainer{
+            margin-left: 52%;
+          }
           #hitbox{
+            position:absolute;
             height:175px;
             width: 128px;
-            top: 10px;
-            left: 688px;
+            top: 240px;
+          
+            z-index: 1;
+            
           }
         </style>
         
