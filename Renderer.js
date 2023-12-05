@@ -2,7 +2,14 @@ import { Transform } from "./Transform.js";
 export {Renderer};
 
 /**
+ * Class representing a Renderer object, which draws sprites to the game canvas.
  * 
+ * Fields:
+ * No fields are exposed by the Renderer.
+ * 
+ * Methods:
+ * - getAnimation() : Returns the animation name of the current animation
+ * - updateSpriteSheet(spriteSheetInfo) : Changes the current sprite information
  */
 class Renderer
 {
@@ -55,6 +62,9 @@ class Renderer
     {
         this.stage.removeChild(this.sprite);
     }
+    /**
+     * Unlinks and destroys the sprite associated with this renderer.
+     */
     dispose()
     {
         if (this.sprite == undefined) return;
@@ -65,6 +75,10 @@ class Renderer
     /**
      * So long as all your animations and frames are contained on a single sheet, you should be able
      * to avoid using this method.
+     * 
+     * If you use this without also changing the animation (changing to "default" should always work), the
+     * animation may end up referencing a non-existent animation.
+     * 
      * @param {Object} spriteSheetInfo An object with a "_Json" key and a "_Img" key, providing the animation
      * and frame data and the base texture, respectively.
      */
@@ -78,15 +92,23 @@ class Renderer
     /**
      * Changes the animation of this Renderer. The animation must be defined by the current sprite
      * sheet json structure.
+     * 
      * @param {String} animationId The name of the animation to play
      * @param {number} speed The animation speed. Defaults to 1
      * @param {boolean} loop Whether the animation should loop. Defaults to false
      */
     setAnimation(animationId, speed=1, loop=false)
     {
+        let anim;
+        try {
+            anim = this.spriteSheet.animations[animationId];
+        } catch {
+            throw new Error("Trying to change a renderer's animation, but the animation does not exist.");
+        }
+
         this._CurrentAnimation = animationId;
         this.unlink();
-        this.sprite = new PIXI.AnimatedSprite(this.spriteSheet.animations[animationId]);
+        this.sprite = new PIXI.AnimatedSprite(anim);
         this.link();
         this.sprite.loop = loop;
         this.sprite.animationSpeed = speed;
