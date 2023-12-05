@@ -47,6 +47,17 @@ class Entity
         this.uuid = crypto.randomUUID();
     }
 
+    get name() {
+        return this._Name;
+    }
+
+    get transform() {
+        return this._Transform;
+    }
+    get renderer() {
+        return this._Renderer;
+    }
+
     getID()
     {
         return this.uuid;

@@ -1,4 +1,6 @@
 import {Entity} from "./Entity.js";
+import { Transform } from "./Transform.js";
+import { Renderer } from "./Renderer.js";
 export {Collider};
 
 class Collider extends Entity
@@ -11,7 +13,7 @@ class Collider extends Entity
     serialize()
     {
         return '{ "type":"Collider", "name": "' + this._Name + '", "transform": ' + this._Transform.serialize() + ', "renderer": '
-            + this._Renderer.serialize() + ', "inventory":' + this.inventory.serialize() + '}';
+            + this._Renderer.serialize() + '}';
     }
 
     static deserialize(obj, game)

@@ -4,6 +4,8 @@ import { Transform } from "./Transform.js";
 import { Renderer } from "./Renderer.js";
 import { Entity } from "./Entity.js";
 import { Inventory } from "./Inventory.js";
+import { Collider } from "./LevelElements.js";
+import { Enemy } from "./Enemy.js";
 export {Player};
 
 /**
@@ -79,6 +81,20 @@ class Player extends Entity
         const roomHeight = this.game.grid.cellSize * this.game.grid.height;
         if (pos._X < 0 || pos._X >= roomWidth || pos._Y < 0 || pos._Y >= roomHeight)
             return;
+
+        const collisions = this.game.getEntities((e) => {
+            return e.transform.position.equals(pos);
+        })
+        for (const e of collisions)
+        {
+            if (e instanceof Collider)
+                return;
+            
+            if (e instanceof Enemy)
+            {
+                console.log("attack enemy");   
+            }
+        }
 
         this.moveTarget = pos;
     }

@@ -1,5 +1,7 @@
 
 import { Mob } from "./Mob.js";
+import { Transform } from "./Transform.js";
+import { Renderer } from "./Renderer.js";
 export {Enemy};
 
 /**
@@ -9,5 +11,5 @@ export {Enemy};
  */
 class Enemy extends Mob 
 {
-    //enemy class
+
 }
