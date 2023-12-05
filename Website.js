@@ -182,6 +182,32 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       }
    });
 
+   /* Event listener for the "saveLevel" button on leve builder tab */
+   document.getElementById("saveLevel").addEventListener("click", async (e) => {
+
+      e.preventDefault();
+
+      // Integer that represents max length allowed for a level name
+      let maxNameSize = 15;
+
+      // Get the level name text box
+      const levelNameTextBox = document.getElementById("levelName");
+
+      // Check to see if there is a name in the text box
+      if (levelNameTextBox.value == 0) {
+         // Textbox is empty, make user enter a name
+         alert("Error: No name provided for the level.")
+         levelNameTextBox.style.backgroundColor = "#E3963E";
+      }
+
+      // Check to see if name exceeds maximum length
+      if (levelNameTextBox.value.length > maxNameSize) {
+         // Name is too long. Make user enter a new name
+         alert("Error: Level name is too long. Please enter a new name.");
+         levelNameTextBox.style.backgroundColor = "#E3963E";
+      }
+   });
+
  });
 // END SUPABASE
 
