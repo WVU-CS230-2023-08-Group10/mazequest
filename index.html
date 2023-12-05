@@ -178,12 +178,24 @@
         <!-- 
           Game Window Tab 
         -->
-        <div id="Gam" class="tabcontent">
-          <canvas id="canvas"></canvas>
+        <div id="Gam" class="tabcontent" >
+          <div style="position:absolute">
+            <div id="hitbox" style="background-color:#f7f7f7;position: relative;z-index: 1;"></div>
+          </div>
+          <canvas id="canvas" style="position: relative;z-index: 0;"></canvas>
         </div>
+        <style>
+          #hitbox{
+            height:175px;
+            width: 128px;
+            top: 10px;
+            left: 688px;
+          }
+        </style>
+        
         <!-- 
           LeaderBoard and Personal Statistics Tab Data 
-        -->
+       
         <div id="Sta" class="tabcontent">
           <h1 class = "form__title">Leaderboards</h1>
           

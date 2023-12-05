@@ -13,6 +13,16 @@ class Inventory
         this.consumables = consumables;
     }
 
+    getWeapon()
+    {
+        return this.weapon;
+    }
+
+    getArmor()
+    {
+        return this.armor;
+    }
+
     /**
      * Stores an item in the inventory. If something needs to be dropped to store, returns an item. 
      * Otherwise, return null;

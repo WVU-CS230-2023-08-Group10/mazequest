@@ -36,17 +36,16 @@ class Combat
         //originally put "initialize combat UI", might just keep to side of screen
         combatDamage;
         //needs establishment of attackers high/low damage of weapon
-        lowDamageAttacker;
-        highDamageAttacker;
+        const attackingWeapon = this.attacker.inventory.getWeapon();
         //needs establishment of defenders high/low damage of weapon
-        lowDamageDefender;
-        highDamageDefender;
+        const defendingArmor = this.defender.inventory.getArmor();
+        
         if(this.isAttackerPlayer()){
             //floatAccuracy = traceGame(vertical swipe)
-            combatDamage = floatAccuracy * (highDamageAttacker - lowDamageAttacker) + lowDamageAttacker;
+            combatDamage = attackingWeapon.damage(floatAccuracy);
         }
         else{
-            combatDamage = Math.random() * (highDamageAttacker - lowDamageAttacker) + lowDamageAttacker;
+            combatDamage = attackingWeapon.damage(Math.random());
         }
 
         if(isDefenderPlayer()){
@@ -58,11 +57,13 @@ class Combat
         return;
     }
     traceGame(){
-        
-        canvasE = document.getElementById('game');
-        
+        // In the top right of the game canvas, a pattern will appear (in the tranparent hitbox) over the creature. 
+        // Press and Drag the mouse over the pattern to deal damage to the creature, 
+        // the higher the accuracy of the trace, the more damage is dealt.
+       
+        // TO DO
         // Get pixel length of mouseTrace
-        // Split up mouseTrace based on number of points in the pattern trace
+        // Split up mouseTrace based on number of points in the pattern trace, will be four for base start
         
         // Initialize accuracy
         // For each segment of mouse trace
@@ -92,20 +93,28 @@ class Combat
 
 }
 let mouseTracePoints = new Array();
+let tracePoints = new Array();
+const hitbox = document.getElementById("hitbox");
+hitbox.addEventListener("mouseover", handleMousePress);
 
+function handleMousePress(){
+    window.addEventListener("mousedown", handleMouseDown);
+}
+function handleMouseDown(){
+    //register the mouse move listener
+    window.addEventListener("mousemove", handleMouseMove);
+}
 function handleMouseMove(event) 
 {
     mouseTracePoints.push(new Vector2(event.clientX, event.clientY));
-    //console.log(mouseTracePoints);
+    console.log(mouseTracePoints);
 }
-
-window.addEventListener("mousedown", function() {
-    window.addEventListener("mousemove", handleMouseMove);
-});
 
 window.addEventListener("mouseup", function() {
     // Unregister the mouse move listener
     window.removeEventListener("mousemove", handleMouseMove);
+    this.window.removeEventListener("mousedown",handleMouseDown);
+    console.log(mouseTracePoints.length);
     // Clear the mouse trace array
     mouseTracePoints = new Array();
 });

@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
    // Check to see if user is logged in
    
    const { data: { user } } = await s.auth.getUser()
+   
    if (user) {
       // User is signed in. Enable access to account tab
       document.getElementById("Account").disabled = false;
@@ -44,6 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       // Move the user to the sign-in tab
       // Explicitly call openTab with the 'In' tab as an argument
       openTab({ currentTarget: document.getElementById('In') }, 'In');
+      
    }
 
    updateLeaderboard();
@@ -122,8 +124,9 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
      const password = document.getElementById("suPassword").value 
      const user_name = document.getElementById("username").value
      
+     user_name.substring(0,user_name.length-1)
      
-      // CHECKS USERNAME
+      // CHECKS USERNAME FOR PROFANITY
      if (profanity.exists(user_name))
      {
       alert("Hark! Thy name is an unforgivable curse...")
@@ -182,15 +185,19 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
  });
 // END SUPABASE
 
+/**
+ * Function to update the leaderboard, including both top and user stats
+ * @param {*} none
+ */
 async function updateLeaderboard() {
 
    var topDragonSlayersPromise
    var topMazeRunnersPromise
    var topEnemySlayersPromise
-   var personalStatsPromise
-
    
 
+   
+      // retrieve promises
    topDragonSlayersPromise =  s
    .from("player_stats")
    .select()
@@ -211,7 +218,7 @@ async function updateLeaderboard() {
 
    
    
-
+   // resolve all promises at once so db calls don't block each other
      const[topDragonSlayers, topEnemySlayers, topMazeRunners] = 
      await Promise.all([
       topDragonSlayersPromise, 
@@ -231,7 +238,7 @@ async function updateLeaderboard() {
             //TODO : Create dummy data to test
            
          
-
+               // grabs stats and usernames for leaderboard
          var firstDragonSlayer = topDragonSlayers.data[0].username
          var secondDragonSlayer = topDragonSlayers.data[1].username
          var thirdDragonSlayer = topDragonSlayers.data[2].username
@@ -261,13 +268,15 @@ async function updateLeaderboard() {
      
       const user =  await s.auth.getUser()
      
+
+      // if user is logged in, retrieve personal stats
   if (user.data.user){
       
       
    console.log(JSON.stringify(user))
    var stringId= JSON.stringify(user.data.user.id)
    
- 
+ // retrieve user id to access stats table
    const id = stringId.substring(1,stringId.length-1)
 
    
@@ -278,12 +287,12 @@ async function updateLeaderboard() {
    .eq("id", id)
 
    
-
+// convert username to json and display
    console.log(JSON.stringify(personalStats.data[0].username))
    const usernameString = JSON.stringify(personalStats.data[0].username)
 
-   const username = usernameString.substring(1,usernameString.length-1)
-   document.getElementById("personal_stat").innerHTML = username + "'s conquests..."
+   //const username = usernameString.substring(1,usernameString.length-1)
+   document.getElementById("personal_stat").innerHTML = usernameString.substring(3,usernameString.length-3)+ "'s conquests..."
 
   
       console.log(JSON.stringify(personalStats))
@@ -299,9 +308,10 @@ async function updateLeaderboard() {
    }
                   
 
-          //error handling is redundant as long as 3 profiles exist, but should probably implement some try/catch or arraylength check
+          //error handling is redundant as long as 3 profiles exist
 
 
+            // stat assignments
       document.getElementById("dragonSlayer1").innerHTML = firstDragonSlayer
       document.getElementById("dragonSlayer2").innerHTML = secondDragonSlayer
       document.getElementById("dragonSlayer3").innerHTML = thirdDragonSlayer
