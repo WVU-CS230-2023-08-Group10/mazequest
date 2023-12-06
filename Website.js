@@ -204,7 +204,7 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       // Check to see if name exceeds maximum length
       if (levelNameTextBox.value.length > maxNameSize) {
          // Name is too long. Make user enter a new name
-         alert("Error: Level name is too long. Please enter a new name.");
+         alert("Error: Level name cannot be longer than 15 characters. Please enter a new name.");
          levelNameTextBox.style.backgroundColor = "#E3963E";
       }
 
@@ -215,7 +215,7 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       // Need creeks help *cry*
       const user =  await s.auth.getUser()
       console.log(JSON.stringify(user))
-      var stringId= JSON.stringify(user.data.user.id)
+      var username = JSON.stringify(user.data.user.id)
 
       // Create a new Game object
       const game = new Game;
@@ -226,7 +226,7 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       // Insert data into Supabase
       const { data, error } = await s.from('levels').insert([
          {
-            username: stringId,
+            username: username,
             level_file: levelObject.level_file,
             index: levelObject.index,
             level_name: level_name,
@@ -511,7 +511,8 @@ var hintsText = ["To engage in combat, move into the enemy!",
    "Hey, you, you're finally awake.",
    "I used to be an adventurer like you. Then I took an arrow to the knee...",
    "Beware the Jabberwock! It's jaws that bite, it's claws that catch!",
-   "Have you heard of the High Elves?"];
+   "Have you heard of the High Elves?",
+   "Grand Theft Auto 6 releases in 2025."];
 
 var counter = 0;
 shuffle(hintsText);
