@@ -214,6 +214,12 @@ prefabs.set('Goblin', JSON.parse(`{ "type":"Player", "name": "Goblin", "transfor
 "img":"./images/enemies/goblin.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
 "scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"walkright"}, "inventory":{ "type":"Inventory", "weapon":null, 
 "armor":null, "consumables":[]}}`));
+prefabs.set('Slime', JSON.parse(`{ "type":"Player", "name": "Slime", "transform": 
+{ "position" : { "x" : 256, "y" : 256}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
+"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/enemies/slime.json", 
+"img":"./images/enemies/slime.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
+"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"walkright"}, "inventory":{ "type":"Inventory", "weapon":null, 
+"armor":null, "consumables":[]}}`));
 prefabs.set('Exit Indicator', JSON.parse(`{ "type":"ExitIndicator", "name": "Exit Indicator", "transform": 
 { "position" : { "x" : 256, "y" : 32}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
 "renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/levelEditor/exit_indicator.json",
@@ -323,7 +329,7 @@ function updateEntityValues(object, propertyName, inputSource)
 
     if (object instanceof Renderer && propertyName == '_CurrentAnimation')
     {
-        selectedEntity._Renderer.setAnimation(inputSource.value, 1/4, true);
+        selectedEntity.renderer.setAnimation(inputSource.value, 1/4, true);
     }
 }
 
