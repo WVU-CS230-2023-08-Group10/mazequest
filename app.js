@@ -210,8 +210,8 @@ prefabs.set('Player', JSON.parse(`{ "type":"Player", "name": "Player", "transfor
 "armor":null, "consumables":[]}}`));
 prefabs.set('Goblin', JSON.parse(`{ "type":"Player", "name": "Goblin", "transform": 
 { "position" : { "x" : 128, "y" : 256}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
-"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/armor/leatherArmor.json", 
-"img":"./images/armor/leatherArmor.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
+"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/enemies/goblin.json", 
+"img":"./images/enemies/goblin.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
 "scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"walkright"}, "inventory":{ "type":"Inventory", "weapon":null, 
 "armor":null, "consumables":[]}}`));
 
