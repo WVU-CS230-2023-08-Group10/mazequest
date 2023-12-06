@@ -100,4 +100,15 @@ class Entity
     {
         return this.constructor.name;
     }
+
+    serialize()
+    {
+        return '{ "type":"Entity", "name": "' + this._Name + '", "transform": ' + this._Transform.serialize() + ', "renderer": '
+            + this._Renderer.serialize() + '}';
+    }
+
+    static deserialize(obj, game)
+    {
+        return new Entity(obj.name, Transform.deserialize(obj.transform), Renderer.deserialize(obj.renderer, game.stage), game);
+    }
 }

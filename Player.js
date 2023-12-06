@@ -79,20 +79,9 @@ class Player extends Entity
 
         const roomWidth = this.game.grid.cellSize * this.game.grid.width;
         const roomHeight = this.game.grid.cellSize * this.game.grid.height;
-        if (pos._X < 0)
+        if (pos.x < 0 || pos.x >= roomWidth || pos.y < 0 || pos.y >= roomHeight)
         {
-            return;
-        }
-        else if (pos._X >= roomWidth)
-        {
-            return
-        }
-        else if (pos._Y < 0)
-        {
-            return;
-        }
-        else if (pos._Y >= roomHeight)
-        {
+            this.game.nextRoom(direction);
             return;
         }
 
@@ -106,7 +95,8 @@ class Player extends Entity
             
             if (e instanceof Enemy)
             {
-                console.log("attack enemy");   
+                console.log("attack enemy");
+                return;
             }
         }
 
