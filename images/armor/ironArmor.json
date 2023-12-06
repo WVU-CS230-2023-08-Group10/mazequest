@@ -1,132 +1,132 @@
 { "frames": {
-   "ironArmor (ironArmor) 0.aseprite": {
-    "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 1.aseprite": {
-    "frame": { "x": 16, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 2.aseprite": {
-    "frame": { "x": 32, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 3.aseprite": {
-    "frame": { "x": 48, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 4.aseprite": {
-    "frame": { "x": 64, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 5.aseprite": {
-    "frame": { "x": 80, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 6.aseprite": {
-    "frame": { "x": 96, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 7.aseprite": {
-    "frame": { "x": 112, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 8.aseprite": {
-    "frame": { "x": 128, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 9.aseprite": {
-    "frame": { "x": 144, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 10.aseprite": {
-    "frame": { "x": 160, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 11.aseprite": {
-    "frame": { "x": 176, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 12.aseprite": {
-    "frame": { "x": 192, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 13.aseprite": {
-    "frame": { "x": 208, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 14.aseprite": {
-    "frame": { "x": 224, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   "ironArmor (ironArmor) 15.aseprite": {
-    "frame": { "x": 240, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   }
+  "right_s1": {
+   "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "right_r1": {
+   "frame": { "x": 16, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "right_r2": {
+   "frame": { "x": 32, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "right_s2": {
+   "frame": { "x": 48, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "down_r1": {
+   "frame": { "x": 64, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "down_s1": {
+  "frame": { "x": 80, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "down_s2": {
+  "frame": { "x": 96, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "down_r2": {
+  "frame": { "x": 112, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "left_r1": {
+  "frame": { "x": 128, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "left_s1": {
+  "frame": { "x": 144, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "left_s2": {
+   "frame": { "x": 160, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "left_r2": {
+  "frame": { "x": 176, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "up_r1": {
+  "frame": { "x": 192, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "up_s1": {
+  "frame": { "x": 208, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "up_s2": {
+  "frame": { "x": 224, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  },
+  "up_r2": {
+  "frame": { "x": 240, "y": 0, "w": 16, "h": 16 },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sourceSize": { "w": 16, "h": 16 },
+   "duration": 100
+  }
  },
  "meta": {
   "app": "https://www.aseprite.org/",
@@ -142,5 +142,13 @@
   ],
   "slices": [
   ]
+ },
+ "animations":
+ {
+    "default":["down_s1"],
+    "walkup":["up_r1", "up_s1","up_s2", "up_r2"],
+    "walkleft":["left_r1", "left_s1", "left_s2", "left_r2"],
+    "walkdown":["down_r1", "down_s1", "down_s2", "down_r2"],
+    "walkright":["right_r1", "right_s1", "right_s2", "right_r2"]
  }
 }
