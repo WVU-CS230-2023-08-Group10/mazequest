@@ -4,12 +4,16 @@ import { Vector2 } from "./Vectors.js";
 import { Renderer } from "./Renderer.js";
 import { Player } from "./Player.js";
 import { Weapon, Armor, Consumable } from "./Item.js";
-import { Collider } from "./LevelElements.js";
+import { Collider, ExitIndicator } from "./LevelElements.js";
 import { Enemy } from "./Enemy.js";
+import { MazeLayout, GenerationParameters } from "./MazeLayout.js";
 export {Game};
 
 /**
  * Class representing the game manager.
+ * 
+ * Fields:
+ *  - currentRoomPosition ({@link Vector2}) : the coordinates in the layout of the currently rendered room
  * 
  * Useful methods to know:
  *  - {@link registerEntity} : Required for entities to recieve updates.
@@ -26,6 +30,8 @@ class Game
     stage;
     isInEditMode;
     grid;
+    layout;
+    currentRoomPosition;
 
     /**
      * Creates a new game manager instance that handles the top level game functions.
@@ -44,11 +50,13 @@ class Game
             height: 16
         }
 
-        // var playerSpriteInfo = { json: './images/armor/leatherArmor.json', img:'./images/armor/leatherArmor.png'};
-        // var player = new Player("Player", new Transform(new Vector2(256, 256), new Vector2(2, 2)), new Renderer(playerSpriteInfo, stage), this)
-        // this.registerEntity(player);
+        this.layout = new MazeLayout(new GenerationParameters(10, 10, 16, 64, .5));
+        this.currentRoomPosition = this.layout.startPosition;
+    }
 
-        // console.log(this.getEntity("Player").serialize());
+    get currentRoom()
+    {
+        return this.layout.roomArray[currentRoomPosition.y][currentRoomPosition.x];
     }
 
     /**
@@ -81,6 +89,10 @@ class Game
     {
         for (const entity of this.entityList) {
             entity.update(delta);
+        }
+        // Seperate these into two different loops so that if update changes
+        // what entities are registered, we don't get conflicts.
+        for (const entity of this.entityList) {
             entity.render(delta);
         }
     }
@@ -170,6 +182,19 @@ class Game
     saveRoom()
     {
         var roomId = 0;
+        // Based on what exit indicators exist in the room, determine its index/shape
+        if (this.entityExists((e) => { return e.renderer.getAnimation() == "exitUp"; })) {
+            roomId += 1;
+        }
+        if (this.entityExists((e) => { return e.renderer.getAnimation() == "exitRight"; })) {
+            roomId += 2;
+        }
+        if (this.entityExists((e) => { return e.renderer.getAnimation() == "exitDown"; })) {
+            roomId += 4;
+        }
+        if (this.entityExists((e) => { return e.renderer.getAnimation() == "exitLeft"; })) {
+            roomId += 8;
+        }
 
         return {
             level_file : this.serializeGameState(),
@@ -178,19 +203,53 @@ class Game
     }
 
     /**
-     * Constructs a new entity registry from a provided game state string. The game state string should
-     * probably be constructed via {@link serializeGameState}. If constructed otherwise, ensure that the
-     * string represents a JSON array of deserializable {@link Entity} objects.
+     * Moves to the next room in the given direction.
      * 
-     * Note: The registry is cleared to load the game state. Clean up is not handled in this step, but it
-     * insures the registry is empty. You absolutely should properly dispose of all entities before calling this method.
-     * @param {String} str A serialized Game state string.
+     * @param {Vector2} direction 
      */
-    deserializeGameState(str)
+    nextRoom(direction)
     {
-        this.entityList = [];
-        var json = JSON.parse(str);
-        for (var o of json)
+        this.currentRoomPosition.add(direction);
+        unloadRoom();
+        loadRoom();
+    }
+
+    /**
+     * Deletes all non-player entities from the game.
+     */
+    unloadRoom()
+    {
+        // Get all non-player entities
+        const entities = this.getEntities((e) => { return !(e instanceof Player); });
+        // Delete those entites (consquently unregistering them)
+        for (const e of entities)
+        {
+            e.destroy();
+        }
+    }
+
+    /**
+     * Loads the room given by currentRoomPosition. This DOES NOT unload existing entities.
+     * Be sure to use with {@link unloadRoom} if you want to also remove existing non-player
+     * entities before loading a new room.
+     */
+    loadRoom()
+    {
+        deserializeGameState(this.currentRoom);
+    }
+
+    /**
+     * Adds entities from a provided game state object. The game state object should
+     * probably be constructed via {@link serializeGameState}. If constructed otherwise, ensure that the
+     * object represents a JSON array of deserializable {@link Entity} objects.
+     * 
+     * Note: The registry is not cleared to load the game state, and will simply add the entities to the registry.
+     * 
+     * @param {Array} json A serialized Game state object (an array of serialized Entities)
+     */
+    deserializeGameState(json)
+    {
+        for (const o of json)
         {
             this.deserializeEntity(o);
         }
@@ -224,6 +283,9 @@ class Game
                 break;
             case "Enemy":
                 e = Enemy.deserialize(obj, this);
+                break;
+            case "ExitIndicator":
+                e = ExitIndicator.deserialize(obj, this);
                 break;
         }
         this.registerEntity(e);

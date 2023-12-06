@@ -79,8 +79,22 @@ class Player extends Entity
 
         const roomWidth = this.game.grid.cellSize * this.game.grid.width;
         const roomHeight = this.game.grid.cellSize * this.game.grid.height;
-        if (pos._X < 0 || pos._X >= roomWidth || pos._Y < 0 || pos._Y >= roomHeight)
+        if (pos._X < 0)
+        {
             return;
+        }
+        else if (pos._X >= roomWidth)
+        {
+            return
+        }
+        else if (pos._Y < 0)
+        {
+            return;
+        }
+        else if (pos._Y >= roomHeight)
+        {
+            return;
+        }
 
         const collisions = this.game.getEntities((e) => {
             return e.transform.position.equals(pos);

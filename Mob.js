@@ -17,7 +17,7 @@ class Mob extends Entity
 {
     mobName;
     mobHealth;
-    mobInventory;
+    inventory;
     mobHostile;
 
     speed = 2;
@@ -32,7 +32,7 @@ class Mob extends Entity
         
         this.mobName = name;
         this.mobHealth = health;
-        this.mobInventory = new Inventory();
+        this.inventory = new Inventory();
         this.mobHostile = hostile;
         this.actionDict = AIDict;
     }
@@ -59,12 +59,12 @@ class Mob extends Entity
 
     get getInventory() 
     {
-        return this.mobInventory;
+        return this.inventory;
     }
 
     set setInventory(inventory) 
     {
-        this.mobInventory = inventory;
+        this.inventory = inventory;
     }
 
     get getHostile() 

@@ -214,6 +214,11 @@ prefabs.set('Goblin', JSON.parse(`{ "type":"Player", "name": "Goblin", "transfor
 "img":"./images/enemies/goblin.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
 "scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"walkright"}, "inventory":{ "type":"Inventory", "weapon":null, 
 "armor":null, "consumables":[]}}`));
+prefabs.set('Exit Indicator', JSON.parse(`{ "type":"ExitIndicator", "name": "Exit Indicator", "transform": 
+{ "position" : { "x" : 256, "y" : 32}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
+"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/levelEditor/exit_indicator.json",
+"img":"./images/levelEditor/exit_indicator.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
+"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"up"}}`));
 
 const prefabButtons = document.querySelectorAll('.prefab-button');
 

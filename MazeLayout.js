@@ -8,8 +8,10 @@ class MazeLayout
     params;
     roomData;
     file;
+    game;
+    startPosition;
     
-    constructor(params, file = null)
+    constructor(params, file = null, game = undefined)
     {
         this.roomData = this.loadRooms(file);
         this.params = params;
@@ -19,13 +21,16 @@ class MazeLayout
                 this.roomArray[i][j] = null;
             }
         }
+
+        this.game = game;
     }
 
-    get Params() { return params; }
-    set Params(params) { this.params = params; }
+    get params() { return params; }
+    set params(params) { this.params = params; }
 
     loadRooms(file)
     {
+        //this.game.registerEntity();
         if (file == null)
             // load the default rooms from the database
             return [];
@@ -48,7 +53,7 @@ class MazeLayout
         // Get random start position
         var startRow = Math.floor(Math.random() * this.roomArray.length);
         var startCol = Math.floor(Math.random() * this.roomArray[startRow].length);
-        var startPos = new Vector2(startCol, startRow);
+        startPosition = new Vector2(startCol, startRow);
 
         // Make a batch of rooms to generate
         var batch = [ startPos ];
@@ -127,6 +132,7 @@ class MazeLayout
                 }
 
                 logStr += tiles[toBeGenerated[i][j]];
+                // TODO: this.roomArray[i][j] = query room with index (toBeGenerated[i][j]);
             }
             logStr += "\n";
         }

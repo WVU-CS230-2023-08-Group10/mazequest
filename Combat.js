@@ -2,8 +2,6 @@ import { Player } from "./Player.js";
 import { Renderer } from "./Renderer.js";
 import { Vector2 } from "./Vectors.js";
 
-
-
 /**
  * Class representing game combat.
  * 
@@ -78,14 +76,14 @@ class Combat
     
     //might need adjustment
     isAttackerPlayer(){
-        if(typeof this.attacker === "Player"){
+        if(this.attacker instanceof Player){
             return true;
         }
         return false;
     }
     //might need adjustment
     isDefenderPlayer(){
-        if(typeof this.defender === "Player"){
+        if(this.defender instanceof Player){
             return true;
         }
         return false;
@@ -107,7 +105,6 @@ function handleMouseDown(){
 function handleMouseMove(event) 
 {
     mouseTracePoints.push(new Vector2(event.clientX, event.clientY));
-    console.log(mouseTracePoints);
 }
 
 window.addEventListener("mouseup", function() {
