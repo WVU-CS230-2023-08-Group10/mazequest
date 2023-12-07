@@ -105,9 +105,9 @@ body {
   background: var(--secondary-font-color);
 }
 
-.canvas{ grid-area: canvas;}
-.entities{ grid-area: entities;}
-.prefabs{ grid-area: prefabs;}
+.canvas{ grid-area: canvas; width: 50%;}
+.entities{ grid-area: entities; width: 70%;}
+.prefabs{ grid-area: prefabs; width: 70%;}
 .vars
 {
   grid-area: vars;
@@ -117,16 +117,15 @@ body {
   position: absolute;
   right: 0;
   overflow-y: scroll;
+  overflow-x: scroll;
   height: 100%;
-  width: 110%;
+  width: 130%;
 }
 .vars div{
   display: flex;
 }
 .vars input{
   margin: 10px 0px 10px 10px;
-  width: 100%;
-  float: right;
 }
 .vars h3
 {
