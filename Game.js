@@ -287,6 +287,9 @@ class Game
             case "ExitIndicator":
                 e = ExitIndicator.deserialize(obj, this);
                 break;
+            case "Entity":
+                e = ExitIndicator.deserialize(obj, this);
+                break;
         }
         this.registerEntity(e);
         return e;

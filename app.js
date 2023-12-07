@@ -1,6 +1,7 @@
 import { Entity } from "./Entity.js";
 import { Game } from "./Game.js";
 import { Renderer } from "./Renderer.js";
+import { Vector2 } from "./Vectors.js";
 
 const canvasWidth = 640;
 const canvasHeight = 512;
@@ -225,6 +226,45 @@ prefabs.set('Exit Indicator', JSON.parse(`{ "type":"ExitIndicator", "name": "Exi
 "renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/levelEditor/exit_indicator.json",
 "img":"./images/levelEditor/exit_indicator.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
 "scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"up"}}`));
+prefabs.set('Wall', {
+    type: "Collider", name: "Wall", transform:
+        { position: { x: 256, y: 256 }, scale: { x: 2, y: 2 }, rotation: 0 },
+    renderer: {
+        type: "Renderer", spriteSheetInfo: {
+            json: "./images/tiles/tiles.json",
+            img: "./images/tiles/tiles.png"
+        }, transform: {
+            position: { x: 0, y: 0 },
+            scale: { x: 1, y: 1 }, rotation: 0
+        }, animation: "stone_wall"
+    }
+});
+prefabs.set('Grass', {
+    type: "Entity", name: "Grass", transform:
+        { position: { x: 256, y: 256 }, scale: { x: 2, y: 2 }, rotation: 0 },
+    renderer: {
+        type: "Renderer", spriteSheetInfo: {
+            json: "./images/tiles/tiles.json",
+            img: "./images/tiles/tiles.png"
+        }, transform: {
+            position: { x: 0, y: 0 },
+            scale: { x: 1, y: 1 }, rotation: 0
+        }, animation: "grass"
+    }
+});
+prefabs.set('Path', {
+    type: "Entity", name: "Path", transform:
+        { position: { x: 256, y: 256 }, scale: { x: 2, y: 2 }, rotation: 0 },
+    renderer: {
+        type: "Renderer", spriteSheetInfo: {
+            json: "./images/tiles/tiles.json",
+            img: "./images/tiles/tiles.png"
+        }, transform: {
+            position: { x: 0, y: 0 },
+            scale: { x: 1, y: 1 }, rotation: 0
+        }, animation: "path"
+    }
+});
 
 const prefabButtons = document.querySelectorAll('.prefab-button');
 
@@ -237,12 +277,17 @@ function addToLevelBuilder(id)
 {
     const obj = prefabs.get(id);
     const entity = levelBuilder.deserializeEntity(obj);
+    if (selectedEntity != null)
+    {
+        entity.transform.position = Vector2.add(selectedEntity.transform.position, {x:32, y:0});
+    }
     const eList = document.querySelector('#entityList');
     const button = document.createElement('button');
-    button.textContent = entity._Name;
+    button.textContent = entity.name;
     button.setAttribute('id','id'+entity.getID());
     button.setAttribute('class','entity-select dropbtn');
     button.addEventListener('click', highlightEntity);
+    button.click();
     eList.appendChild(button);
 }
 
