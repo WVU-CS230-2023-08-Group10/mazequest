@@ -199,6 +199,7 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
          // Textbox is empty, make user enter a name
          alert("Error: No name provided for the level.")
          levelNameTextBox.style.backgroundColor = "#E3963E";
+         return;
       }
 
       // Check to see if name exceeds maximum length
@@ -206,16 +207,15 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
          // Name is too long. Make user enter a new name
          alert("Error: Level name cannot be longer than 15 characters. Please enter a new name.");
          levelNameTextBox.style.backgroundColor = "#E3963E";
+         return;
       }
 
       // Get the user's level name
       const level_name = levelNameTextBox.value;
 
       // Get the user's username
-      // Need creeks help *cry*
-      const user =  await s.auth.getUser()
-      console.log(JSON.stringify(user))
-      var username = JSON.stringify(user.data.user.id)
+      const user =  await s.auth.getUser();
+      var username = JSON.stringify(user.data.user.user_metadata.username);
 
       // Create a new Game object
       const game = new Game;
@@ -237,15 +237,15 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       if (error){
          // Error saving to database
          alert("Error: There was an error saving your level. Please retry.");
+         return;
       }
       else{
          // Level was successfully added
          alert("Level saved!");
          // Change text box color back to original (if necessary)
          levelNameTextBox.style.backgroundColor = '';
+         return;
       }
-      
-      
    });
 
  });
