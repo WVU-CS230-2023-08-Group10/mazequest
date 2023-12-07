@@ -425,8 +425,10 @@ async function updateLeaderboard() {
          let isValid = item.regex.test(password)
          if (!isValid)
          {
+            // Remove text from text boxes
             passwordBox.value = "";
             rePasswordBox.value = "";
+            // Make the text box orange
             passwordBox.style.backgroundColor = "#E3963E";
             console.log("invalid password")
             isStrong = false
@@ -440,6 +442,7 @@ async function updateLeaderboard() {
    }
    // Text boxes did not match. Make them re-enter.
    alert("Passwords do not match.")
+   // Remove text from text boxes
    passwordBox.value = "";
    rePasswordBox.value = "";
    // Make text boxes orange
