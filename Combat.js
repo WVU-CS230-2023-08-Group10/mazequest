@@ -105,13 +105,14 @@ function handleMouseDown(){
 function handleMouseMove(event) 
 {
     mouseTracePoints.push(new Vector2(event.clientX, event.clientY));
+    console.log(mouseTracePoints);
 }
 
 window.addEventListener("mouseup", function() {
     // Unregister the mouse move listener
     window.removeEventListener("mousemove", handleMouseMove);
     this.window.removeEventListener("mousedown",handleMouseDown);
-    console.log(mouseTracePoints.length);
+    // console.log(mouseTracePoints);
     if(tracePoints.length>0)
     {
         tracePoints = new Array();  
@@ -122,15 +123,17 @@ window.addEventListener("mouseup", function() {
 });
 function Accuracy()
 {
-    extra = tracePoints%3;
-    for(let i=0;i<extra;i++)
-    {
-        tracePoints.pop();
-    }
-    var point1 = tracePoints.at(0);
-    let p2Index = tracePoints.length/3;
-    var point2 = tracePoints.at(p2Index);
-    let p3Index = p2Index*2;
-    var point3 = tracePoints.at(p3Index);
-    var point4 = tracePoints.at(tracePoints.length-1);
+    let basicPatternPoints = new Array();
+    basicPatternPoints.push(new Vector2(22, 30));
+    // extra = tracePoints%3;
+    // for(let i=0;i<extra;i++)
+    // {
+    //     tracePoints.pop();
+    // }
+    // var point1 = tracePoints.at(0);
+    // let p2Index = tracePoints.length/3;
+    // var point2 = tracePoints.at(p2Index);
+    // let p3Index = p2Index*2;
+    // var point3 = tracePoints.at(p3Index);
+    // var point4 = tracePoints.at(tracePoints.length-1);
 }
