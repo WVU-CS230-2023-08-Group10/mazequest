@@ -91,14 +91,17 @@
               <input type = "text" id ="username" class= "form__input" autofocus placeholder="Username">
             </div>
             <div class = "form__input-group">
-              <p>Password Must:</p>
-              <l style="width: 80%; height: 80%;">
-                <li>Be Greater than 8 Characters</li>
-                <li>Not Contain the Word "Password"</li>
-              </l>
+              
               <br />
               <input type = "password" id = "suPassword" class= "form__input" autofocus placeholder="Password">
               <input type = "password" id = "reSuPassword" class= "form__input" autofocus placeholder="Re-Enter Password">
+              <p>Password Must:</p>
+              <l style="width: 80%; height: 80%;">
+                <li>Be Greater than 8 Characters</li>
+                <li>Contain 1 Special Character</li>
+                <li>Contain 1 Uppercase Character</li>
+                <li>Contain 1 Number</li>
+              </l>
               <p id = "passwordErrorMsg"></p>
             </div>
             <button class="form__button" type="submit">Continue</button>

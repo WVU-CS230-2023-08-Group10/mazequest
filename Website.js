@@ -419,27 +419,24 @@ async function updateLeaderboard() {
    if (passwordBox.value == rePasswordBox.value){
       rePasswordBox.style.backgroundColor = '';
       // Passwords match, check other requirements
-      // Check password length
-      if (password.length < 8) {
-         // Not long enough
-         passwordBox.value = "";
-         rePasswordBox.value = "";
-         passwordBox.style.backgroundColor = "#E3963E";
-          return false;  
-       }
-      // Check password to see if contains "password"
-      if (password.includes("password")) {
-         // Can't contain 'password'
-         passwordBox.value = "";
-         rePasswordBox.value = "";
-         passwordBox.style.backgroundColor = "#E3963E";
-          return false;
-      }
-      // Password is valid. Return true
-      else{
+      let isStrong = true
+      let validationRegex = [{regex: /.{8,}/}, {regex: /[0-9]/}, {regex:/[A-Z]/}, {regex:/[^A-Za-z0-9]/}]
+      validationRegex.forEach((item) => {
+         let isValid = item.regex.test(password)
+         if (!isValid)
+         {
+            passwordBox.value = "";
+            rePasswordBox.value = "";
+            passwordBox.style.backgroundColor = "#E3963E";
+            console.log("invalid password")
+            isStrong = false
+         }
+      })
+      if (isStrong)
          passwordBox.style.backgroundColor = '';
-          return true;
-      }
+
+      return isStrong
+     
    }
    // Text boxes did not match. Make them re-enter.
    alert("Passwords do not match.")
