@@ -32,6 +32,7 @@ class Game
     grid;
     layout;
     currentRoomPosition;
+    needsInitialization = true;
 
     /**
      * Creates a new game manager instance that handles the top level game functions.
@@ -87,6 +88,11 @@ class Game
      */
     updateEntities(delta)
     {
+        if (this.needsInitialization)
+        {
+            this.needsInitialization = false;
+        }
+
         for (const entity of this.entityList) {
             entity.update(delta);
         }
