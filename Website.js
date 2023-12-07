@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
        } else {
           // successful login
           alert("Success! Logged In");
+          location.reload();
 
           // Enable access to Account tab
           document.getElementById("Account").disabled = false;
@@ -97,6 +98,7 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       console.error(error)
    } else {
       alert("You have been successfully signed out")
+      location.reload()
       // User is logged out. Disable the Account tab
       document.getElementById("Account").disabled = true;
       document.getElementById("Level_Builder").disabled = true;
