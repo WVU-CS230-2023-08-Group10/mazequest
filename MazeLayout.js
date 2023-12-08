@@ -124,7 +124,7 @@ class MazeLayout
 
                 adjacent = [up, right, down, left];
                 for (let a = 0; a < adjacent.length; a++) {
-                    const adj = adjacent[a];
+                    adj = adjacent[a];
                     if (!this.isPositionInMaze(adj)) continue;
                     if (toBeGenerated[adj._Y][adj._X] > 0)
                     {

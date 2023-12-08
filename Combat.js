@@ -2,6 +2,8 @@ import { Player } from "./Player.js";
 import { Renderer } from "./Renderer.js";
 import { Vector2 } from "./Vectors.js";
 
+export {Combat}
+
 /**
  * Class representing game combat.
  * 
@@ -30,9 +32,10 @@ class Combat
         this.defender = defender;
         initiateCombat();
     }
+
     initiateCombat(){
         //originally put "initialize combat UI", might just keep to side of screen
-        combatDamage;
+        let combatDamage;
         //needs establishment of attackers high/low damage of weapon
         const attackingWeapon = this.attacker.inventory.getWeapon();
         //needs establishment of defenders high/low damage of weapon
