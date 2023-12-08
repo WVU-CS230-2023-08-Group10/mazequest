@@ -1,3 +1,4 @@
+import { Item } from "./Item.js";
 export {Inventory};
 
 class Inventory
@@ -31,19 +32,19 @@ class Inventory
      */
     store(item)
     {
-        if (item.isWeapon())
+        if (Item.isWeapon(item))
         {
             const currentWeapon = this.weapon;
             this.weapon = item;
             return currentWeapon;
         }
-        else if (item.isArmor())
+        else if (Item.isArmor(item))
         {
             const currentArmor = this.armor;
             this.armor = item;
             return currentArmor;
         }
-        else if (item.isConsumable())
+        else if (Item.isConsumable(item))
         {
             const stackableItem = this.consumables.find((e) => e.equals(item));
             if (stackableItem == undefined)

@@ -1,5 +1,4 @@
 import { Direction, Vector2 } from "./Vectors.js";
-import { Armor, Consumable, Item, Weapon } from "./Item.js";
 import { Transform } from "./Transform.js";
 import { Renderer } from "./Renderer.js";
 import { Entity } from "./Entity.js";
@@ -18,7 +17,6 @@ class Player extends Entity
     account;
     health;
     inventory;
-    room;
 
     speed = 2;
     moveTarget = new Vector2(0.0, 0.0);
@@ -44,8 +42,8 @@ class Player extends Entity
     }
     damage(damageDone)
     {
-        health = health - damageDone;
-        if(health < 1)
+        this.health -= damageDone;
+        if(health <= 0)
         {
             //game over
         }
@@ -54,28 +52,23 @@ class Player extends Entity
     {
         // call combat
     }
-    position(room,tile)
-    {
-        this.room=room;
-        this.tile=tile;
-    }
     update(delta)
     {
-        const difference = Vector2.subtract(this.moveTarget, this._Transform._Position);
+        const difference = Vector2.subtract(this.moveTarget, this.transform.position);
         if (difference.getMagnitude() < 0.1)
         {
-            this._Transform._Position = this.moveTarget.copy();
+            this.transform.position = this.moveTarget.copy();
         }
         else
         {
             difference.normalize();
             difference.scalarMultiply(this.speed * delta);
-            this._Transform.translate(difference);
+            this.transform.translate(difference);
         }
     }
     move(direction)
     {
-        const pos = Vector2.add(this._Transform._Position, Vector2.scalarMultiply(direction, this.game.grid.cellSize));
+        const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.game.grid.cellSize));
 
         const roomWidth = this.game.grid.cellSize * this.game.grid.width;
         const roomHeight = this.game.grid.cellSize * this.game.grid.height;
@@ -113,33 +106,32 @@ class Player extends Entity
     }
     playerInput(key)
     {
-        if (!this._Transform._Position.equals(this.moveTarget)) return;
+        if (!this.transform.position.equals(this.moveTarget)) return;
 
         switch (key) {
             case 'ArrowUp':
             case 'w':
-                this._Renderer.setAnimation('walkup', this.animationSpeed);
+                this.renderer.setAnimation('walkup', this.animationSpeed);
                 this.move(Direction.Up);
                 break;
             case 'ArrowLeft':
             case 'a':
-                this._Renderer.setAnimation('walkleft', this.animationSpeed);
+                this.renderer.setAnimation('walkleft', this.animationSpeed);
                 this.move(Direction.Left);
                 break;
             case 'ArrowDown':
             case 's':
-                this._Renderer.setAnimation('walkdown', this.animationSpeed);
+                this.renderer.setAnimation('walkdown', this.animationSpeed);
                 this.move(Direction.Down);
                 break;
             case 'ArrowRight':
             case 'd':
-                this._Renderer.setAnimation('walkright', this.animationSpeed);
+                this.renderer.setAnimation('walkright', this.animationSpeed);
                 this.move(Direction.Right);
                 break;
             default:
                 break;
         }
-        console.log(this._Transform._Position);
     }
 
     serialize()

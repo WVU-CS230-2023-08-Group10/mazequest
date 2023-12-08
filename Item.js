@@ -4,26 +4,22 @@ export {Item, Weapon, Armor, Consumable};
 
 class Item extends Entity
 {
-    itemName;
-
-    constructor(name){
-        this.itemName = name;
-    }
-    get getName(){
-        return this.itemName;
-    }
-    set setName(name){
-        this.itemName = name;
+    constructor(name = "", transform = new Transform(), renderer = new Renderer(), game = undefined) 
+    {
+        super(name, transform, renderer, game);
     }
       
-    isWeapon(Item){
-        return Item instanceof Weapon;
+    static isWeapon(obj)
+    {
+        return obj instanceof Weapon;
     }
-    isArmor(Item){
-        return Item instanceof Armor;
+    static isArmor(obj)
+    {
+        return obj instanceof Armor;
     }
-    isConsumable(Item){
-        return Item instanceof Consumable;
+    static isConsumable(obj)
+    {
+        return obj instanceof Consumable;
     }
     
     equals(obj)
@@ -40,9 +36,9 @@ class Weapon extends Item
     lowDamage;
     highDamage;
 
-    constructor(name, lowDamage, highDamage)
+    constructor(name, transform = new Transform(), renderer = new Renderer(), game = undefined, lowDamage, highDamage)
     {
-        super(name);
+        super(name, transform, renderer, game);
         this.lowDamage = lowDamage;
         this.highDamage = highDamage;
     }

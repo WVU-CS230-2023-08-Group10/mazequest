@@ -89,7 +89,6 @@ class Entity
 
         this.game.unregisterEntity(this);
         this._Renderer.dispose();
-        delete this;
     }
 
     /**
