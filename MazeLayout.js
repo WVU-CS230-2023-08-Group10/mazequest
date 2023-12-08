@@ -1,6 +1,6 @@
 import { Vector2, Direction } from "./Vectors.js";
 
-export { MazeLayout, GenerationParameters, Room};
+export { MazeLayout, GenerationParameters};
 
 class MazeLayout
 {
@@ -42,7 +42,7 @@ class MazeLayout
     generateRoomLayout()
     {
         // Initialize toBeGenerated array
-        var toBeGenerated = [];
+        let toBeGenerated = [];
         for (let i = 0; i < this.params.dimensions.y; i++) {
             toBeGenerated[i] = [];
             for (let j = 0; j < this.params.dimensions.x; j++) {
@@ -51,34 +51,35 @@ class MazeLayout
         }
 
         // Get random start position
-        var startRow = Math.floor(Math.random() * this.roomArray.length);
-        var startCol = Math.floor(Math.random() * this.roomArray[startRow].length);
-        startPosition = new Vector2(startCol, startRow);
+        const startRow = Math.floor(Math.random() * this.roomArray.length);
+        const startCol = Math.floor(Math.random() * this.roomArray[startRow].length);
+        this.startPosition = new Vector2(startCol, startRow);
 
         // Make a batch of rooms to generate
-        var batch = [ startPos ];
+        let batch = [ startPos ];
+        let pos, up, down, left, right, adjacent, adj;
 
         while (batch.length > 0)
         {
             // Make the next batch
-            var newBatch = [];
+            let newBatch = [];
             // Iterate through the batch
             for (let i = 0; i < batch.length; i++) {
-                const pos = batch[i];
+                pos = batch[i];
 
                 // Generate the batch element
                 toBeGenerated[pos._Y][pos._X] = 1;
                 
                 // Get the adjacent rooms
-                var up = Vector2.add(pos, Direction.Up);
-                var down = Vector2.add(pos, Direction.Down); 
-                var left = Vector2.add(pos, Direction.Left);
-                var right = Vector2.add(pos, Direction.Right);
+                up = Vector2.add(pos, Direction.Up);
+                down = Vector2.add(pos, Direction.Down); 
+                left = Vector2.add(pos, Direction.Left);
+                right = Vector2.add(pos, Direction.Right);
 
-                var adjacent = [up, down, left, right];
+                adjacent = [up, down, left, right];
                 // Iterate through adjacent rooms
                 for (let j = 0; j < adjacent.length; j++) {
-                    const adj = adjacent[j];
+                    adj = adjacent[j];
 
                     // If the room isn't within the maze, skip
                     if (!this.isPositionInMaze(adj))
@@ -103,8 +104,8 @@ class MazeLayout
             batch = newBatch;
         }
 
-        var logStr = "";    
-        var tiles = ['-','╨','╞','╚','╥','║','╔','╠','╡','╝','═','╩','╗','╣','╦','╬'];
+        let logStr = "";    
+        const tiles = ['-','╨','╞','╚','╥','║','╔','╠','╡','╝','═','╩','╗','╣','╦','╬'];
         for (let i = 0; i < this.params.dimensions.y; i++) {
             for (let j = 0; j < this.params.dimensions.x; j++) {
                 if (toBeGenerated[i][j] <= 0)
@@ -113,15 +114,15 @@ class MazeLayout
                     continue;
                 }
 
-                var pos = new Vector2(j, i);
+                pos = new Vector2(j, i);
                 toBeGenerated[i][j] = 0;
 
-                var up = Vector2.add(pos, Direction.Up);
-                var down = Vector2.add(pos, Direction.Down); 
-                var left = Vector2.add(pos, Direction.Left);
-                var right = Vector2.add(pos, Direction.Right);
+                up = Vector2.add(pos, Direction.Up);
+                down = Vector2.add(pos, Direction.Down); 
+                left = Vector2.add(pos, Direction.Left);
+                right = Vector2.add(pos, Direction.Right);
 
-                var adjacent = [up, right, down, left];
+                adjacent = [up, right, down, left];
                 for (let a = 0; a < adjacent.length; a++) {
                     const adj = adjacent[a];
                     if (!this.isPositionInMaze(adj)) continue;
@@ -184,9 +185,9 @@ class GenerationParameters
     isGenerated()
     {
         // Chance scales down as we approach max rooms
-        var chance = 1 - (this.currentRoomCount-this.minRooms)/(this.maxRooms-this.minRooms);
+        let chance = 1 - (this.currentRoomCount-this.minRooms)/(this.maxRooms-this.minRooms);
         chance *= this.clumping;
-        var boundsProtection = 1 - (this.currentRoomCount/this.currentIteration);
+        let boundsProtection = 1 - (this.currentRoomCount/this.currentIteration);
         if (this.currentRoomCount < this.minRooms)
             chance = chance + (boundsProtection * (1-chance));
         else if (this.currentRoomCount > this.maxRooms)
@@ -199,14 +200,5 @@ class GenerationParameters
             this.currentRoomCount++;
 
         return generate;
-    }
-}
-
-class Room
-{
-    entities;
-
-    constructor(entities) {
-        this.entities = entities;
     }
 }
