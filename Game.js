@@ -296,6 +296,9 @@ class Game
             case "Entity":
                 e = ExitIndicator.deserialize(obj, this);
                 break;
+            default:
+                console.log("Entity of type: '" + obj.type + "' not recognized!" );
+                break;
         }
         this.registerEntity(e);
         return e;

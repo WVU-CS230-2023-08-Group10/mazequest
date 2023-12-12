@@ -5,7 +5,7 @@ import { Entity } from "./Entity.js";
 import { Inventory } from "./Inventory.js";
 import { Collider } from "./LevelElements.js";
 import { Enemy } from "./Enemy.js";
-export {Player};
+export { Player };
 
 /**
  * Class representing the Player entity
@@ -22,7 +22,7 @@ class Player extends Entity
     moveTarget = new Vector2(0.0, 0.0);
     animationSpeed = 1/3;
 
-    constructor(name = "", transform = new Transform(), renderer = new Renderer(), game=undefined, health=10, account=null)
+    constructor(name = "", transform = new Transform(), renderer = new Renderer(), game = undefined, health = 10, account = null)
     {
         super(name, transform, renderer, game);
 
@@ -31,6 +31,7 @@ class Player extends Entity
         this.account = account;
         this.health = health;
         this.inventory = new Inventory();
+        
     }
     pickUp(item)
     {

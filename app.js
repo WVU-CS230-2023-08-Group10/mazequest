@@ -131,16 +131,21 @@ app.stage.addChild(bkg);
 loadSidebar();
 encounterScreen();
 
-
-
 const game = new Game(app.stage);
+
+const masterList = await fetch('./Items/Weapons.json')
+    .then((response) => response.json()).catch(error => console.error(error));
+   
+let currWeapon = JSON.stringify(masterList.starter_sword);
+console.log(currWeapon);
 
 game.deserializeEntity(JSON.parse(`{ "type":"Player", "name": "Player", "transform": 
 { "position" : { "x" : 256, "y" : 256}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
 "renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/armor/leatherArmor.json", 
 "img":"./images/armor/leatherArmor.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
-"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"default"}, "inventory":{ "type":"Inventory", "weapon":null, 
+"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"default"}, "inventory":{ "type":"Inventory", "weapon":` + currWeapon +  `, 
 "armor":null, "consumables":[]}}`));
+
 game.deserializeEntity(JSON.parse(`{ "type":"Collider", "name": "Wall", "transform": 
 { "position" : { "x" : 128, "y" : 256}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
 "renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/armor/leatherArmor.json", 

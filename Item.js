@@ -1,6 +1,8 @@
 import { Entity } from "./Entity.js";
+import { Renderer } from "./Renderer.js";
+import { Transform } from "./Transform.js";
 
-export {Item, Weapon, Armor, Consumable};
+export { Item, Weapon, Armor, Consumable };
 
 class Item extends Entity
 {
@@ -31,16 +33,20 @@ class Item extends Entity
             return true;
     }
 }
+
 class Weapon extends Item
 {
     lowDamage;
     highDamage;
+    trace;
 
-    constructor(name, transform = new Transform(), renderer = new Renderer(), game = undefined, lowDamage, highDamage)
+    constructor(name, lowDamage, highDamage, trace, renderer, transform = new Transform(), game = undefined)
     {
         super(name, transform, renderer, game);
+        
         this.lowDamage = lowDamage;
         this.highDamage = highDamage;
+        this.trace = trace;
     }
 
     /**
@@ -53,19 +59,22 @@ class Weapon extends Item
      */
     damage(accuracy)
     {
-        return accuracy * (highDamage-lowDamage) + lowDamage;
+        return accuracy * (highDamage - lowDamage) + lowDamage;
     }
 
     serialize()
     {
-        return '{ "type":"Weapon", "name" : "'+this._Name+'", "damage": { "low":'+this.lowDamage+', "high":'+this.highDamage+'}}';
+        return '{ "type":"Weapon", "name":"' + this._Name 
+            + '", "damage": { "low":' + this.lowDamage + ', "high":' + this.highDamage + '}' 
+            + ', "trace":"' + this.trace + '" }';
     }
 
     static deserialize(obj, game)
     {
-        return new Weapon(obj.name, obj.damage.low, obj.damage.high);
+        return new Weapon(obj.name, obj.damage.low, obj.damage.high, obj.trace, obj.renderer);
     }
 }
+
 class Armor extends Item
 {
     protection;
@@ -73,12 +82,12 @@ class Armor extends Item
     constructor(name, protection)
     {
         super(name);
-        this.protection=protection;
+        this.protection = protection;
     }
 
     serialize()
     {
-        return '{ "type":"Armor", "name" : "'+this._Name+'", "protection":'+this.protection+'}';
+        return '{ "type":"Armor", "name" : "' + this._Name + '", "protection":' + this.protection + '}';
     }
 
     static deserialize(obj, game)
@@ -109,7 +118,7 @@ class Consumable extends Item
 
     serialize()
     {
-        return '{ "type":"Consumable", "name" : "'+this._Name+'", "count":'+this.stackCount+'}';
+        return '{ "type":"Consumable", "name" : "' + this._Name + '", "count":' + this.stackCount + '}';
     }
 
     static deserialize(obj, game)

@@ -1,5 +1,5 @@
 import { Item } from "./Item.js";
-export {Inventory};
+export { Inventory };
 
 class Inventory
 {
