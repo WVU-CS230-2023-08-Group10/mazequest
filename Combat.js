@@ -67,19 +67,20 @@ class Combat
         // In the top right of the game canvas, a pattern will appear (in the tranparent hitbox) over the creature. 
         // Press and Drag the mouse over the pattern to deal damage to the creature, 
         // the higher the accuracy of the trace, the more damage is dealt.
-       
-        // TO DO
-        // Get pixel length of mouseTrace
-        // Split up mouseTrace based on number of points in the pattern trace, will be four for base start
         
-        // Initialize accuracy
-        // For each segment of mouse trace
-        //     Get the distance between trace point and mouse point
-        //     Add to accuracy based on where distance falls in min to max distance
-        //     Distance <= min is accuracy of 1
-        //     Distance >= max is accuracy of 0
-        // End for
-        // Return the average of the accuracies
+        //TODO 
+        //connect pattern vectors to hitbox circles
+            //Notes
+            //maximum hieght is 155px
+            //only works from top so invert it ->
+            //(155 - y) coord
+            //maximum width is 105px
+
+        //after done, place temp traceGame here
+        
+        
+
+       
 
     }
     
@@ -103,56 +104,118 @@ class Combat
     }
 
 }
-let mouseTracePoints = new Array();
-let tracePoints = new Array();
-const hitbox = document.getElementById("hitbox");
-hitbox.addEventListener("mouseover", handleMousePress);
-
-function handleMousePress()
+//temp traceGame
+        let mouseTracePoints = new Array();
+        let tracePoints = new Array();
+        const hitbox = document.getElementById("hitbox");
+        hitbox.addEventListener("mouseover", handleMousePress);
+        
+        function handleMousePress()
+        {
+            hitbox.addEventListener("mousedown", handleMouseDown);
+        }
+        
+        function handleMouseDown()
+        {
+            //register the mouse move listener
+            hitbox.addEventListener("mousemove", handleMouseMove);
+        }
+        
+        function handleMouseMove(event) 
+        {
+            mouseTracePoints.push(new Vector2(event.clientX, event.clientY));
+             console.log(mouseTracePoints);
+        }
+        var continueGame = false;
+        window.addEventListener("mouseup", function() 
+        {
+            // Unregister the mouse move listener
+            hitbox.removeEventListener("mousemove", handleMouseMove);
+            this.hitbox.removeEventListener("mousedown",handleMouseDown);
+            console.log(mouseTracePoints.length);
+            if(tracePoints.length>0)
+            {
+                tracePoints = new Array();  
+            }
+            tracePoints = mouseTracePoints;
+            // Clear the mouse trace array
+            mouseTracePoints = new Array();
+            continueGame = true;
+        });
+        if(continueGame){
+            var damagePercentage = Accuracy(mouseTracePoints);
+            return damagePercentage;
+        }
+//end temp traceGame
+function Accuracy(tracePoints)
 {
-    window.addEventListener("mousedown", handleMouseDown);
-}
-
-function handleMouseDown()
-{
-    //register the mouse move listener
-    window.addEventListener("mousemove", handleMouseMove);
-}
-
-function handleMouseMove(event) 
-{
-    mouseTracePoints.push(new Vector2(event.clientX, event.clientY));
-    // console.log(mouseTracePoints);
-}
-
-window.addEventListener("mouseup", function() 
-{
-    // Unregister the mouse move listener
-    window.removeEventListener("mousemove", handleMouseMove);
-    this.window.removeEventListener("mousedown",handleMouseDown);
-    console.log(mouseTracePoints.length);
-    if(tracePoints.length>0)
-    {
-        tracePoints = new Array();  
-    }
-    tracePoints = mouseTracePoints;
-    // Clear the mouse trace array
-    mouseTracePoints = new Array();
-});
-
-function Accuracy()
-{
+    
+    //connect basicPatternPoints to weapons pattern
     let basicPatternPoints = new Array();
-    basicPatternPoints.push(new Vector2(22, 30));
-    // extra = tracePoints%3;
-    // for(let i=0;i<extra;i++)
-    // {
-    //     tracePoints.pop();
-    // }
-    // var point1 = tracePoints.at(0);
-    // let p2Index = tracePoints.length/3;
-    // var point2 = tracePoints.at(p2Index);
-    // let p3Index = p2Index*2;
-    // var point3 = tracePoints.at(p3Index);
-    // var point4 = tracePoints.at(tracePoints.length-1);
+    let points =4;
+    //Makes array divisible by 4
+    let extra = tracePoints%3;
+    for(let i=0;i<extra;i++)
+    {
+        tracePoints.pop();
+    }
+    //array for average point Distances
+    let totalAverageDistance =0;
+    //compares points
+    for(let i=0;i<points;i++){
+        //finds point of pattern
+        let patternVector = basicPatternPoints.at(i);
+        let patternX = patternVector.getX();
+        let patternY = patternVector.getY();
+        //finds point of pattern
+        var mouseVector;
+        if(i==1)
+        {
+            mouseVector = tracePoints.at(0);
+        }
+        if(i==2)
+        {
+            let p2Index = tracePoints.length/3;
+            mouseVector = tracePoints.at(p2Index);
+        }
+        if(i==3)
+        {
+            let p3Index = (tracePoints.length/3)*2;
+            mouseVector = tracePoints.at(p3Index);
+        }
+        if(i==4)
+        {
+            mouseVector = tracePoints.at(tracePoints.length-1);
+        }
+        let mouseX = mouseVector.getX();
+        let mouseY = mouseVector.getY();
+        //TODO
+        //fix vectors to be equivalent ->
+            //pattern vector only accounts for inside hitbox while mouse accounts for window
+        //then compare the x and y distances to find distances from pattern point, 
+        //add x distance with y distance, then divide by two to find average distance from pattern for averageDistance.
+        let averageDistance;
+        totalAverageDistance+=averageDistance;
+    }
+    //average the four points
+    let DExtra = totalAverageDistance%4;
+    totalAverageDistance = ((totalAverageDistance-DExtra)/4);
+    //score the average distance
+    ScalingScore(totalAverageDistance);
+    const isBetween = (n, start, stop) => n >= start && n <= stop ;
+    //switch case for range of distances, returns damage percentage
+    function ScalingScore (num) {
+        switch (true) {
+            case isBetween(num, 0, 20):
+                return 0.95;          
+            case isBetween(num, 21, 40):
+                return 0.85;
+            case isBetween(num,41, 60):
+                return 0.75;
+            case isBetween(num, 61, 80):
+                return 0.65;
+            default:
+                return 0.55;
+        }
+    } 
 }
