@@ -48,7 +48,7 @@ class Transform
 
     serialize()
     {
-        return '{ "position" : '+this._Position.serialize()+', "scale" : '+this._Scale.serialize()+', "rotation" : '+this._Rotation+'}';
+        return '{ "position" : '+this.position.serialize()+', "scale" : '+this.scale.serialize()+', "rotation" : '+this.rotation+'}';
     }
 
     static deserialize(obj)

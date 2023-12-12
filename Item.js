@@ -64,14 +64,15 @@ class Weapon extends Item
 
     serialize()
     {
-        return '{ "type":"Weapon", "name":"' + this._Name 
+        return '{ "type":"Weapon", "name":"' + this._Name +
+            '", "transform": ' + this.transform.serialize() + ', "renderer": ' + this.renderer.serialize() 
             + '", "damage": { "low":' + this.lowDamage + ', "high":' + this.highDamage + '}' 
             + ', "trace":"' + this.trace + '" }';
     }
 
     static deserialize(obj, game)
     {
-        return new Weapon(obj.name, obj.damage.low, obj.damage.high, obj.trace, obj.renderer);
+        return new Weapon(obj.name, obj.damage.low, obj.damage.high, obj.trace, Renderer.deserialize(obj.renderer, game.stage));
     }
 }
 
@@ -87,7 +88,9 @@ class Armor extends Item
 
     serialize()
     {
-        return '{ "type":"Armor", "name" : "' + this._Name + '", "protection":' + this.protection + '}';
+        return '{ "type":"Armor", "name" : "' + this._Name 
+            + '", "transform": ' + this.transform.serialize() + ', "renderer": ' + this.renderer.serialize() 
+            + '", "protection":' + this.protection + '}';
     }
 
     static deserialize(obj, game)
@@ -118,7 +121,9 @@ class Consumable extends Item
 
     serialize()
     {
-        return '{ "type":"Consumable", "name" : "' + this._Name + '", "count":' + this.stackCount + '}';
+        return '{ "type":"Consumable", "name" : "' + this._Name 
+            + '", "transform": ' + this.transform.serialize() + ', "renderer": ' + this.renderer.serialize() 
+            + '", "count":' + this.stackCount + '}';
     }
 
     static deserialize(obj, game)

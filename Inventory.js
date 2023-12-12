@@ -1,4 +1,4 @@
-import { Item } from "./Item.js";
+import { Item, Weapon, Armor, Consumable } from "./Item.js";
 export { Inventory };
 
 class Inventory
@@ -98,12 +98,12 @@ class Inventory
         return str;
     }
 
-    static deserialize(obj)
+    static deserialize(obj, game)
     {
         const consumables = [];
         for (c of obj.consumables)
             consumables.push(Consumable.deserialize(c));
-        const w = (obj.weapon == null) ? null : Weapon.deserialize(obj.weapon);
+        const w = (obj.weapon == null) ? null : Weapon.deserialize(obj.weapon, game);
         const a = (obj.armor == null) ? null : Armor.deserialize(obj.armor);
         return new Inventory(w, a, consumables);
     }

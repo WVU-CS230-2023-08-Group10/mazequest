@@ -144,7 +144,7 @@ class Player extends Entity
     static deserialize(obj, game)
     {
         const p = new Player(obj.name, Transform.deserialize(obj.transform), Renderer.deserialize(obj.renderer, game.stage), game)
-        p.inventory = Inventory.deserialize(obj.inventory);
+        p.inventory = Inventory.deserialize(obj.inventory, game);
         return p;
     }
 }
