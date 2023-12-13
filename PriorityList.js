@@ -1,14 +1,14 @@
-export {PriorityList, action};
+export {PriorityList, Action };
 
 
-class action
+class Action
 {
     name;
     priority;
     base;
     increment;
 
-    action(name="", priority=0, base=0, increment=0) {
+    constructor(name="", priority=0, base=0, increment=0) {
 
         this.name = name;
         this.priority = priority;
@@ -16,7 +16,7 @@ class action
         this.increment = increment;
     }
 
-    addPriority(){
+    incrementPriority(){
         this.priority += this.increment;
     }
 
@@ -34,20 +34,24 @@ class PriorityList
     }
 
     addPriority(){
-        for (let i = 0; i < this.AIDict.size(); i++){
-            this.AIDict[i].priority += this.AIDict[i].increment;
-        }
+        for (const action of this.AIDict)
+            action.addPriority();
 
         this.sortPriority();
     }
 
     resetPriority(i=0){
-        this.AIDict[i].priority = this.AIDict[i].base;
+        this.AIDict[i].resetPriority();
 
         this.sortPriority();
     }
 
     sortPriority(){
         this.AIDict.sort((a, b) => b.priority - a.priority);
+    }
+
+    getPriorityAction()
+    {
+        return this.AIDict[0];
     }
 }

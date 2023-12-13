@@ -165,15 +165,17 @@ class Mob extends Entity
         switch (event.type)
         {
             case "keydown":
-                updateAction(this.AIDict);
-                mobAction();
+                this.actionDict.addPriority();
+                this.mobAction()
                 break;
         }
     }
-    
-    mobAction(action)
+
+    mobAction()
     {
-        switch (action.name) {
+        const action = this.actionDict.getPriorityAction().name;
+        this.actionDict.resetPriority();
+        switch (action) {
             case 'Attack':
                 
                 // check if attack is valid
@@ -182,23 +184,53 @@ class Mob extends Entity
                 initializeCombat();
                 break;
             case 'Move':
-                // find any valid, empty tile
-                // empty tile is required to not call combat
-                // if yes, move to that tile
-                // if not, call method again with next index of action dictionary
-                this.renderer.setAnimation('animation', this.animationSpeed);
-                this.move(Direction.valid);
+                // Get valid directions to move
+                let directions = [Direction.Up, Direction.Down, Direction.Left, Direction.Right];
+                let validMoves = [];
+                for (const dir in directions)
+                {
+                    const pos = Vector2.add(this.transform.position, dir);
+                    const collisions = this.game.getEntities((e) => {
+                        return e.transform.position.equals(pos);
+                    });
+                    for (const e of collisions)
+                    {
+                        if (!(e instanceof Collider))
+                            validMoves.push(dir);
+                    }
+                }
+                // If no valid tiles...
+                if (validMoves.length <= 0)
+                {
+                    this.mobAction();
+                    break;
+                }
+
+                // Pick a random valid move
+                const i = floor(Math.random() * (validMoves.length - 1));
+                // Change animation
+                if (validMoves[i].equals(Direction.Up)) {
+                    this.renderer.setAnimation('walkup', this.animationSpeed);
+                }
+                else if (validMoves[i].equals(Direction.Down)) {
+                    this.renderer.setAnimation('walkdown', this.animationSpeed);
+                }
+                else if (validMoves[i].equals(Direction.Left)) {
+                    this.renderer.setAnimation('walkleft', this.animationSpeed);
+                }
+                else if (validMoves[i].equals(Direction.Right)) {
+                    this.renderer.setAnimation('walkright', this.animationSpeed);
+                }
+                // Move in the direction
+                this.move(validMoves[i]);
                 break;
             case 'Item':
                 // use consumable
                 break;
             case 'Wait':
+                break;
             default:
                 break;
         }
-        
     }
 }
-
-
-
