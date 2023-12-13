@@ -119,13 +119,7 @@ class Mob extends Entity
     {
         //call combat
     }
-
-    position(room,tile)
-    {
-        this.room = room;
-        this.tile = tile;
-    }
-
+    
     update(delta)
     {
         const difference = Vector2.subtract(this.moveTarget, this.transform.position);
@@ -143,9 +137,11 @@ class Mob extends Entity
 
     move(direction)
     {
-        const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.cellSize));
+        const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.game.grid.cellSize));
 
-        if (pos.x < 0 || pos.x >= this.roomSize || pos.y < 0 || pos.y >= this.roomSize)
+        const roomWidth = this.game.grid.cellSize * this.game.grid.width;
+        const roomHeight = this.game.grid.cellSize * this.game.grid.height;
+        if (pos.x < 0 || pos.x >= roomWidth || pos.y < 0 || pos.y >= roomHeight)
         {
             return;
         }
@@ -189,7 +185,7 @@ class Mob extends Entity
                 let validMoves = [];
                 for (const dir in directions)
                 {
-                    const pos = Vector2.add(this.transform.position, dir);
+                    const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(dir, this.game.grid.cellSize));
                     const collisions = this.game.getEntities((e) => {
                         return e.transform.position.equals(pos);
                     });
@@ -222,7 +218,7 @@ class Mob extends Entity
                     this.renderer.setAnimation('walkright', this.animationSpeed);
                 }
                 // Move in the direction
-                this.move(validMoves[i]);
+                this.move(Vector2.scalarMultiply(validMoves[i], this.game.grid.cellSize));
                 break;
             case 'Item':
                 // use consumable
