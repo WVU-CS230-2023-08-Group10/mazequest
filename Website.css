@@ -289,3 +289,9 @@ canvas {
   cursor: not-allowed; 
   color: #777; 
 }
+
+#userLevels{
+    width: 30%; /* Set a width for the div */
+    margin-left: auto;
+    margin-right: auto;
+}
