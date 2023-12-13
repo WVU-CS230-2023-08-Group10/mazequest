@@ -41,18 +41,6 @@ const loadSidebar = async () =>
         goblin.width = 106;
         goblin.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
     app.stage.addChild(goblin);
-    // const screen = new PIXI.Sprite(sheet.textures['screen']);
-    //     screen.anchor.set(-4, 0);
-    //     screen.height = 176;
-    //     screen.width = 128;
-    //     screen.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    // app.stage.addChild(screen);
-    // const testTxt = new PIXI.Sprite(sheet.textures['test_text']);
-    //     testTxt.anchor.set(-8.5, -2);
-    //     testTxt.height = 32;
-    //     testTxt.width = 64;
-    //     testTxt.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    // app.stage.addChild(testTxt);
     const invTxt = new PIXI.Sprite(sheet.textures['inv_text']);
         invTxt.anchor.set(-4, -5.5);
         invTxt.height = 32;
@@ -121,18 +109,12 @@ const loadSidebar = async () =>
     app.stage.addChild(weaponSlot);
 }
 
-// Custom background + sprite for screen
-const encounterScreen = () => 
-{
-    
-}
-
 app.stage.addChild(bkg);
 loadSidebar();
-encounterScreen();
 
 const game = new Game(app.stage);
 
+// Load our weapons from .json file
 const masterList = await fetch('./Items/Weapons.json')
     .then((response) => response.json()).catch(error => console.error(error));
    
