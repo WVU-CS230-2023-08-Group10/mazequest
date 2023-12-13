@@ -1,40 +1,223 @@
 :root {
-    --theme-color: #7395AE;
-    --theme-dark-color: #557A95;
-    --primary-font-color: #F6C90E;
-    --link-font-color: #white;
-    background-image: url(./images/WebsiteBackground.png);
-    background-size: cover;
- }
+  --theme-color: #7395AE;
+  --theme-dark-color: #557A95;
+  --primary-font-color: #F6C90E;
+  --secondary-font-color: #E3963E;
+  --link-font-color: #white;
+
+  background-image: url(./images/WebsiteBackground.png);
+  background-size: cover;
+  background-position: fixed;
+  background-repeat: repeat-y;
+  background-attachment: scroll;
+  animation: animBg 60s linear infinite;
+  -moz-animation: animBg 60s linear infinite;
+  -webkit-animation: animBg 60s linear infinite;
+}
  
+@keyframes animBg {
+  from {background-position-y: 0px;}
+  to {background-position-y: -2000px;}
+}
+
  @font-face {
-   font-family: 'Alagard';
-   src: url('Fonts/Alagard/Alagard.eot');
-   src: url('Fonts/Alagard/Alagard.eot?#iefix') format('embedded-opentype'),
-       url('Fonts/Alagard/Alagard.woff2') format('woff2'),
-       url('Fonts/Alagard/Alagard.woff') format('woff'),
-       url('Fonts/Alagard/Alagard.ttf') format('truetype'),
-       url('Fonts/Alagard/Alagard.svg#Alagard') format('svg');
-   font-weight: 500;
-   font-style: normal;
-   font-display: swap;
+  font-family: 'Alagard';
+  src: url('Fonts/Alagard/Alagard.eot');
+  src: url('Fonts/Alagard/Alagard.eot?#iefix') format('embedded-opentype'),
+      url('Fonts/Alagard/Alagard.woff2') format('woff2'),
+      url('Fonts/Alagard/Alagard.woff') format('woff'),
+      url('Fonts/Alagard/Alagard.ttf') format('truetype'),
+      url('Fonts/Alagard/Alagard.svg#Alagard') format('svg');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+input{
+  font-family:"Alagard";
+  color: white;
+  background-color: #71797E2F;
+  border-color: #F6C90E;
+  font-weight: bold;
+  padding: 5px;
+  margin: 5px;
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 body {
-   width: 80%;
-   height: 80%;
-   font-family: "Alagard";
-   display: table;
-   color: var(--primary-font-color);
-   padding: 40px 15px 0px 15px;
-   margin: 20px auto;
-   text-align: center;
-   background-color: rgb(15, 15, 15)
+  width: 80%;
+  height: 80%;
+  font-family: "Alagard";
+  display: table;
+  color: var(--primary-font-color);
+  padding: 0px 15px 0px 15px;
+  margin: 20px auto;
+  text-align: center;
+  background-color: rgb(15, 15, 15)
+}
+
+#entityList
+{
+  width: 100%;
+  height: 200px;
+  overflow-y: scroll;
+}
+#entityList button
+{
+  height: 40px;
+  font-family:"Alagard";
+  color: #F6C90E;
+  background-color: rgb(30, 30, 30);
+  border-color: #F6C90E;
+  text-align: left;
+  display: block;
+  width: 100%;
+}
+#entityList button:hover
+{
+  background-color: var(--secondary-font-color);
+  color: black;
+}
+#entityList > .selected-entity
+{
+  background-color: rgb(60, 60, 60);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #71797E2F;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-font-color);
+}
+
+.canvas{ grid-area: canvas; width: 50%;}
+.entities{ grid-area: entities; width: 70%;}
+.prefabs{ grid-area: prefabs; width: 70%;}
+.vars
+{
+  grid-area: vars;
+  text-align: left;
+  margin: 0px;
+  padding: 0% 10%;
+  position: absolute;
+  right: 0;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  height: 100%;
+  width: 130%;
+}
+.vars div{
+  display: flex;
+}
+.vars input{
+  margin: 10px 0px 10px 10px;
+}
+.vars h3
+{
+  font-size: 20px;
+}
+.vars h4
+{
+  font-size: 18px;
+  margin-left: 40px;
+}
+.vars h5
+{
+  font-size: 16px;
+  margin-left: 40px;
+}
+.vars h6
+{
+  font-size: 14px;
+  margin-left: 40px;
+}
+.grid-container
+{
+  display: grid;
+  grid-template-areas: 
+    'entities canvas vars'
+    'prefabs canvas vars';
+  height: 512;
+  position: relative;
+}
+
+.dropbtn {
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  display: inline-block;
+  white-space: nowrap;
+}
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: grid;
+}
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 0px; left: 100%;
+  
+}
+/* Links inside the dropdown */
+.dropdown-content a {
+  text-decoration: none;
+  display: block;
+}
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content 
+{
+  display: grid;
+}
+
+.dropdown button
+{
+  font-family:"Alagard";
+  color: #F6C90E;
+  background-color: rgb(30, 30, 30);
+  border-color: #F6C90E;
+}
+.dropdown button:hover
+{
+  background-color: var(--secondary-font-color);
+  color: black;
+}
+
+.form__button
+{
+  font-family:"Alagard";
+  color: #F6C90E;
+  background-color: #71797E2F;
+  border-color: #F6C90E;
+  padding: 5px 15px 5px 15px;
+  margin: 5px;
+}
+
+.form__button:hover
+{
+  background-color: #71797E;
+  color: white;
 }
 
 #changeH {
    color:black;
-   background-color:#E3963E;
+   background-color:var(--secondary-font-color);
 }
 
 a {
@@ -45,50 +228,64 @@ a {
 header > h1 {
    color: var(--theme-dark-color);
    font-size: 2.5rem;
-   margin: 10px 0;
+   margin: 10px 0px;
    text-shadow: 2px 2px 3px gray;
 }
 
 /* Style the tab */
 .tab {
    overflow: hidden;
-   border: 1px solid rgb(30, 30, 30);
+   /* border: 1px solid rgb(30, 30, 30); */
    background-color: rgb(30, 30, 30);
  }
- 
- /* Style the buttons that are used to open the tab content */
- .tab button {
-   background-color: inherit;
-   float: left;
-   border: none;
-   outline: none;
-   cursor: pointer;
-   padding: 14px 16px;
-   transition: 0.3s;  
-   color: var(--primary-font-color);
-   font-family: 'Alagard';
- }
- 
- /* Change background color of buttons on hover */
- .tab button:hover {
-   background-color: #E3963E;
-   color: black;
- }
- 
- /* Create an active/current tablink class */
- .tab button.active {
-   background-color: #E3963E;
-   color: black;
- }
- 
- /* Style the tab content */
- .tabcontent {
-   display: none;
-   padding: 6px 12px;
-   border: 1px solid rgb(30, 30, 30);
-   border-top: none;
- }
 
- #canvas {
-   padding: 10px;
- }
+.btnGroup {
+   display: inline-block;
+}
+ 
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;  
+  color: var(--primary-font-color);
+  font-family: 'Alagard';
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: var(--secondary-font-color);
+  color: black;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: var(--secondary-font-color);
+  color: black;
+}
+ 
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid rgb(30, 30, 30);
+  border-top: none;
+}
+
+p {
+  color: var(--secondary-font-color);
+}
+
+canvas {
+  padding: 10px;
+}
+
+.tablinks:disabled {
+  opacity: 0.5; 
+  cursor: not-allowed; 
+  color: #777; 
+}

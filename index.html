@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Document Head -->
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MazeQuest</title>
+    <link rel="stylesheet" href="./Website.css">
+    <script type="module" src = "./Website.js"></script>
+    <script type="module" src="./app.js"></script>
+    <script type="module" src="./Combat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://pixijs.download/release/pixi.js"></script>
+  </head>
+    <!-- 
+      Website Banner 
+    -->
+    <header>
+      <div id="headerContainer">
+        <h1>Welcome to</h1>
+        <img src="./images/MazeQuest.png" alt="maze-quest-title-image">
+      </div>
+    </header>
+    <!-- 
+      Tab Contents 
+    -->
+    <body>
+      <main> 
+        <!-- 
+          Background audio initialization 
+        -->
+        <audio src="In-the-hall-of-the-mountain-king.mp3" playsinline muted loop id="myaudio"></audio>
+        <!--         
+          Tab Links 
+        -->
+        <div class="tab">
+          <div class="btnGroup">
+            <button class="tablinks active" onclick="openTab(event, 'Hom')">Home</button>
+            <button class="tablinks" onclick="openTab(event, 'Sig')">Sign Up</button>
+            <button class="tablinks" onclick="openTab(event, 'In')">Login</button>
+            <button class="tablinks" id = "Level_Builder" onclick="openTab(event, 'Bui')" disabled>Level Builder</button>
+            <button class="tablinks" id = "GameWindow" onclick="openTab(event, 'Gam')" disabled>Game Window</button>
+            <button class="tablinks" onclick="openTab(event, 'Sta')">Stats</button>
+            <button class="tablinks" onclick="openTab(event, 'Set')">Settings</button>
+            <button class="tablinks" id = "Account" onclick="openTab(event, 'Acc')" disabled>Account</button>
+          </div>
+        </div>
+        <style>
+          #Hom {
+            text-align: left;
+          }
+        </style>
+        <!-- 
+          Home Tab 
+        -->
+        <div id="Hom" class="tabcontent">
+          <h2><u>Synopsis</u></h2>
+          <p>MazeQuest is an action-packed exploration game! Your journey begins as you wake up in the middle of an isolated room
+            with only a single door ahead of you. Your only choice? ESCAPE. On this journey, you will encounter numerous challenging 
+            puzzles, resilient enemies, and mysterious rooms as you fight to find the way forward.</p>
+          <h2><u>How To Play</u></h2>
+          <h3>Level Builder</h3>
+          <p>Upload room templates to the site, and it will be added to your level's room layout. 
+            While the template room is custom made by you, the user, the level will still possess a 
+            uniquely-random layout that may contain base elements from the game.</p>
+          <h3>Game Window</h3>
+          <p>Greetings new player!
+             Your journey is just starting as you embark on this brand-new adventure! This game is comprised of many rooms that contain 
+             mazes full of secrets and enemies. These paths can branch off from the exit, but they may contain helpful items that will 
+             strengthen your character. Although, this can also make it a dangerous journey; be on the lookout for helpful items as you 
+             choose to avoid or fight enemies.</p>
+          <h2><u>Controls</u></h2>
+          <h3>Movement</h3>
+          <p>Up: W<br>Down: S<br>Left: A<br>Right: D</p>
+          <h3>Inventory Bar</h3>
+          <p>Use Keys 1-7 or your mouse's scroll wheel to access inventory slots.</p>
+        </div>
+        <!-- 
+          Account Creation 
+        -->
+        <div id="Sig" class="tabcontent">
+          <form class="form" id="signup">
+            <form class="form" id = "signupContents">
+            <h1 class = "form__title">Create Account</h1>
+            <p class="form__input-message">Input Your Email with Your New Username and Password Below</p>
+            <div class = "form__input-group">
+              <input type = "email" id = "suEmail" class= "form__input" autofocus placeholder="Email">
+            </div>
+            <div class = "form__input-group">
+              <input type = "text" id ="username" class= "form__input" autofocus placeholder="Username">
+            </div>
+            <div class = "form__input-group">
+              
+              <br />
+              <input type = "password" id = "suPassword" class= "form__input" autofocus placeholder="Password">
+              <input type = "password" id = "reSuPassword" class= "form__input" autofocus placeholder="Re-Enter Password">
+              <p>Password Must:</p>
+              <l style="width: 80%; height: 80%;">
+                <li>Be Greater than 8 Characters</li>
+                <li>Contain 1 Special Character</li>
+                <li>Contain 1 Uppercase Character</li>
+                <li>Contain 1 Number</li>
+              </l>
+              <p id = "passwordErrorMsg"></p>
+            </div>
+            <button class="form__button" type="submit">Continue</button>
+           </form>
+          </form>
+        </div>
+        <!-- 
+          Login Tab 
+        -->
+        <div id="In" class="tabcontent">
+          <form class="form" id="login">
+            <h1 class = "form__title">Login</h1>
+            <p class="form__input-message">Input Your Email and Password Below</p>
+            <div class = "form__input-group">
+              <input type = "text" id = "liEmail" class= "form__input" autofocus placeholder="Email">
+              <p id = "emailErrorMsg" class="form__input-error-message"></p>
+            </div>
+            <div class = "form__input-group">
+              <input type = "password" id = "liPassword" class= "form__input" autofocus placeholder="Password">
+              <p id = "passwordErrorMsg" class="form__input-error-message"></p>
+            </div>
+            <button class="form__button" type="submit">Continue</button>
+          </form>
+        </div>
+        <!-- 
+          LevelBuilder Tab 
+        -->
+        <div id="Bui" class="tabcontent">
+          <h1 class = "form__title">Level Builder</h1>
+          <p>CAUTION Construction in Progress.</p>
+          <div class="grid-container">
+            <div class="entities grid-item">
+              <h2>Give your level a name!</h2>
+              <p>Name must be less than 15 characters.</p>
+            <input type = "text" id = "levelName" class = "form__input" autofocus placeholder="Level Name">
+              <h4>Entities</h4>
+              <div id="entityList">
+
+              </div>
+            </div>
+            <div id="lbCanvasAnchor" class="canvas grid-item">
+              <canvas id="levelBuilderCanvas"></canvas>
+            </div>
+            <div class="vars grid-item">
+              <h4>Transform</h4>
+            </div>
+            <div class="prefabs grid-item">
+              <h4>Prefabs</h4>
+              <div class="dropdown">
+                <button class="dropbtn">Player</button>
+                <div class="dropdown-content">
+                  <button class="prefab-button dropbtn" type="submit">Player</button>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Enemies</button>
+                <div class="dropdown-content">
+                  <button class="prefab-button dropbtn" type="submit">Goblin</button>
+                  <button class="prefab-button dropbtn" type="submit">Slime</button>
+                  <button class="prefab-button dropbtn" type="submit">Dragon</button>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Environment</button>
+                <div class="dropdown-content">
+                  <button class="prefab-button dropbtn" type="submit">Wall</button>
+                  <button class="prefab-button dropbtn" type="submit">Grass</button>
+                  <button class="prefab-button dropbtn" type="submit">Path</button>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Items</button>
+                <div class="dropdown-content">
+                  <button class="prefab-button dropbtn" type="submit">Sword</button>
+                  <button class="prefab-button dropbtn" type="submit">Shield</button>
+                  <button class="prefab-button dropbtn" type="submit">Health Potion</button>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Gizmos</button>
+                <div class="dropdown-content">
+                  <button class="prefab-button dropbtn" type="submit">Exit Indicator</button>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Custom</button>
+                <div class="dropdown-content">
+                  <button class="disableNotif dropbtn" type="submit" disabled>No Custom Prefabs</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="form__button" type="submit" id = "saveLevel">Save Level</button>
+          
+          <div id = "userLevels"></div>
+        </div>
+        <!-- 
+          Game Window Tab 
+        -->
+        <div id="Gam" class="tabcontent" >
+          <div id="HitboxContainer" style="position: relative;z-index: 1;">
+            <div id="hitbox" style="position: relative;z-index: 2;">
+              <div id="circlePosition1" >
+                <div class="circle">1</div>
+              </div>
+              <div id="circlePosition2" >
+                <div class="circle">2</div>
+              </div>
+              <div id="circlePosition3" >
+                <div class="circle">3</div>
+              </div>
+              <div id="circlePosition4" >
+                <div class="circle">4</div>
+              </div>
+                <style>
+                  .circle {
+                    position: absolute;
+                    height: 20px;
+                    width: 20px;
+                    background-color: #555;
+                    border-radius: 50%;
+                  }
+                  #circlePosition1{
+                    position: relative;
+                    z-index: 1;
+                    margin:auto 15px;
+                    width:10px;
+                    top:20px;
+                  }
+                  #circlePosition2{
+                    position: relative;
+                    z-index: 1;
+                    margin:auto;
+                    width:20px;
+                    top:40px;
+                  }
+                  #circlePosition3{
+                    position: relative;
+                    z-index: 1;
+                    margin:auto 105px ;
+                    width:20px;
+                    top:155px;
+                  }
+                  #circlePosition4{
+                    position: relative;
+                    z-index: 1;
+                    margin:auto;
+                    width:40px;
+                    top:80px;
+                    
+                  }
+                  </style>
+            </div>
+          </div>
+          <canvas id="canvas" style="position: relative;z-index: 0;"></canvas>
+        </div>
+        <script>
+          var element = document.getElementById('canvas');
+          var elementWidth = getComputedStyle(element).width;
+          console.log(elementWidth);
+        </script>
+        <style>
+          #HitboxContainer{
+            width: 385px;
+            margin:auto;
+          }
+          #hitbox{
+            height:175px;
+            width: 128px;
+            top: 115px;
+            margin-left: 100%;
+            -webkit-touch-callout: none; 
+              -webkit-user-select: none; 
+                -khtml-user-select: none;
+                  -moz-user-select: none; 
+                    -ms-user-select: none; 
+                        user-select: none; 
+          }
+          #canvas{
+            top:-70px;
+          }
+        </style>
+        
+        <!--
+          LeaderBoard and Personal Statistics Tab Data 
+       -->
+        <div id="Sta" class="tabcontent">
+          <h1 class = "form__title">Leaderboards</h1>
+          
+          <h3>Enemies slain</h3>
+          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
+            <tr>
+              <th id="enemySlayer1">Username#1</th>
+              <th id="U1E">Enemies slain</th>
+            </tr>
+            <tr>
+              <th id="enemySlayer2">Username#2</th>
+              <th id="U2E">Enemies slain</th>
+            </tr>
+            <tr>
+              <th id="enemySlayer3">Username#3</th>
+              <th id="U3E">Enemies slain</th>
+            </tr>
+          </table>
+          <h3>Dragons slain</h3>
+          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
+            <tr>
+              <th id ="dragonSlayer1">Username#1</th>
+              <th id="U1D">Dragons slain</th>
+            </tr>
+            <tr>
+              <th id="dragonSlayer2">Username#2</th>
+              <th id="U2D">Dragons slain</th>
+            </tr>
+            <tr>
+              <th id="dragonSlayer3">Username#3</th>
+              <th id="U3D">Dragons slain</th>
+            </tr>
+          </table>
+          <h3>Mazes escaped</h3>
+          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
+            <tr>
+              <th id="mazeRunner1">Username#1</th>
+              <th id="U1M">Mazes Escaped</th>
+            </tr>
+            <tr>
+              <th id="mazeRunner2">Username#2</th>
+              <th id="U2M">Mazes Escaped</th>
+            </tr>
+            <tr>
+              <th id="mazeRunner3">Username#3</th>
+              <th id="U3M">Mazes Escaped</th>
+            </tr>
+          </table>
+          <h1 class = "form__title" id = "personal_stat">Personal Stats</h1>
+          <table style ="width:60%; border:1px solid #F6C90E; margin-left: auto;margin-right: auto;">
+            <tr>
+              <th >Enemies slain</th>
+              <th id="PE">0</th>
+            </tr>
+            <tr>
+              <th >Dragons slain</th>
+              <th id="PD">0</th>
+            </tr>
+            <tr>
+              <th >Mazes Escaped</th>
+              <th id="PM">0</th>
+            </tr>
+          </table>
+        </div>
+        <!----
+          Settings Tab 
+        -->
+        <div id="Set" class="tabcontent">
+          <h1 >Music</h1>
+          <h3>Experimental, music may not play in chrome browser</h3>
+          <table style ="width:100%">
+            <th style="width:50%">
+              <h2 >Sound Bar</h2>
+              <input type="range" min="1" max="100" value="100" id="slider">
+              <span id="display">1</span>
+              <script>
+                var audio = document.getElementById("myaudio");
+                var slider = document.getElementById("slider");
+                var output = document.getElementById("display"); 
+                output.innerHTML = slider.value;
+                slider.oninput = function() {
+                  output.innerHTML = this.value;
+                  audio.volume=(this.value)/100;
+                }     
+              </script>
+            </th>
+            <th style="width:50%">
+              <h2 >Start/Mute</h2>
+              <input type="checkBox" id="box1" name="box1"/>
+              <script>
+                var audio = document.getElementById("myaudio");
+                document.getElementById('box1').addEventListener('click', function (e)
+                {
+                    audio.play();
+                    e = e || window.event;
+                    audio.muted = !audio.muted;
+                     e.preventDefault();
+                }, false);
+              </script>
+            </th>
+          </table>
+          <h1></h1>
+        </div>
+        <!-- 
+          Account tab. Contains Log out button and reset password fuctionality. Disabled by default 
+        -->
+        <div id="Acc" class="tabcontent">
+          <h1 >Account</h1>
+          <table style ="width:100%">
+            <th style="width:50%">
+              <h2 >Reset Password</h2>
+              <form>
+                <p>Password Must:</p>
+              <l style="width: 80%; height: 80%;">
+                <li>Be Greater than 8 Characters</li>
+                <li>Contain 1 Special Character</li>
+                <li>Contain 1 Uppercase Character</li>
+                <li>Contain 1 Number</li>
+              </l>
+                <input type = "password" id = "newPassword" class= "form__input" autofocus placeholder="Password">
+                <input type = "password" id = "reNewPassword" class= "form__input" autofocus placeholder="Re-Enter Password">
+                <button id = "resetPassword" class="form__button" type="submit">Reset Password</button>
+              </form>
+            </th>
+            <th style="width:50%">
+              <h2>Log Out</h2>
+              <button id = "logout" class="form__button" type="submit">Here</button>
+            </th>
+          </table>
+        </div>
+        <!--         
+          OpenTab Function, used in tab links 
+        -->
+        <script>
+          function openTab(evt, name) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+              tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            if (evt.currentTarget != null)
+            {
+              for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+              }
+              evt.currentTarget.className += " active";
+            }
+            document.getElementById(name).style.display = "block";
+          }
+          openTab(new Event('PointerEvent'), 'Hom');
+        </script>
+      </main>
+      <!--       
+        Hint Box 
+      -->
+      <div id="changeH">You found the secret hint! Nothing's hidden here though... Look harder in The Maze!</div>
+      
+      <script>
+        var elem = document.getElementById("changeH");
+        
+      </script>
+    </body>
+</html>
