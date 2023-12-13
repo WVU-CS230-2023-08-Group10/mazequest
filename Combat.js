@@ -166,18 +166,15 @@ class Combat
             tracePoints = mouseTracePoints;
             // Clear the mouse trace array
             mouseTracePoints = new Array();
-            continueGame = true;
+            var damagePercentage = Accuracy(tracePoints);
         });
-        if(continueGame){
-            var damagePercentage = Accuracy(mouseTracePoints);
-            //return damagePercentage;
-        }
+        
 //end temp traceGame
 function Accuracy(tracePoints)
 {
     
     //connect basicPatternPoints to weapons pattern
-    let basicPatternPoints = new Array();
+    let basicPatternPoints = attackingWeapon.getTrace();
     let points =4;
     //Makes array divisible by 4
     let extra = tracePoints%3;

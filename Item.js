@@ -62,6 +62,10 @@ class Weapon extends Item
         return accuracy * (highDamage - lowDamage) + lowDamage;
     }
 
+    getTrace()
+    {
+        return this.trace;
+    }
     serialize()
     {
         return '{ "type":"Weapon", "name":"' + this._Name +
