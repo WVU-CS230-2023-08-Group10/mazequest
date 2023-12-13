@@ -11,7 +11,7 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const s = supabase.createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener("DOMContentLoaded", async () => {
-   
+
    // Save the initial contents of login form
    const loginForm = document.getElementById("login");
    const loginInitialFormContent = loginForm.innerHTML;
@@ -26,11 +26,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
    // Check to see if user is logged in
-   
+
    const { data: { user } } = await s.auth.getUser()
-   
+
    if (user) {
-      // User is signed in. Enable access to account tab
+      // User is signed in.
+
+      // Get the user's username
+      const user = await s.auth.getUser();
+      var username = JSON.stringify(user.data.user.user_metadata.username);
+      // Pull the user's levels from database
+      loadUserLevels(username);
+
+      // Enable access to account tab
       document.getElementById("Account").disabled = false;
       document.getElementById("Level_Builder").disabled = false;
       document.getElementById("GameWindow").disabled = false;
@@ -47,128 +55,130 @@ document.addEventListener("DOMContentLoaded", async () => {
       // Move the user to the sign-in tab
       // Explicitly call openTab with the 'In' tab as an argument
       openTab({ currentTarget: document.getElementById('In') }, 'In');
-      
+
    }
 
    updateLeaderboard();
 
-// BEGIN LOGIN
+   // BEGIN LOGIN
    document.getElementById("login").addEventListener("submit", async (e) => {
-      
+
       e.preventDefault();
-     
-     
-     
+
+
+
       const email = document.getElementById("liEmail").value
-      const password = document.getElementById("liPassword").value 
-      
+      const password = document.getElementById("liPassword").value
+
       // Switch to Home view
       const { data, error } = await s.auth.signInWithPassword({
-          email: email,
-          password: password
- 
-       })
+         email: email,
+         password: password
 
-       if (error) {
-          alert("Incorrect username or password")
-       } else {
-          // successful login
-          alert("Success! Logged In");
-          location.reload();
-
-          // Enable access to Account tab
-          document.getElementById("Account").disabled = false;
-          document.getElementById("Level_Builder").disabled = false;
-          document.getElementById("GameWindow").disabled = false;
-
-          // Remove login tab content
-          removeLoginForm(loginForm, SIGNED_IN);
-
-          // Remove sign-up tab content
-          removeSignUpForm(signupForm, SIGNED_IN);
-       }
-    });
-// END LOGIN
-
-//BEGIN LOGOUT 
-document.getElementById("logout").addEventListener("click", async (e) =>{
-   
-   const { error } = await s.auth.signOut()
-   if (error){
-      console.error(error)
-   } else {
-      alert("You have been successfully signed out")
-      location.reload()
-      // User is logged out. Disable the Account tab
-      document.getElementById("Account").disabled = true;
-      document.getElementById("Level_Builder").disabled = true;
-      document.getElementById("GameWindow").disabled = true;
-
-
-      // Remove focus from the currently focused element
-      document.activeElement.blur();
-
-      // Restore inital contents of sign-up and login forms
-      loginForm.innerHTML = loginInitialFormContent;
-      signupForm.innerHTML = signupInitialFormContent;
-
-      // Move the user off of the Account tab
-      // Explicitly call openTab with the 'In' tab as an argument
-      openTab({ currentTarget: document.getElementById('In') }, 'In');
-   }
-});
-
-
-
-// BEGIN SIGNUP
-   document.getElementById("signup").addEventListener("submit", async (e) => {
-    
-     e.preventDefault();
-     
-     // Grabbing email and password entered by user
-     const email = document.getElementById("suEmail").value
-     const password = document.getElementById("suPassword").value 
-     const user_name = document.getElementById("username").value
-     
-     user_name.substring(0,user_name.length-1)
-     
-      // CHECKS USERNAME FOR PROFANITY
-     if (profanity.exists(user_name))
-     {
-      alert("Hark! Thy name is an unforgivable curse...")
-      document.getElementById("username").value = ""
-      return}
-
-     // Checks password
-     if (isStrongPassword(password, document.getElementById("suPassword"), document.getElementById("reSuPassword"))){
-   
-      
-      const { data, error } = await s.auth.signUp({
-          email: email,
-          password: password,
-          options:{data: {
-            "username": user_name
-          }}
-      });
+      })
 
       if (error) {
-          alert("error")
-          console.log(error)
+         alert("Incorrect email or password")
       } else {
-         // Create a success message 
-         alert("Success! Account is being created.");
-         // Call sign up form removal function
-         removeSignUpForm(signupForm, CHECK_EMAIL);
+         // successful login
+         alert("Success! Logged In");
+         location.reload();
+
+         // Enable access to Account tab
+         document.getElementById("Account").disabled = false;
+         document.getElementById("Level_Builder").disabled = false;
+         document.getElementById("GameWindow").disabled = false;
+
+         // Remove login tab content
+         removeLoginForm(loginForm, SIGNED_IN);
+
+         // Remove sign-up tab content
+         removeSignUpForm(signupForm, SIGNED_IN);
       }
-   } else {
-      // Password not entered correctly, retry
-      alert("Please enter a valid password.");
-  }
-   });``
+   });
+   // END LOGIN
+
+   //BEGIN LOGOUT 
+   document.getElementById("logout").addEventListener("click", async (e) => {
+
+      const { error } = await s.auth.signOut()
+      if (error) {
+         console.error(error)
+      } else {
+         alert("You have been successfully signed out")
+         location.reload()
+         // User is logged out. Disable the Account tab
+         document.getElementById("Account").disabled = true;
+         document.getElementById("Level_Builder").disabled = true;
+         document.getElementById("GameWindow").disabled = true;
+
+
+         // Remove focus from the currently focused element
+         document.activeElement.blur();
+
+         // Restore inital contents of sign-up and login forms
+         loginForm.innerHTML = loginInitialFormContent;
+         signupForm.innerHTML = signupInitialFormContent;
+
+         // Move the user off of the Account tab
+         // Explicitly call openTab with the 'In' tab as an argument
+         openTab({ currentTarget: document.getElementById('In') }, 'In');
+      }
+   });
+
+
+
+   // BEGIN SIGNUP
+   document.getElementById("signup").addEventListener("submit", async (e) => {
+
+      e.preventDefault();
+
+      // Grabbing email and password entered by user
+      const email = document.getElementById("suEmail").value
+      const password = document.getElementById("suPassword").value
+      const user_name = document.getElementById("username").value
+
+      user_name.substring(0, user_name.length - 1)
+
+      // CHECKS USERNAME FOR PROFANITY
+      if (profanity.exists(user_name)) {
+         alert("Hark! Thy name is an unforgivable curse...")
+         document.getElementById("username").value = ""
+         return
+      }
+
+      // Checks password
+      if (isStrongPassword(password, document.getElementById("suPassword"), document.getElementById("reSuPassword"))) {
+
+
+         const { data, error } = await s.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+               data: {
+                  "username": user_name
+               }
+            }
+         });
+
+         if (error) {
+            alert("error")
+            console.log(error)
+         } else {
+            // Create a success message 
+            alert("Success! Account is being created.");
+            // Call sign up form removal function
+            removeSignUpForm(signupForm, CHECK_EMAIL);
+         }
+      } else {
+         // Password not entered correctly, retry
+         alert("Please enter a valid password.");
+      }
+   }); ``
    // END SIGNUP
 
    // BEGIN RESET PASSWORD
-   document.getElementById("resetPassword").addEventListener("click", async (e) =>{
+   document.getElementById("resetPassword").addEventListener("click", async (e) => {
 
       e.preventDefault();
 
@@ -176,13 +186,13 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       const new_password = document.getElementById("newPassword").value;
 
       // Check to see if new password is strong enough
-      if (isStrongPassword(new_password, document.getElementById("newPassword"), document.getElementById("reNewPassword"))){
+      if (isStrongPassword(new_password, document.getElementById("newPassword"), document.getElementById("reNewPassword"))) {
 
-         if(await s.auth.updateUser({ password: new_password })){
+         if (await s.auth.updateUser({ password: new_password })) {
             alert("Password was changed!");
          }
       }
-      else{
+      else {
          // Password not entered correctly, retry
          alert("Please enter a valid password.");
       }
@@ -219,7 +229,7 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       const level_name = levelNameTextBox.value;
 
       // Get the user's username
-      const user =  await s.auth.getUser();
+      const user = await s.auth.getUser();
       var username = JSON.stringify(user.data.user.user_metadata.username);
 
       // Create a new Game object
@@ -239,12 +249,12 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
          },
       ])
 
-      if (error){
+      if (error) {
          // Error saving to database
          alert("Error: There was an error saving your level. Please retry.");
          return;
       }
-      else{
+      else {
          // Level was successfully added
          alert("Level saved!");
          // Change text box color back to original (if necessary)
@@ -253,7 +263,7 @@ document.getElementById("logout").addEventListener("click", async (e) =>{
       }
    });
 
- });
+});
 // END SUPABASE
 
 /**
@@ -344,7 +354,7 @@ async function updateLeaderboard() {
   if (user.data.user){
       
       
-   console.log(JSON.stringify(user))
+  // console.log(JSON.stringify(user))
    var stringId= JSON.stringify(user.data.user.id)
    
  // retrieve user id to access stats table
@@ -359,14 +369,14 @@ async function updateLeaderboard() {
 
    
 // convert username to json and display
-   console.log(JSON.stringify(personalStats.data[0].username))
+   // console.log(JSON.stringify(personalStats.data[0].username))
    const usernameString = JSON.stringify(personalStats.data[0].username)
 
    //const username = usernameString.substring(1,usernameString.length-1)
    document.getElementById("personal_stat").innerHTML = usernameString.substring(3,usernameString.length-3)+ "'s conquests..."
 
   
-      console.log(JSON.stringify(personalStats))
+      //console.log(JSON.stringify(personalStats))
        var personalDragons =  personalStats.data[0].dragons_slain
        var personalMazes = personalStats.data[0].mazes_escaped
        var personalenemies = personalStats.data[0].enemies_slain
@@ -415,18 +425,17 @@ async function updateLeaderboard() {
  * @param {*} password - users password to check
  * @returns returns true if the user's password meets the criteria. False otherwise.
  */
- function isStrongPassword(password, passwordBox, rePasswordBox) {
+function isStrongPassword(password, passwordBox, rePasswordBox) {
 
    // Check if the two password boxes contain the same text
-   if (passwordBox.value == rePasswordBox.value){
+   if (passwordBox.value == rePasswordBox.value) {
       rePasswordBox.style.backgroundColor = '';
       // Passwords match, check other requirements
       let isStrong = true
-      let validationRegex = [{regex: /.{8,}/}, {regex: /[0-9]/}, {regex:/[A-Z]/}, {regex:/[^A-Za-z0-9]/}]
+      let validationRegex = [{ regex: /.{8,}/ }, { regex: /[0-9]/ }, { regex: /[A-Z]/ }, { regex: /[^A-Za-z0-9]/ }]
       validationRegex.forEach((item) => {
          let isValid = item.regex.test(password)
-         if (!isValid)
-         {
+         if (!isValid) {
             // Remove text from text boxes
             passwordBox.value = "";
             rePasswordBox.value = "";
@@ -440,7 +449,7 @@ async function updateLeaderboard() {
          passwordBox.style.backgroundColor = '';
 
       return isStrong
-     
+
    }
    // Text boxes did not match. Make them re-enter.
    alert("Passwords do not match.")
@@ -482,7 +491,7 @@ function removeSignUpForm(form, message){
  * This function removes the login form from the tab and adds a message showing that the user successfully logged in
  * @param {*} form - login form to remove contents of
  */
-function removeLoginForm(form, message){
+function removeLoginForm(form, message) {
    // Remove the text boxes and intstructions from the form
    form.innerHTML = ' ';
 
@@ -500,6 +509,48 @@ function removeLoginForm(form, message){
    successImage.width = "500";
    successImage.style.display = "block";
    successImage.style.margin = "auto";
+}
+
+/**
+ * loadUserLevels - method to pull the user's levels from Supaabse. This method Queries the database and loads the elements into the levelBuilder.
+ * @param {*} username - used to pull user's levels from the database
+ */
+async function loadUserLevels(username) {
+   // Pull all levels associated with user's username from database
+   const { data, error } = await s
+      .from('levels')
+      .select('*') // Select all columns
+      .eq('username', username); // Filter by the username
+
+
+   // Check if there was an error
+   if (error) {
+      alert("error getting levels.");
+   }
+
+   // Check if levels were pulled
+   if (data == null) {
+      // No levels pulled. Do nothing and return
+      return;
+   }
+   else {
+
+      // Find the HTML element to display the data
+      const listElement = document.getElementById('userLevels');
+
+      // Create a list to hold the names
+      const ul = document.createElement('ul');
+
+      // Loop through the data and create list items for each name
+      data.forEach(item => {
+         const li = document.createElement('li');
+         li.textContent = String(item.level_name);
+         ul.appendChild(li);
+      });
+
+      // Append the list to the selected HTML element
+      listElement.appendChild(ul);
+   }
 }
 
 //below is used for hint rotation
