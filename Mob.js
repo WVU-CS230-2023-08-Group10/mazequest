@@ -203,6 +203,7 @@ class Mob extends Entity
                 // If no valid tiles...
                 if (validMoves.length <= 0)
                 {
+                    // ...retry action
                     this.mobAction();
                     break;
                 }
