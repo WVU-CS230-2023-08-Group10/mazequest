@@ -78,12 +78,21 @@ class Weapon extends Item
 
 class Armor extends Item
 {
-    protection;
+    lowProtection;
+    highProtection;
+    trace;
 
-    constructor(name, protection)
+    constructor(name, lowProtection, highProtection, trace, renderer, transform = new Transform(), game = undefined)
     {
-        super(name);
-        this.protection = protection;
+        super(name, transform, renderer, game);
+        this.lowProtection = lowProtection;
+        this.highProtection = highProtection;
+        this.trace = trace;
+    }
+
+    protection(accuracy)
+    {
+        return accuracy * (highProtection - lowProtection) + lowProtection;
     }
 
     serialize()
@@ -95,7 +104,7 @@ class Armor extends Item
 
     static deserialize(obj, game)
     {
-        return new Armor(obj.name, obj.protection);
+        return new Armor(obj.name, obj.protection, Renderer.deserialize(obj.renderer), Transform.deserialize(obj.transform), game);
     }
 }
 
@@ -103,9 +112,9 @@ class Consumable extends Item
 {
     stackCount;
 
-    constructor(name, count = 1)
+    constructor(name, renderer, count = 1, transform = new Transform(), game = undefined)
     {
-        super(name);
+        super(name, transform, renderer, game);
         this.stackCount = count;
     }
 
@@ -128,6 +137,6 @@ class Consumable extends Item
 
     static deserialize(obj, game)
     {
-        return new Consumable(obj.name, obj.count);
+        return new Consumable(obj.name, Renderer.deserialize(obj.renderer), obj.count, Transform.deserialize(obj.transform), game);
     }
 }
