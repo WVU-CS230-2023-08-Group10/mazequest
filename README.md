@@ -28,6 +28,12 @@ To play MazeQuest or use the LevelBuilder, you must first create and authenticat
 ![MazeQuest Title](https://github.com/WVU-CS230-2023-08-Group10/mazequest/blob/main/images/MazeQuest.png)
 ![QuestBirb](https://github.com/WVU-CS230-2023-08-Group10/mazequest/blob/main/images/Smol_Quest_Birb.png)
 ![GameWindow Preview](https://github.com/WVU-CS230-2023-08-Group10/mazequest/blob/main/images/preview.png)
+
+## Testing
+### Automated Testing was conducted using:
+* [SonarQube](https://www.sonarsource.com/products/sonarqube/)
+* [SeleniumHQ](https://www.selenium.dev/)
+
 ## Tech/framework used
 ### Built with
 * [Pixi.js](https://pixijs.com/) - Rendering engine
