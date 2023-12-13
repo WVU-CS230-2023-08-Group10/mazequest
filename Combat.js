@@ -13,7 +13,6 @@ export {Combat}
  *  - run         : Boolean
  *  - minDistance :
  *  - maxDistance :
- *  - Renderer    : Renderer
  * 
  * Methods:
  *  - 
@@ -24,20 +23,26 @@ class Combat
     defender;
     run = false;
     minDistance;
-    MaxDistance;
-    Renderer;
+    maxDistance;
+    graphics;
+    stage;
 
-    constructor(attacker,defender)
+    constructor(attacker, defender, stage)
     {
         this.attacker = attacker;
         this.defender = defender;
+
+        this.stage = stage;
+        this.graphics = new PIXI.Graphics();
+        this.stage.addChild(graphics);
+
         initiateCombat();
     }
 
     initiateCombat()
     {
         //originally put "initialize combat UI", might just keep to side of screen
-        let combatDamage;
+        let combatDamage, floatAccuracy;
         //needs establishment of attackers high/low damage of weapon
         const attackingWeapon = this.attacker.inventory.getWeapon();
         //needs establishment of defenders high/low damage of weapon
@@ -45,6 +50,7 @@ class Combat
         
         if(this.isAttackerPlayer())
         {
+            this.drawPattern(attackingWeapon.trace);
             //floatAccuracy = traceGame(vertical swipe)
             combatDamage = attackingWeapon.damage(floatAccuracy);
         }
@@ -53,12 +59,17 @@ class Combat
             combatDamage = attackingWeapon.damage(Math.random());
         }
 
-        if(isDefenderPlayer())
+        if(this.isDefenderPlayer())
         {
+            this.drawPattern(defendingArmor.trace);
             //floatAccuracy = traceGame(horizantel swipe)
-            // combat += floatAccuracy * (highDamageDefender - lowDamageDefender) + lowDamageDefender;
+            combatDamage -= defendingArmor.damage(floatAccuracy);
         }
-        // defender.damage(combatDamage)
+        else
+        {
+            combatDamage -= defendingArmor.damage(Math.random());
+        }
+        this.defender.damage(combatDamage);
         //endCombat
         return;
     }
@@ -84,25 +95,40 @@ class Combat
 
     }
     
-    //might need adjustment
     isAttackerPlayer()
     {
-        if(this.attacker instanceof Player)
-        {
-            return true;
-        }
-        return false;
-    }
-    //might need adjustment
-    isDefenderPlayer()
-    {
-        if(this.defender instanceof Player)
-        {
-            return true;
-        }
-        return false;
+        return this.attacker instanceof Player;
     }
 
+    isDefenderPlayer()
+    {
+        return this.defender instanceof Player;
+    }
+
+    /**
+     * 
+     * @param {Array<Vector2>} pattern 
+     */
+    drawPattern(pattern)
+    {
+        if (trace.length <= 0)
+            return;
+
+        const baseCoord = new Vector2(512, 0);
+
+        this.graphics.lineStyle({
+            native:true, 
+            color:0xffffff,
+            width:2
+        });
+        this.graphics.moveTo(pattern[0].x + baseCoord.x, pattern[0].y + baseCoord.y);
+        // remove the starting point
+        pattern.splice(0, 1);
+        for (const vec of pattern)
+        {
+            this.graphics.lineTo(vec.x + baseCoord.x, vec.y + baseCoord.y);
+        }
+    }
 }
 //temp traceGame
         let mouseTracePoints = new Array();
@@ -144,7 +170,7 @@ class Combat
         });
         if(continueGame){
             var damagePercentage = Accuracy(mouseTracePoints);
-            return damagePercentage;
+            //return damagePercentage;
         }
 //end temp traceGame
 function Accuracy(tracePoints)

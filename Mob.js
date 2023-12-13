@@ -185,15 +185,20 @@ class Mob extends Entity
                 let validMoves = [];
                 for (const dir in directions)
                 {
+                    const isValid = true;
                     const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(dir, this.game.grid.cellSize));
+                    // Get collisions for the given direction
                     const collisions = this.game.getEntities((e) => {
                         return e.transform.position.equals(pos);
                     });
                     for (const e of collisions)
                     {
-                        if (!(e instanceof Collider))
-                            validMoves.push(dir);
+                        // If move would colide with player, wall, or other mob, the move is not valid
+                        if (e instanceof Collider || e instanceof Player || e instanceof Mob)
+                            isValid = false;
                     }
+                    if (isValid)
+                        validMoves.push(dir);
                 }
                 // If no valid tiles...
                 if (validMoves.length <= 0)

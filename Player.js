@@ -5,6 +5,7 @@ import { Entity } from "./Entity.js";
 import { Inventory } from "./Inventory.js";
 import { Collider } from "./LevelElements.js";
 import { Enemy } from "./Enemy.js";
+import { Combat } from "./Combat.js";
 export { Player };
 
 /**
@@ -89,7 +90,7 @@ class Player extends Entity
             
             if (e instanceof Enemy)
             {
-                console.log("attack enemy");
+                new Combat(this, e, this.game.stage);
                 return;
             }
         }
