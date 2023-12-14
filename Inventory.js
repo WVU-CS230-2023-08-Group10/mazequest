@@ -114,9 +114,9 @@ class Inventory
      */
     serialize()
     {
-        const weapon_serialized = (this.weapon == null) ? null : this.weapon.serialize();
-        const armor_serialized = (this.armor == null) ? null : this.armor.serialize();
-        const str = '{ "type":"Inventory", "weapon":' + weapon_serialized + ', "armor":' + armor_serialized + ', "consumables":[';
+        const weapon_serialized = (this.weapon == null) ? "null" : this.weapon.serialize();
+        const armor_serialized = (this.armor == null) ? "null" : this.armor.serialize();
+        let str = '{ "type":"Inventory", "weapon": "' + weapon_serialized + '", "armor": "' + armor_serialized + '", "consumables":[';
         for (let i = 0; i < this.consumables.length; i++)
         {
             const c = this.consumables[i];
@@ -139,8 +139,8 @@ class Inventory
         const consumables = [];
         for (c of obj.consumables)
             consumables.push(Consumable.deserialize(c));
-        const w = (obj.weapon == null) ? null : Weapon.deserialize(obj.weapon, game);
-        const a = (obj.armor == null) ? null : Armor.deserialize(obj.armor);
+        const w = (obj.weapon == "null") ? null : Weapon.deserialize(obj.weapon, game);
+        const a = (obj.armor == "null") ? null : Armor.deserialize(obj.armor);
         return new Inventory(w, a, consumables);
     }
 }

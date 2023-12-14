@@ -48,7 +48,7 @@ class Player extends Entity
      * This method requires Inventory usage to account for items  
      * which allows the game to add new graphics to the canvas for rendering.
      * @param {string} name the users name.
-     * @param {transfrom} transform Player position, scale, and rotation.
+     * @param {transform} transform Player position, scale, and rotation.
      * @param {renderer} renderer Player renderer.
      * @param {game} game The Game this is attached to (if any).
      * @param {integer} health Initial health of the user.
@@ -88,9 +88,10 @@ class Player extends Entity
     damage(damageDone)
     {
         this.health -= damageDone;
+        
 
         // game over
-        if(health <= 0)
+        if(this.health <= 0)
         {
             // removing Player from room
             this.destroy();
@@ -106,55 +107,54 @@ class Player extends Entity
             this.game.loadRoom();
 
             // adding new Player into room.
-            this.game.deserializeEntity({"Player":
-            {
-                "type": "Player", 
-                "name": "Player", 
-                "transform": 
+            this.game.deserializeEntity({
+                type: "Player", 
+                name: "Player", 
+                transform: 
                 { 
-                    "position" : { "x" : 256, "y" : 256}, 
-                    "scale" : { "x" : 2, "y" : 2}, 
-                    "rotation" : 0
+                    position : { x : 256, y : 256}, 
+                    scale : { x : 2, y : 2}, 
+                    rotation : 0
                 }, 
-                "renderer": 
+                renderer: 
                 { 
-                    "type":"Renderer", 
-                    "spriteSheetInfo": 
+                    type:"Renderer", 
+                    spriteSheetInfo: 
                     { 
-                        "json":"./images/armor/leatherArmor.json", 
-                        "img":"./images/armor/leatherArmor.png"
+                        json:"./images/armor/leatherArmor.json", 
+                        img:"./images/armor/leatherArmor.png"
                     }, 
-                    "transform": 
+                    transform: 
                     { 
-                        "position" : { "x" : 0, "y" : 0}, 
-                        "scale" : { "x" : 1, "y" : 1}, 
-                        "rotation" : 0
+                        position : { x : 0, y : 0}, 
+                        scale : { x : 1, y : 1}, 
+                        rotation : 0
                     }, 
-                    "animation":"default"
+                    animation:"default"
                 }, 
-                "inventory":
+                inventory:
                 { 
-                    "type":"Inventory", 
-                    "weapon":
+                    type:"Inventory", 
+                    weapon:
                     { 
-                        "type":"Weapon", 
-                        "name":"Starter Sword",
-                        "damage": { "low":5, "high":20 },
-                        "trace":[ {"x":0, "y":0} , {"x":0, "y":1} , {"x":0, "y":2} , {"x":0, "y":3} ],
-                        "renderer": { 
-                            "type":"Renderer", 
-                            "spriteSheetInfo": { "json":"./images/weapons/sword.json", "img":"./images/weapons/sword.png" }, 
-                            "transform" : {
-                                "position" : { "x":0, "y":0 },
-                                "scale" : { "x":1, "y":1 },
-                                "rotation" : 0
+                        type:"Weapon", 
+                        name:"Starter Sword",
+                        damage: { low:5, high:20 },
+                        trace:[ {x:0, y:0} , {x:0, y:1} , {x:0, y:2} , {x:0, y:3} ],
+                        renderer: { 
+                            type:"Renderer", 
+                            spriteSheetInfo: { json:"./images/weapons/sword.json", img:"./images/weapons/sword.png" }, 
+                            transform : {
+                                position : { x:0, y:0 },
+                                scale : { x:1, y:1 },
+                                rotation : 0
                             } 
                         }
                     }, 
-                    "armor":null, 
-                    "consumables":[]
+                    armor:"null", 
+                    consumables:[]
                 }
-            }});
+            });
         }
     }
     /**
@@ -267,8 +267,8 @@ class Player extends Entity
      */
     serialize()
     {
-        return '{ "type":"Player", "name": "' + this._Name + '", "transform": ' + this._Transform.serialize() + ', "renderer": '
-            + this._Renderer.serialize() + ', "inventory":' + this.inventory.serialize() + '}';
+        return '{ "type":"Player", "name": "' + this.name + '", "transform": ' + this.transform.serialize() + ', "renderer": '
+            + this.renderer.serialize() + ', "inventory":' + this.inventory.serialize() + '}';
     }
     /**
      * Take an object that has been serialized and turn it into an instance of Player.

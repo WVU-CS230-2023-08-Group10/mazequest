@@ -125,7 +125,7 @@ class Renderer
     {
         return '{ "type":"Renderer", "spriteSheetInfo": { "json":"' + this._SpriteSheetInfo._Json +
          '", "img":"'+this._SpriteSheetInfo._Img+'"}, "transform": ' + this.transform.serialize() + 
-         '"animation": '+this.getAnimation()+'}';
+         ', "animation": "'+this.getAnimation()+'"}';
     }
 
     static deserialize(obj, stage)

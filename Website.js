@@ -480,23 +480,28 @@ async function loadUserLevels(username) {
       // No levels pulled. Do nothing and return
       return;
    }
-   else {
-
+   else 
+   {
       // Find the HTML element to display the data
       const listElement = document.getElementById('userLevels');
 
-      // Create a list to hold the names
-      const ul = document.createElement('ul');
+      const lList = document.querySelector('#levelList');
 
       // Loop through the data and create list items for each name
       data.forEach(item => {
-         const li = document.createElement('li');
-         li.textContent = String(item.level_name);
-         ul.appendChild(li);
+         const button = document.createElement('button');
+         button.textContent = String(item.level_name);
+         button.setAttribute('class','levelbtn dropbtn');
+         button.addEventListener('click', (e) => {
+            const jstring = String(item.level_file);
+            const event = new CustomEvent('loadLevel', { detail : { level_obj : JSON.parse(jstring), level_name : item.level_name } });
+            document.getElementById("Bui").dispatchEvent(event);
+         })
+         lList.appendChild(button);
       });
 
       // Append the list to the selected HTML element
-      listElement.appendChild(ul);
+      listElement.appendChild(lList);
    }
 }
 

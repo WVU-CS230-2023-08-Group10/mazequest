@@ -187,14 +187,13 @@ const prefabButtons = document.querySelectorAll('.prefab-button');
 
 for (const e of prefabButtons)
 {
-    e.addEventListener('click', () => addToLevelBuilder(e.textContent));
+    e.addEventListener('click', () => addToLevelBuilder(prefabs[e.textContent]));
 }
 
-function addToLevelBuilder(id)
+function addToLevelBuilder(obj, rawAdd = false)
 {
-    const obj = prefabs[id];
     const entity = levelBuilder.deserializeEntity(obj);
-    if (selectedEntity != null)
+    if (selectedEntity != null && !rawAdd)
     {
         entity.transform.position = Vector2.add(selectedEntity.transform.position, {x:32, y:0});
         if (entity.transform.position.x >= 512)
@@ -209,7 +208,8 @@ function addToLevelBuilder(id)
     button.setAttribute('id','id'+entity.getID());
     button.setAttribute('class','entity-select dropbtn');
     button.addEventListener('click', highlightEntity);
-    button.click();
+    if (!rawAdd)
+        button.click();
     eList.appendChild(button);
 }
 
@@ -305,7 +305,16 @@ function clearEditorUI()
     document.querySelector('.vars').replaceChildren();
 }
 
-/* Event listener for the "saveLevel" button on leve builder tab */
+document.getElementById("Bui").addEventListener('loadLevel', (e) => {
+    levelBuilder.unloadRoom();
+    for (const obj of e.detail.level_obj)
+    {
+        addToLevelBuilder(obj, true);
+    }
+    document.getElementById("levelName").value = e.detail.level_name;
+});
+
+/* Event listener for saving levels to supabase */
 document.getElementById("saveLevel").addEventListener("click", async (e) => {
 
     e.preventDefault();
@@ -339,6 +348,8 @@ document.getElementById("saveLevel").addEventListener("click", async (e) => {
     const user = await s.auth.getUser();
     var username = JSON.stringify(user.data.user.user_metadata.username);
 
+    await removeLevel(username, level_name);
+
     // Call the saveRoom() function to get the level file and index
     const levelObject = levelBuilder.saveRoom();
 
@@ -366,3 +377,12 @@ document.getElementById("saveLevel").addEventListener("click", async (e) => {
        return;
     }
  });
+
+ async function removeLevel(username, levelname)
+ {
+    const { data, error } = await s
+        .from('levels')
+        .delete()
+        .eq('username', username)
+        .eq('level_name', levelname);
+ }

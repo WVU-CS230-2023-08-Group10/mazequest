@@ -44,7 +44,7 @@
                     } 
                 }
             }, 
-            "armor":null, 
+            "armor":"null", 
             "consumables":[]
         }
     },
@@ -77,8 +77,8 @@
         "inventory":
         { 
             "type":"Inventory", 
-            "weapon":null, 
-            "armor":null, 
+            "weapon":"null", 
+            "armor":"null", 
             "consumables":[]
         }
     },
@@ -111,8 +111,8 @@
         "inventory":
         { 
             "type":"Inventory", 
-            "weapon":null, 
-            "armor":null, 
+            "weapon":"null", 
+            "armor":"null", 
             "consumables":[]
         }
     },
@@ -145,8 +145,8 @@
         "inventory":
         { 
             "type":"Inventory", 
-            "weapon":null, 
-            "armor":null, 
+            "weapon":"null", 
+            "armor":"null", 
             "consumables":[]
         }
     },

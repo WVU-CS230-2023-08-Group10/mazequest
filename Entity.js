@@ -88,7 +88,7 @@ class Entity
             return;
 
         this.game.unregisterEntity(this);
-        this._Renderer.dispose();
+        this.renderer.dispose();
     }
 
     /**
