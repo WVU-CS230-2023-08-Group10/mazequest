@@ -6,16 +6,6 @@ export {Combat}
 
 /**
  * Class representing game combat.
- * 
- * Fields:
- *  - attacker    : String
- *  - defender    : Transform
- *  - run         : Boolean
- *  - minDistance :
- *  - maxDistance :
- * 
- * Methods:
- *  - 
  */
 class Combat
 {
@@ -39,6 +29,9 @@ class Combat
         initiateCombat();
     }
 
+    /**
+     * Initiates combat conditions & starts encounter
+     */
     initiateCombat()
     {
         //originally put "initialize combat UI", might just keep to side of screen
@@ -73,6 +66,11 @@ class Combat
         //endCombat
         return;
     }
+
+    /**
+     * Description
+     * @param {*} member description
+     */
     traceGame(member)
     {
         // In the top right of the game canvas, a pattern will appear (in the tranparent hitbox) over the creature. 
@@ -96,19 +94,27 @@ class Combat
 
     }
     
+    /**
+     * Checks if the player is the attacker
+     * @returns boolean result of if attacker is the player
+     */
     isAttackerPlayer()
     {
         return this.attacker instanceof Player;
     }
 
+    /**
+     * Checks if the player is the defender of the attack
+     * @returns boolean result of if defender/reeiver is the player 
+     */
     isDefenderPlayer()
     {
         return this.defender instanceof Player;
     }
 
     /**
-     * 
-     * @param {Array<Vector2>} pattern 
+     * Draws the given attack pattern to the game window
+     * @param {Array<Vector2>} pattern the passed attack pattern of a weapon
      */
     drawPattern(pattern)
     {
