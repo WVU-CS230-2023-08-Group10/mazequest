@@ -49,13 +49,21 @@ class Game
             height: 16
         }
 
-        this.layout = new MazeLayout(new GenerationParameters(10, 10, 16, 64, .5));
-        this.currentRoomPosition = this.layout.startPosition;
+        this.generateRoomLayout()
     }
 
     get currentRoom()
     {
         return this.layout.roomArray[currentRoomPosition.y][currentRoomPosition.x];
+    }
+
+    /**
+     * Generates a new maze layout for the game
+     */
+    generateRoomLayout()
+    {
+        this.layout = new MazeLayout(new GenerationParameters(10, 10, 16, 64, .5));
+        this.currentRoomPosition = this.layout.startPosition;
     }
 
     /**
