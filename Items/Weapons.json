@@ -12,12 +12,13 @@
         },
         "renderer": { 
             "type":"Renderer", 
-            "spriteSheetInfo": { "json":"./images/weapons/sword.json", "img":"./images/weapons/sword.png" }, 
+            "spriteSheetInfo": { "json":"./images/items/Items.json", "img":"./images/items/Items.png" }, 
             "transform" : {
                 "position" : { "x":0, "y":0 },
                 "scale" : { "x":1, "y":1 },
                 "rotation" : 0
-            } 
+            },
+            "animation":"sword"
         }
     },
     "master_sword": {
@@ -32,13 +33,14 @@
             "rotation" : 0
         },
         "renderer": { 
-            "type":"Renderer", 
-            "spriteSheetInfo": { "json":"./images/weapons/goldenSword.json", "img": "./images/weapons/goldenSword.png"} ,
+            "type":"Renderer",
+            "spriteSheetInfo": { "json":"./images/items/Items.json", "img": "./images/items/Items.png"} ,
             "transform" : {
                 "position" : { "x":0, "y":0 },
                 "scale" : { "x":1, "y":1 },
                 "rotation" : 0
-            } 
+            },
+            "animation":"goldenSword"
         } 
     }
 }

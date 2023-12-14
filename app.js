@@ -22,10 +22,11 @@ const app = new PIXI.Application(
 app.stage.sortableChildren = true;
 document.getElementById("Gam").appendChild(app.view);
 
-// Stores the background image as a new sprite, to be removed for built levels
-const bkgTexture = PIXI.Texture.from("./images/preview.png");
-const bkg = new PIXI.Sprite(bkgTexture);
-app.stage.addChild(bkg);
+// Stores the background image as a new sprite
+let bkgTexture = PIXI.Texture.from("./images/tiles/default_bg.png");
+let bkg = new PIXI.Sprite(bkgTexture);
+bkg.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+bkg.setTransform(0, 0, 2, 2);
 
 // Load prefabs from .json file
 const prefabs = await fetch('./prefabs.json')
@@ -157,6 +158,12 @@ const lbapp = new PIXI.Application(
 )
 lbapp.stage.sortableChildren = true;
 document.getElementById("lbCanvasAnchor").appendChild(lbapp.view);
+
+bkgTexture = PIXI.Texture.from("./images/tiles/default_bg.png");
+bkg = new PIXI.Sprite(bkgTexture);
+bkg.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+bkg.setTransform(0, 0, 2, 2);
+lbapp.stage.addChild(bkg);
 
 const levelBuilder = new Game(lbapp.stage);
 const lbui = new PIXI.Graphics();
