@@ -76,7 +76,7 @@ class Weapon extends Item
 
     static deserialize(obj, game)
     {
-        return new Weapon(obj.name, obj.damage.low, obj.damage.high, obj.trace, Renderer.deserialize(obj.renderer, game.stage), Transform.deserialize(obj.transform));
+        return new Weapon(obj.name, obj.damage.low, obj.damage.high, obj.trace, Renderer.deserialize(obj.renderer, game.stage), Transform.deserialize(obj.transform), game);
     }
 }
 

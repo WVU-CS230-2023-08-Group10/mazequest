@@ -117,6 +117,7 @@ class Game
      */
     renderEntities(delta)
     {
+        this.stage.sortChildren();
         for (const entity of this.entityList) {
             entity.render(delta);
         }
@@ -307,7 +308,6 @@ class Game
                 console.log("Entity of type: '" + obj.type + "' not recognized!" );
                 break;
         }
-        this.registerEntity(e);
         return e;
     }
 }

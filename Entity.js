@@ -45,6 +45,8 @@ class Entity
         this._Name = name;
         
         this.uuid = crypto.randomUUID();
+
+        this.game.registerEntity(this);
     }
 
     get name() {
