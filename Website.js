@@ -518,7 +518,7 @@ var hintsText = ["To engage in combat, move into the enemy!",
    "Do not drop STAT 215. Worst mistake I ever made.",
    "We love StoodBood.",
    "The Sons of Feral Sods is a good read!",
-   ""];
+   "World of wings addictions end here!"];
 
 var counter = 0;
 shuffle(hintsText);
