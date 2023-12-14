@@ -1,0 +1,205 @@
+{
+    "Player":
+    {
+        "type": "Player", 
+        "name": "Player", 
+        "transform": 
+        { 
+            "position" : { "x" : 256, "y" : 256}, 
+            "scale" : { "x" : 2, "y" : 2}, 
+            "rotation" : 0
+        }, 
+        "renderer": 
+        { 
+            "type":"Renderer", 
+            "spriteSheetInfo": 
+            { 
+                "json":"./images/armor/leatherArmor.json", 
+                "img":"./images/armor/leatherArmor.png"
+            }, 
+            "transform": 
+            { 
+                "position" : { "x" : 0, "y" : 0}, 
+                "scale" : { "x" : 1, "y" : 1}, 
+                "rotation" : 0
+            }, 
+            "animation":"default"
+        }, 
+        "inventory":
+        { 
+            "type":"Inventory", 
+            "weapon":null, 
+            "armor":null, 
+            "consumables":[]
+        }
+    },
+    "Goblin":
+    {
+        "type":"Player", 
+        "name": "Goblin", 
+        "transform": 
+        { 
+            "position" : { "x" : 128, "y" : 256}, 
+            "scale" : { "x" : 2, "y" : 2}, 
+            "rotation" : 0
+        }, 
+        "renderer": 
+        { 
+            "type":"Renderer", 
+            "spriteSheetInfo": 
+            { 
+                "json":"./images/enemies/goblin.json", 
+                "img":"./images/enemies/goblin.png"
+            }, 
+            "transform": 
+            { 
+                "position" : { "x" : 0, "y" : 0}, 
+                "scale" : { "x" : 1, "y" : 1}, 
+                "rotation" : 0
+            }, 
+            "animation":"walkright"
+        }, 
+        "inventory":
+        { 
+            "type":"Inventory", 
+            "weapon":null, 
+            "armor":null, 
+            "consumables":[]
+        }
+    },
+    "Slime":
+    { 
+        "type":"Player", 
+        "name": "Slime", 
+        "transform": 
+        { 
+            "position" : { "x" : 256, "y" : 256}, 
+            "scale" : { "x" : 2, "y" : 2}, 
+            "rotation" : 0
+        }, 
+        "renderer": 
+        { 
+            "type":"Renderer", 
+            "spriteSheetInfo": 
+            { 
+                "json":"./images/enemies/slime.json", 
+                "img":"./images/enemies/slime.png"
+            }, 
+            "transform": 
+            { 
+                "position" : { "x" : 0, "y" : 0}, 
+                "scale" : { "x" : 1, "y" : 1}, 
+                "rotation" : 0
+            }, 
+            "animation":"walkright"
+        }, 
+        "inventory":
+        { 
+            "type":"Inventory", 
+            "weapon":null, 
+            "armor":null, 
+            "consumables":[]
+        }
+    },
+    "Exit Indicator":
+    {
+        "type":"ExitIndicator", 
+        "name": "Exit Indicator", 
+        "transform": 
+        { 
+            "position" : { "x" : 256, "y" : 32}, 
+            "scale" : { "x" : 2, "y" : 2}, 
+            "rotation" : 0
+        }, 
+        "renderer": 
+        { 
+            "type":"Renderer", 
+            "spriteSheetInfo": 
+            { 
+                "json":"./images/levelEditor/exit_indicator.json",
+                "img":"./images/levelEditor/exit_indicator.png"
+            }, 
+            "transform": 
+            { 
+                "position" : { "x" : 0, "y" : 0}, 
+                "scale" : { "x" : 1, "y" : 1}, 
+                "rotation" : 0
+            }, 
+            "animation":"up"
+        }
+    },
+    "Wall":
+    {
+        "type": "Collider", 
+        "name": "Wall", 
+        "transform":
+        {
+            "position": { "x": 256, "y": 256 }, 
+            "scale": { "x": 2, "y": 2 }, 
+            "rotation": 0 
+        },
+        "renderer": 
+        {
+            "type": "Renderer", 
+            "spriteSheetInfo": 
+            {
+                "json": "./images/tiles/tiles.json",
+                "img": "./images/tiles/tiles.png"
+            }, 
+            "transform": 
+            {
+                "position": { "x": 0, "y": 0 },
+                "scale": { "x": 1, "y": 1 }, 
+                "rotation": 0
+            }, 
+            "animation": "stone_wall"
+        }
+    },
+    "Grass":
+    {
+        "type": "Entity", 
+        "name": "Grass", 
+        "transform":
+        { 
+            "position": { "x": 256, "y": 256 }, 
+            "scale": { "x": 2, "y": 2 }, 
+            "rotation": 0 
+        },
+        "renderer": 
+        {
+            "type": "Renderer", 
+            "spriteSheetInfo": 
+            {
+                "json": "./images/tiles/tiles.json",
+                "img": "./images/tiles/tiles.png"
+            }, 
+            "transform": 
+            {
+                "position": { "x": 0, "y": 0 },
+                "scale": { "x": 1, "y": 1 }, 
+                "rotation": 0
+            }, 
+            "animation": "grass"
+        }
+    },
+    "Path":
+    {
+        "type": "Entity", "name": "Path", "transform":
+            { "position": { "x": 256, "y": 256 }, "scale": { "x": 2, "y": 2 }, "rotation": 0 },
+        "renderer": 
+        {
+            "type": "Renderer", 
+            "spriteSheetInfo": 
+            {
+                "json": "./images/tiles/tiles.json",
+                "img": "./images/tiles/tiles.png"
+            }, 
+            "transform": 
+            {
+                "position": { "x": 0, "y": 0 },
+                "scale": { "x": 1, "y": 1 }, "rotation": 0
+            }, 
+            "animation": "path"
+        }
+    }
+}

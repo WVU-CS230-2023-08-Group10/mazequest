@@ -117,9 +117,12 @@ const game = new Game(app.stage);
 // Load our weapons from .json file
 const masterList = await fetch('./Items/Weapons.json')
     .then((response) => response.json()).catch(error => console.error(error));
+
+const prefabs = await fetch('./prefabs.json')
+    .then((response) => response.json()).catch(error => console.error(error));
    
 let currWeapon = JSON.stringify(masterList.starter_sword);
-console.log(currWeapon);
+console.log(prefabs);
 
 game.deserializeEntity(JSON.parse(`{ "type":"Player", "name": "Player", "transform": 
 { "position" : { "x" : 256, "y" : 256}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
@@ -189,69 +192,6 @@ lbapp.stage.hitArea = lbapp.screen;
 lbapp.stage.on('pointerup', onDragEnd);
 lbapp.stage.on('pointerupoutside', onDragEnd);
 
-const prefabs = new Map();
-prefabs.set('Player', JSON.parse(`{ "type":"Player", "name": "Player", "transform": 
-{ "position" : { "x" : 256, "y" : 256}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
-"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/armor/leatherArmor.json", 
-"img":"./images/armor/leatherArmor.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
-"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"default"}, "inventory":{ "type":"Inventory", "weapon":null, 
-"armor":null, "consumables":[]}}`));
-prefabs.set('Goblin', JSON.parse(`{ "type":"Player", "name": "Goblin", "transform": 
-{ "position" : { "x" : 128, "y" : 256}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
-"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/enemies/goblin.json", 
-"img":"./images/enemies/goblin.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
-"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"walkright"}, "inventory":{ "type":"Inventory", "weapon":null, 
-"armor":null, "consumables":[]}}`));
-prefabs.set('Slime', JSON.parse(`{ "type":"Player", "name": "Slime", "transform": 
-{ "position" : { "x" : 256, "y" : 256}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
-"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/enemies/slime.json", 
-"img":"./images/enemies/slime.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
-"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"walkright"}, "inventory":{ "type":"Inventory", "weapon":null, 
-"armor":null, "consumables":[]}}`));
-prefabs.set('Exit Indicator', JSON.parse(`{ "type":"ExitIndicator", "name": "Exit Indicator", "transform": 
-{ "position" : { "x" : 256, "y" : 32}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
-"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/levelEditor/exit_indicator.json",
-"img":"./images/levelEditor/exit_indicator.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
-"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"up"}}`));
-prefabs.set('Wall', {
-    type: "Collider", name: "Wall", transform:
-        { position: { x: 256, y: 256 }, scale: { x: 2, y: 2 }, rotation: 0 },
-    renderer: {
-        type: "Renderer", spriteSheetInfo: {
-            json: "./images/tiles/tiles.json",
-            img: "./images/tiles/tiles.png"
-        }, transform: {
-            position: { x: 0, y: 0 },
-            scale: { x: 1, y: 1 }, rotation: 0
-        }, animation: "stone_wall"
-    }
-});
-prefabs.set('Grass', {
-    type: "Entity", name: "Grass", transform:
-        { position: { x: 256, y: 256 }, scale: { x: 2, y: 2 }, rotation: 0 },
-    renderer: {
-        type: "Renderer", spriteSheetInfo: {
-            json: "./images/tiles/tiles.json",
-            img: "./images/tiles/tiles.png"
-        }, transform: {
-            position: { x: 0, y: 0 },
-            scale: { x: 1, y: 1 }, rotation: 0
-        }, animation: "grass"
-    }
-});
-prefabs.set('Path', {
-    type: "Entity", name: "Path", transform:
-        { position: { x: 256, y: 256 }, scale: { x: 2, y: 2 }, rotation: 0 },
-    renderer: {
-        type: "Renderer", spriteSheetInfo: {
-            json: "./images/tiles/tiles.json",
-            img: "./images/tiles/tiles.png"
-        }, transform: {
-            position: { x: 0, y: 0 },
-            scale: { x: 1, y: 1 }, rotation: 0
-        }, animation: "path"
-    }
-});
 
 const prefabButtons = document.querySelectorAll('.prefab-button');
 
