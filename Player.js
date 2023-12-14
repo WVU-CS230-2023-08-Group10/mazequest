@@ -170,6 +170,15 @@ class Player extends Entity
      */
     update(delta)
     {
+        if (this.inventory.weapon != null)
+        {
+            this.inventory.weapon.transform.position = new Vector2(544, 432);
+        }
+        if (this.inventory.armor != null)
+        {
+            this.inventory.armor.transform.position = new Vector2(544, 326);
+        }
+
         const difference = Vector2.subtract(this.moveTarget, this.transform.position);
         if (difference.getMagnitude() < 0.1)
         {

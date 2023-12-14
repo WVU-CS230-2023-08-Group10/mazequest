@@ -8,6 +8,7 @@ const supabaseUrl = "https://inyelmyxiphvbfgmhmrk.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlueWVsbXl4aXBodmJmZ21obXJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTc0Nzg3NzEsImV4cCI6MjAxMzA1NDc3MX0.9ByIuA4tv1oMmEr2UPAbCvNQYSvH-wY8aU-4Y8JSprg";
 const s = supabase.createClient(supabaseUrl, supabaseKey);
 
+// Creating the game window
 const canvasWidth = 640;
 const canvasHeight = 512;
 const canvas = document.getElementById("canvas");
@@ -21,6 +22,7 @@ const app = new PIXI.Application(
 );
 document.getElementById("Gam").appendChild(app.view);
 
+// Stores the background image as a new sprite
 const bkgTexture = PIXI.Texture.from("./images/preview.png");
 const bkg = new PIXI.Sprite(bkgTexture);
 
@@ -45,7 +47,7 @@ const loadSidebar = async () =>
         sidebar.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
     app.stage.addChild(sidebar);
     const battleBkg = new PIXI.Sprite(PIXI.Texture.from('./images/sb/frutiger.png'));
-        battleBkg.setTransform(512, 0);
+        battleBkg.setTransform(514, 2);
         battleBkg.height = 172;
         battleBkg.width = 124;
         battleBkg.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
