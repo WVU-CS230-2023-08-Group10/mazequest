@@ -4,9 +4,6 @@ export {Renderer};
 /**
  * Class representing a Renderer object, which draws sprites to the game canvas.
  * 
- * Fields:
- * No fields are exposed by the Renderer.
- * 
  * Methods:
  * - getAnimation() : Returns the animation name of the current animation
  * - updateSpriteSheet(spriteSheetInfo) : Changes the current sprite information
@@ -115,6 +112,7 @@ class Renderer
         this.sprite.play();
         console.log("Successfully changed animation to "+animationId);
     }
+
     update(delta)
     {
         if (this.sprite == undefined) return;

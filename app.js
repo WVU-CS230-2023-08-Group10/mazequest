@@ -3,6 +3,11 @@ import { Game } from "./Game.js";
 import { Renderer } from "./Renderer.js";
 import { Vector2 } from "./Vectors.js";
 
+// New supabase session 
+const supabaseUrl = "https://inyelmyxiphvbfgmhmrk.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlueWVsbXl4aXBodmJmZ21obXJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTc0Nzg3NzEsImV4cCI6MjAxMzA1NDc3MX0.9ByIuA4tv1oMmEr2UPAbCvNQYSvH-wY8aU-4Y8JSprg";
+const s = supabase.createClient(supabaseUrl, supabaseKey);
+
 const canvasWidth = 640;
 const canvasHeight = 512;
 const canvas = document.getElementById("canvas");
@@ -307,3 +312,65 @@ function clearEditorUI()
 {
     document.querySelector('.vars').replaceChildren();
 }
+
+/* Event listener for the "saveLevel" button on leve builder tab */
+document.getElementById("saveLevel").addEventListener("click", async (e) => {
+
+    e.preventDefault();
+
+    // Integer that represents max length allowed for a level name
+    let maxNameSize = 15;
+
+    // Get the level name text box
+    const levelNameTextBox = document.getElementById("levelName");
+
+    // Check to see if there is a name in the text box
+    if (levelNameTextBox.value == 0) {
+       // Textbox is empty, make user enter a name
+       alert("Error: No name provided for the level.")
+       levelNameTextBox.style.backgroundColor = "#E3963E";
+       return;
+    }
+
+    // Check to see if name exceeds maximum length
+    if (levelNameTextBox.value.length > maxNameSize) {
+       // Name is too long. Make user enter a new name
+       alert("Error: Level name cannot be longer than 15 characters. Please enter a new name.");
+       levelNameTextBox.style.backgroundColor = "#E3963E";
+       return;
+    }
+
+    // Get the user's level name
+    const level_name = levelNameTextBox.value;
+
+    // Get the user's username
+    const user = await s.auth.getUser();
+    var username = JSON.stringify(user.data.user.user_metadata.username);
+
+    // Call the saveRoom() function to get the level file and index
+    const levelObject = levelBuilder.saveRoom();
+
+    // Insert data into Supabase
+    const { data, error } = await s.from('levels').insert([
+       {
+          username: username,
+          level_file: levelObject.level_file,
+          index: levelObject.index,
+          level_name: level_name,
+          published: false,
+       },
+    ])
+
+    if (error) {
+       // Error saving to database
+       alert("Error: There was an error saving your level. Please retry.");
+       return;
+    }
+    else {
+       // Level was successfully added
+       alert("Level saved!");
+       // Change text box color back to original (if necessary)
+       levelNameTextBox.style.backgroundColor = '';
+       return;
+    }
+ });

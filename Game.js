@@ -1,7 +1,5 @@
 import { Entity } from "./Entity.js";
-import { Transform } from "./Transform.js";
 import { Vector2 } from "./Vectors.js";
-import { Renderer } from "./Renderer.js";
 import { Player } from "./Player.js";
 import { Weapon, Armor, Consumable } from "./Item.js";
 import { Collider, ExitIndicator } from "./LevelElements.js";

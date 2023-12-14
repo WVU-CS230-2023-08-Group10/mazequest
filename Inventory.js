@@ -86,7 +86,7 @@ class Inventory
     {
         const weapon_serialized = (this.weapon == null) ? null : this.weapon.serialize();
         const armor_serialized = (this.armor == null) ? null : this.armor.serialize();
-        const str = '{ "type":"Inventory", "weapon":' + weapon_serialized + ', "armor":' + armor_serialized + ', "consumables":[';
+        let str = '{ "type":"Inventory", "weapon":' + weapon_serialized + ', "armor":' + armor_serialized + ', "consumables":[';
         for (let i = 0; i < this.consumables.length; i++)
         {
             const c = this.consumables[i];
