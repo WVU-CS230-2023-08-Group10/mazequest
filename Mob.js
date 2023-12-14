@@ -275,7 +275,7 @@ class Mob extends Entity
      */
     serialize()
     {
-        return '{ "type":"Player", "name": "' + this._Name + '", "transform": ' + this._Transform.serialize() + ', "renderer": '
+        return '{ "type":"Mob", "name": "' + this._Name + '", "transform": ' + this._Transform.serialize() + ', "renderer": '
             + this._Renderer.serialize() + ', "inventory":' + this.inventory.serialize() + '}';
     }
 
