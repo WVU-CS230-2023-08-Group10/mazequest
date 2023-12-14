@@ -24,9 +24,9 @@ export { Player };
  *  - {@link drop} : Updates Inventory, removes item.
  *  - {@link damage} : Updates health with incoming damage. Calls gameOver function.
  *  - {@link initializeCombat} : Creates new instance of Combat.
- *  - {@link update} : 
+ *  - {@link update} : Called by the game object every tick.
  *  - {@link move} : Moves player across canvas, takes into consideration of collisions with walls and other entities.
- *  - {@link broadcast} : 
+ *  - {@link broadcast} : How player recieves events.
  *  - {@link playerInput} : Recieves player input through keys
  *  - {@link serialize} : Creates a simplified JSON version of an instance of an Player, keeping only the important information to be used.
  *  - {@link deserialize} : Take an object that has been serialized and turn it into an instance of Player.
@@ -164,7 +164,10 @@ class Player extends Entity
     {
         return new Combat;
     }
-
+    /**
+     * Called by the game object every tick.
+     * @param {number} delta amount of time between ticks.
+     */
     update(delta)
     {
         const difference = Vector2.subtract(this.moveTarget, this.transform.position);
@@ -212,7 +215,10 @@ class Player extends Entity
 
         this.moveTarget = pos;
     }
-
+    /**
+     * How player recieves events.
+     * @param {event} event the event being passed to the player.
+     */
     broadcast(event)
     {
         switch (event.type)
