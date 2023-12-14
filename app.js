@@ -3,6 +3,8 @@ import { Game } from "./Game.js";
 import { Renderer } from "./Renderer.js";
 import { Vector2 } from "./Vectors.js";
 
+export { levelBuilder };
+
 const canvasWidth = 640;
 const canvasHeight = 512;
 const canvas = document.getElementById("canvas");
@@ -309,5 +311,3 @@ function clearEditorUI()
 {
     document.querySelector('.vars').replaceChildren();
 }
-
-export { game, levelBuilder }

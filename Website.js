@@ -1,5 +1,6 @@
 import { profanity } from "https://cdn.skypack.dev/@2toad/profanity";
-import { levelBuilder } from "./app.js";
+//import { levelBuilder } from "./app.js";
+import { Game } from "./Game.js";
 // BEGIN SUPABASE ;
 
 // CLIENT INITIALIZATION
@@ -230,7 +231,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       var username = JSON.stringify(user.data.user.user_metadata.username);
 
       // Call the saveRoom() function to get the level file and index
-      const levelObject = levelBuilder.saveRoom();
+      //const levelObject = levelBuilder.saveRoom();
+      const game = new Game();
+      const levelObject = game.saveRoom();
 
       // Insert data into Supabase
       const { data, error } = await s.from('levels').insert([
