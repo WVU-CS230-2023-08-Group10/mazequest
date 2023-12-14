@@ -36,93 +36,42 @@ const prefabs = await fetch('./prefabs.json')
 const masterList = await fetch('./Items/Weapons.json')
     .then((response) => response.json()).catch(error => console.error(error));
 
-// Temporary implementation of sidebar with loaded elements
-const loadSidebar = async () =>
+// Load sidebar
+const sheet = await PIXI.Assets.load('./images/sb/sidebar.json');
+const sidebar = new PIXI.Sprite(sheet.textures['sidebar']);
+    sidebar.setTransform(512, 0, 2, 2);
+    sidebar.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+app.stage.addChild(sidebar);
+const battleBkg = new PIXI.Sprite(PIXI.Texture.from('./images/sb/frutiger.png'));
+    battleBkg.setTransform(514, 2, 2, 2);
+    battleBkg.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+app.stage.addChild(battleBkg);
+const invTxt = new PIXI.Sprite(sheet.textures['inv_text']);
+    invTxt.setTransform(512, 176, 2, 2);
+app.stage.addChild(invTxt);
+const invColumns = 3, invRows = 2, slotSize = 42;
+for (let i = 0; i < invColumns; i++)
 {
-    const sheet = await PIXI.Assets.load('./images/sb/sidebar.json');
-    // const wpnTexture = prefabs.Player.inventory.weapon.resnderer.spriteSheetInfo.img;
-    const sidebar = new PIXI.Sprite(sheet.textures['sidebar']);
-        sidebar.setTransform(512, 0);
-        // sidebar.anchor.set(0.5, 0.5);
-        sidebar.height = 512;
-        sidebar.width = 128;
-        sidebar.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(sidebar);
-    const battleBkg = new PIXI.Sprite(PIXI.Texture.from('./images/sb/frutiger.png'));
-        battleBkg.setTransform(514, 2);
-        battleBkg.height = 172;
-        battleBkg.width = 124;
-        battleBkg.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(battleBkg);
-    const invTxt = new PIXI.Sprite(sheet.textures['inv_text']);
-        invTxt.setTransform(512, 176);
-        invTxt.height = 32;
-        invTxt.width = 128;
-        invTxt.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(invTxt);
-    const invSlot = new PIXI.Sprite(sheet.textures['circle_slot']);
-        invSlot.setTransform(518, 212);
-        invSlot.height = 32;
-        invSlot.width = 32;
-        invSlot.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(invSlot);
-    const invSlot2 = new PIXI.Sprite(sheet.textures['circle_slot']);
-        invSlot2.setTransform(560, 212);
-        invSlot2.height = 32;
-        invSlot2.width = 32;
-        invSlot2.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(invSlot2);
-    const invSlot3 = new PIXI.Sprite(sheet.textures['circle_slot']);
-        invSlot3.setTransform(602, 212);
-        invSlot3.height = 32;
-        invSlot3.width = 32;
-        invSlot3.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(invSlot3);
-    const invSlot4 = new PIXI.Sprite(sheet.textures['circle_slot']);
-        invSlot4.setTransform(518, 254);
-        invSlot4.height = 32;
-        invSlot4.width = 32;
-        invSlot4.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(invSlot4);
-    const invSlot5 = new PIXI.Sprite(sheet.textures['circle_slot']);
-        invSlot5.setTransform(560, 254);
-        invSlot5.height = 32;
-        invSlot5.width = 32;
-        invSlot5.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(invSlot5);
-    const invSlot6 = new PIXI.Sprite(sheet.textures['circle_slot']);
-        invSlot6.setTransform(602, 254);
-        invSlot6.height = 32;
-        invSlot6.width = 32;
-        invSlot6.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(invSlot6);
-    const armorTxt = new PIXI.Sprite(sheet.textures['armor_text']);
-        armorTxt.setTransform(528, 292);
-        armorTxt.height = 32;
-        armorTxt.width = 96;
-        armorTxt.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(armorTxt);
-    const armorSlot = new PIXI.Sprite(sheet.textures['square_slot_big']);
-        armorSlot.setTransform(544, 326);
-        armorSlot.height = 64;
-        armorSlot.width = 64;
-        armorSlot.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(armorSlot);
-    const weaponTxt = new PIXI.Sprite(sheet.textures['weapon_text']);
-        weaponTxt.setTransform(512, 394);
-        weaponTxt.height = 32;
-        weaponTxt.width = 128;
-        weaponTxt.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(weaponTxt);
-    const weaponSlot = new PIXI.Sprite(sheet.textures['circle_slot_big']);
-        weaponSlot.setTransform(544, 432);
-        weaponSlot.height = 64;
-        weaponSlot.width = 64;
-        weaponSlot.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(weaponSlot);
+    for (let j = 0; j < invRows; j++)
+    {
+        const slot = new PIXI.Sprite(sheet.textures['circle_slot']);
+            slot.setTransform(518 + i*slotSize, 212 + j*slotSize, 2, 2);
+        app.stage.addChild(slot);
+    }
 }
+const armorTxt = new PIXI.Sprite(sheet.textures['armor_text']);
+    armorTxt.setTransform(528, 292, 2, 2);
+app.stage.addChild(armorTxt);
+const armorSlot = new PIXI.Sprite(sheet.textures['square_slot_big']);
+    armorSlot.setTransform(544, 326, 2, 2);
+app.stage.addChild(armorSlot);
+const weaponTxt = new PIXI.Sprite(sheet.textures['weapon_text']);
+    weaponTxt.setTransform(512, 394, 2, 2);
+app.stage.addChild(weaponTxt);
+const weaponSlot = new PIXI.Sprite(sheet.textures['circle_slot_big']);
+    weaponSlot.setTransform(544, 432, 2, 2);
+app.stage.addChild(weaponSlot);
 
-loadSidebar();
 
 const game = new Game(app.stage);
 
@@ -146,7 +95,6 @@ app.ticker.add((delta) => {
 /**
  *  Level Builder Stuff
  */
-
 const lbcanvas = document.getElementById("levelBuilderCanvas");
 const lbapp = new PIXI.Application(
     { 
