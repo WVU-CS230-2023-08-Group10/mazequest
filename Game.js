@@ -53,6 +53,9 @@ class Game
         this.generateRoomLayout()
     }
 
+    /**
+     * Getter for the current room
+     */
     get currentRoom()
     {
         return this.layout.roomArray[currentRoomPosition.y][currentRoomPosition.x];
@@ -192,6 +195,10 @@ class Game
         return str;
     }
 
+    /**
+     * Determines index & shape of room based on exit indicators, saves the current game state & room to a new object
+     * @returns an JSON object representing the current room
+     */
     saveRoom()
     {
         var roomId = 0;
@@ -217,7 +224,6 @@ class Game
 
     /**
      * Moves to the next room in the given direction.
-     * 
      * @param {Vector2} direction 
      */
     nextRoom(direction)

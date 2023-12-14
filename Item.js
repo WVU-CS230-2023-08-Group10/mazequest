@@ -165,6 +165,7 @@ class Armor extends Item
 
 class Consumable extends Item
 {
+    // Amount of items that can be held of the variety
     stackCount;
 
     constructor(name, renderer, count = 1, transform = new Transform(), game = undefined)
