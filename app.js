@@ -37,7 +37,7 @@ const prefabs = await fetch('./prefabs.json')
 const masterList = await fetch('./Items/Weapons.json')
     .then((response) => response.json()).catch(error => console.error(error));
 
-// Load sidebar
+// Load sidebar & assets, revised
 const sheet = await PIXI.Assets.load('./images/sb/sidebar.json');
 const sidebar = new PIXI.Sprite(sheet.textures['sidebar']);
     sidebar.setTransform(512, 0, 2, 2);

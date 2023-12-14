@@ -534,11 +534,10 @@ let hintsText = ["To engage in combat, move into the enemy!",
    "If you're seeing this, the dragon already knows your location and he is rapidly approaching.",
    "Follow your attack trace accurately to get the best damage roll!",
    "There are hot goblins in your area waiting to meet you!",
-   "\"F**k JavaScript.\" - Cy Blair, lead developer",
+   "\"F*** JavaScript.\" - Lead developer",
    "According to all known laws of aviation, there is no way that a bee should be able to fly.",
    "Do not drop STAT 215. Worst mistake I ever made.",
    "We love StoodBood.",
-   "The Sons of Feral Sods is a good read!",
    "World of wings addictions end here!"];
 
 // Keeps track of number of hints that have been displayed in the current shuffle

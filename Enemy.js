@@ -11,7 +11,7 @@ export {Enemy};
 class Enemy extends Mob 
 {
 
-    constructor(name = "", transform = new Transform(), renderer = new Renderer(), game = undefined, health = 1, hostile = undefined, AIDict = new PriorityList([new Action(), new Action(), new Action()])) {
+    constructor(name = "", transform = new Transform(), renderer = new Renderer(), game = undefined, health = 1, hostile = undefined, AIDict = new PriorityList([new Action(), new Action(), new Action()]))
     {
         super(name, transform, renderer, game, health, hostile, AIDict);
     }
@@ -34,7 +34,7 @@ class Enemy extends Mob
      */
     static deserialize(obj, game)
     {
-        const p = new Enemy(obj.name, Transform.deserialize(obj.transform), Renderer.deserialize(obj.renderer, game.stage), game)
+        const p = new Enemy(obj.name, Transform.deserialize(obj.transform), Renderer.deserialize(obj.renderer, game.stage), game);
         p.inventory = Inventory.deserialize(obj.inventory, game);
         return p;
     }

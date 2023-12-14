@@ -113,6 +113,10 @@ class Renderer
         console.log("Successfully changed animation to "+animationId);
     }
 
+    /**
+     * Updates the position & transform of object being renddered
+     * @param {*} delta 
+     */
     update(delta)
     {
         if (this.sprite == undefined) return;
@@ -123,6 +127,10 @@ class Renderer
         this.sprite.setTransform(t.position.x + w/2, t.position.y+ h/2, t.scale.x, t.scale.y, t.rotation/180*Math.PI, 0, 0, w/2/t.scale.x, h/2/t.scale.y);
     }
 
+    /**
+     * Serializes the this renderer to a JSON object string
+     * @returns the JSON string representation
+     */
     serialize()
     {
         return '{ "type":"Renderer", "spriteSheetInfo": { "json":"' + this._SpriteSheetInfo._Json +
@@ -130,6 +138,12 @@ class Renderer
          ', "animation": "'+this.getAnimation()+'"}';
     }
 
+    /**
+     * Deserializes the JSON object to a renderer object
+     * @param {*} obj the JSON object
+     * @param {*} stage the current game stage
+     * @returns new renderer object
+     */
     static deserialize(obj, stage)
     {
         return new Renderer(

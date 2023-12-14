@@ -102,12 +102,22 @@ class Entity
         return this.constructor.name;
     }
 
+    /**
+     * Serializes the entity into a JSON object string
+     * @returns the JSON string representation
+     */
     serialize()
     {
         return '{ "type":"Entity", "name": "' + this._Name + '", "transform": ' + this._Transform.serialize() + ', "renderer": '
             + this._Renderer.serialize() + '}';
     }
 
+    /**
+     * Deserializes the JSON object into an entity
+     * @param {*} obj the JSON object
+     * @param {*} game the current game instance
+     * @returns the new entity 
+     */
     static deserialize(obj, game)
     {
         return new Entity(obj.name, Transform.deserialize(obj.transform), Renderer.deserialize(obj.renderer, game.stage), game);
