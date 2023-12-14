@@ -1,7 +1,6 @@
 import { Entity } from "./Entity.js";
 import { Renderer } from "./Renderer.js";
 import { Transform } from "./Transform.js";
-import { levelBuilder } from "./app.js";
 
 export { Item, Weapon, Armor, Consumable };
 
