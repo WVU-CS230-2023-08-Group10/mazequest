@@ -9,9 +9,29 @@ import { Combat } from "./Combat.js";
 export { Player };
 
 /**
- * Class representing the Player entity
+ * Class representing the Player Entity.
  * 
- * @extends Entity
+ * Fields:
+ *  - account : Account
+ *  - health : integer
+ *  - inventory : Array
+ *  - speed : integer
+ *  - moveTarget : Vector
+ *  - animationSpeed : double
+ * 
+ * Methods:
+ *  - {@link pickUp} : Updates inventory with new item.
+ *  - {@link drop} : Updates Inventory, removes item.
+ *  - {@link damage} : Updates health with incoming damage. Calls gameOver function.
+ *  - {@link initializeCombat} : Creates new instance of Combat.
+ *  - {@link update} : 
+ *  - {@link move} : Moves player across canvas, takes into consideration of collisions with walls and other entities.
+ *  - {@link broadcast} : 
+ *  - {@link playerInput} : Recieves player input through keys
+ *  - {@link serialize} : 
+ *  - {@link deserialize} : 
+ * 
+ *  @extends Entity
  */
 class Player extends Entity
 {
@@ -23,6 +43,17 @@ class Player extends Entity
     moveTarget = new Vector2(0.0, 0.0);
     animationSpeed = 1/3;
 
+    /**
+     * Creates a new player instance that controls the users character on the game canvas.
+     * This method requires Inventory usage to account for items  
+     * which allows the game to add new graphics to the canvas for rendering.
+     * @param {string} name the users name.
+     * @param {transfrom} transform Player position, scale, and rotation.
+     * @param {renderer} renderer Player renderer.
+     * @param {game} game The Game this is attached to (if any).
+     * @param {integer} health Initial health of the user.
+     * @param {account} account Account of the user.
+     */
     constructor(name = "", transform = new Transform(), renderer = new Renderer(), game = undefined, health = 10, account = null)
     {
         super(name, transform, renderer, game);
@@ -34,14 +65,26 @@ class Player extends Entity
         this.inventory = new Inventory();
         
     }
+    /**
+     * Accesses Inventory, and updates items.
+     * @param {item} item new item that is added to inventory.
+     */
     pickUp(item)
     {
         this.inventory.store(item);
     }
+     /**
+     * Accesses Inventory, and updates items.
+     * @param {item} item item that is deleted from inventory.
+     */
     drop(item)
     {
         this.inventory.drop(item);
     }
+    /**
+     * Updates Health based on damage done, then calls gameOver function if health is depleted.
+     * @param {integer} damageDone integer that is subtracted from health.
+     */
     damage(damageDone)
     {
         this.health -= damageDone;
@@ -114,10 +157,14 @@ class Player extends Entity
             }});
         }
     }
+    /**
+     * Calls new instance of Combat.
+     */
     initializeCombat()
     {
-        // call combat
+        return new Combat;
     }
+
     update(delta)
     {
         const difference = Vector2.subtract(this.moveTarget, this.transform.position);
@@ -132,6 +179,10 @@ class Player extends Entity
             this.transform.translate(difference);
         }
     }
+    /**
+     * Moves player across canvas, takes into consideration of collisions with walls and other entities
+     * @param {direction} direction indicates the direction that player object must move.
+     */
     move(direction)
     {
         const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.game.grid.cellSize));
@@ -161,6 +212,7 @@ class Player extends Entity
 
         this.moveTarget = pos;
     }
+
     broadcast(event)
     {
         switch (event.type)
@@ -170,6 +222,10 @@ class Player extends Entity
                 break;
         }
     }
+    /**
+     * Takes into account different key inputs from the user and calls the appropriate move functions to control the characters movement.
+     * @param {key} key indicates the key that was pressed.
+     */
     playerInput(key)
     {
         if (!this.transform.position.equals(this.moveTarget)) return;
