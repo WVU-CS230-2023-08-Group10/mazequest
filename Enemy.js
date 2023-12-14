@@ -1,4 +1,3 @@
-
 import { Mob } from "./Mob.js";
 import { Transform } from "./Transform.js";
 import { Renderer } from "./Renderer.js";
@@ -11,26 +10,10 @@ export {Enemy};
  */
 class Enemy extends Mob 
 {
-    enemyName;
-    enemyHealth;
-    inventory;
-    enemyHostile;
-
-    speed = 2;
-    moveTarget = new Vector2(0.0, 0.0);
-    animationSpeed = 1/3;
-
-    actionDict = new PriorityList();
 
     constructor(name = "", transform = new Transform(), renderer = new Renderer(), game = undefined, health = 1, hostile = undefined, AIDict = new PriorityList([new Action(), new Action(), new Action()])) {
     {
-        super(name, transform, renderer, game);
-
-        this.enemyName = name;
-        this.enemyHealth = health;
-        this.inventory = new Inventory();
-        this.enemyHostile = hostile;
-        this.actionDict = AIDict;
+        super(name, transform, renderer, game, health, hostile, AIDict);
     }
 
     /**
@@ -39,8 +22,8 @@ class Enemy extends Mob
      */
     serialize()
     {
-        return '{ "type":"Enemy", "name": "' + this._Name + '", "transform": ' + this._Transform.serialize() + ', "renderer": '
-            + this._Renderer.serialize() + ', "inventory":' + this.inventory.serialize() + '}';
+        return '{ "type":"Enemy", "name": "' + this.name + '", "transform": ' + this.transform.serialize() + ', "renderer": '
+            + this.renderer.serialize() + ', "inventory":' + this.inventory.serialize() + '}';
     }
 
     /**
