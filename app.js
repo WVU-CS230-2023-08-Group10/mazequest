@@ -163,6 +163,7 @@ const levelBuilder = new Game(lbapp.stage);
 const lbui = new PIXI.Graphics();
 lbui.eventMode = 'static';
 lbui.cursor = 'pointer';
+lbui.zIndex = 1024;
 lbapp.stage.addChild(lbui);
 
 let selectedEntity = null;
@@ -171,8 +172,6 @@ lbapp.ticker.add((delta) => {
     levelBuilder.renderEntities(delta);
 
     lbui.clear();
-    lbapp.stage.removeChild(lbui);
-    lbapp.stage.addChild(lbui);
     if (selectedEntity != null)
     {
         lbapp.stage.on('pointerdown', onDragStart, lbui);
