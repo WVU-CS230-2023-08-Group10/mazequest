@@ -1,6 +1,5 @@
 {
-    "starter_sword":
-    { 
+    "starter_sword": { 
         "type":"Weapon", 
         "name":"Starter Sword",
         "damage": { "low":5, "high":20 },
@@ -15,8 +14,7 @@
             } 
         }
     },
-    "master_sword":
-    {
+    "master_sword": {
         "type":"Weapon", 
         "name":"Dragonslayer",
         "damage": { "low":20, "high":50 },

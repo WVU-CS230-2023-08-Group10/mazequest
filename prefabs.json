@@ -28,7 +28,22 @@
         "inventory":
         { 
             "type":"Inventory", 
-            "weapon":null, 
+            "weapon":
+            { 
+                "type":"Weapon", 
+                "name":"Starter Sword",
+                "damage": { "low":5, "high":20 },
+                "trace":[ {"x":0, "y":0} , {"x":0, "y":1} , {"x":0, "y":2} , {"x":0, "y":3} ],
+                "renderer": { 
+                    "type":"Renderer", 
+                    "spriteSheetInfo": { "json":"./images/weapons/sword.json", "img":"./images/weapons/sword.png" }, 
+                    "transform" : {
+                        "position" : { "x":0, "y":0 },
+                        "scale" : { "x":1, "y":1 },
+                        "rotation" : 0
+                    } 
+                }
+            }, 
             "armor":null, 
             "consumables":[]
         }

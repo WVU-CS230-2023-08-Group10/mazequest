@@ -565,7 +565,26 @@ var hintsText = ["To engage in combat, move into the enemy!",
    "I used to be an adventurer like you. Then I took an arrow to the knee...",
    "Beware the Jabberwock! It's jaws that bite, it's claws that catch!",
    "Have you heard of the High Elves?",
-   "Grand Theft Auto 6 releases in 2025."];
+   "Grand Theft Auto 6 releases in 2025.",
+   "We fr got the GTA 6 trailer before MazeQuest.",
+   "Did you know that mochi is not a good consolation gift?",
+   "Remember not to drop the keyfob to your motorcycle!",
+   "Blood, sweat, and tears went into this game... you better like it. Or else.",
+   "There is currently no way for the dragon to entire your home... yet.",
+   "Try out our new level builder!",
+   "Recombobulating the discombobulators...",
+   "Watch the tram car please.",
+   "Press Ctrl+W for more hints!",
+   "Press Alt+F4 to unlock super saiyan mode.",
+   "If you're seeing this, the dragon already knows your location and he is rapidly approaching.",
+   "Follow your attack trace accurately to get the best damage roll!",
+   "There are hot goblins in your area waiting to meet you!",
+   "\"F**k JavaScript.\" - Cy Blair, lead developer",
+   "According to all known laws of aviation, there is no way that a bee should be able to fly.",
+   "Do not drop STAT 215. Worst mistake I ever made.",
+   "We love StoodBood.",
+   "The Sons of Feral Sods is a good read!",
+   ""];
 
 var counter = 0;
 shuffle(hintsText);
