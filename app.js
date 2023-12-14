@@ -365,6 +365,8 @@ document.getElementById("saveLevel").addEventListener("click", async (e) => {
     const user = await s.auth.getUser();
     var username = JSON.stringify(user.data.user.user_metadata.username);
 
+    await removeLevel(username, level_name);
+
     // Call the saveRoom() function to get the level file and index
     const levelObject = levelBuilder.saveRoom();
 
@@ -392,3 +394,12 @@ document.getElementById("saveLevel").addEventListener("click", async (e) => {
        return;
     }
  });
+
+ async function removeLevel(username, levelname)
+ {
+    const { data, error } = await s
+        .from('levels')
+        .delete()
+        .eq('username', username)
+        .eq('level_name', levelname);
+ }
