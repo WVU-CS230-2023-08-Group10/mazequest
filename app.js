@@ -170,6 +170,8 @@ lbapp.ticker.add((delta) => {
     levelBuilder.renderEntities(delta);
 
     lbui.clear();
+    lbapp.stage.removeChild(lbui);
+    lbapp.stage.addChild(lbui);
     if (selectedEntity != null)
     {
         lbapp.stage.on('pointerdown', onDragStart, lbui);
