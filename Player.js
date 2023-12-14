@@ -45,9 +45,73 @@ class Player extends Entity
     damage(damageDone)
     {
         this.health -= damageDone;
+
+        // game over
         if(health <= 0)
         {
-            //game over
+            // removing Player from room
+            this.destroy();
+            alert("You died!");
+            
+            // unloading room.
+            this.game.unloadRoom();
+            
+            // Resetting rooms.
+            this.game.generateRoomLayout();
+
+            // loading default rooms.
+            this.game.loadRoom();
+
+            // adding new Player into room.
+            this.game.deserializeEntity({"Player":
+            {
+                "type": "Player", 
+                "name": "Player", 
+                "transform": 
+                { 
+                    "position" : { "x" : 256, "y" : 256}, 
+                    "scale" : { "x" : 2, "y" : 2}, 
+                    "rotation" : 0
+                }, 
+                "renderer": 
+                { 
+                    "type":"Renderer", 
+                    "spriteSheetInfo": 
+                    { 
+                        "json":"./images/armor/leatherArmor.json", 
+                        "img":"./images/armor/leatherArmor.png"
+                    }, 
+                    "transform": 
+                    { 
+                        "position" : { "x" : 0, "y" : 0}, 
+                        "scale" : { "x" : 1, "y" : 1}, 
+                        "rotation" : 0
+                    }, 
+                    "animation":"default"
+                }, 
+                "inventory":
+                { 
+                    "type":"Inventory", 
+                    "weapon":
+                    { 
+                        "type":"Weapon", 
+                        "name":"Starter Sword",
+                        "damage": { "low":5, "high":20 },
+                        "trace":[ {"x":0, "y":0} , {"x":0, "y":1} , {"x":0, "y":2} , {"x":0, "y":3} ],
+                        "renderer": { 
+                            "type":"Renderer", 
+                            "spriteSheetInfo": { "json":"./images/weapons/sword.json", "img":"./images/weapons/sword.png" }, 
+                            "transform" : {
+                                "position" : { "x":0, "y":0 },
+                                "scale" : { "x":1, "y":1 },
+                                "rotation" : 0
+                            } 
+                        }
+                    }, 
+                    "armor":null, 
+                    "consumables":[]
+                }
+            }});
         }
     }
     initializeCombat()
