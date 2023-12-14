@@ -156,6 +156,7 @@ const lbapp = new PIXI.Application(
         backgroundColor: 0x000000,
     }
 )
+lbapp.stage.sortableChildren = true;
 document.getElementById("lbCanvasAnchor").appendChild(lbapp.view);
 
 const levelBuilder = new Game(lbapp.stage);
