@@ -11,5 +11,5 @@ export {Enemy};
  */
 class Enemy extends Mob 
 {
-
+    //Enemy class
 }

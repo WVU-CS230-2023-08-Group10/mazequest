@@ -1,15 +1,16 @@
 import { Direction, Vector2 } from "./Vectors.js";
-import { Armor, Consumable, Item, Weapon } from "./Item.js";
-import { Inventory } from "./Inventory.js";
 import { Transform } from "./Transform.js";
 import { Renderer } from "./Renderer.js";
 import { Entity } from "./Entity.js";
-// import { actions } from "./PriorityList.js";
+import { Inventory } from "./Inventory.js";
+import { Collider } from "./LevelElements.js";
+import { Enemy } from "./Enemy.js";
+import { Combat } from "./Combat.js";
 
 export {Mob};
 
 /**
- * Class representing generic mobs
+ * Class representing generic entities
  * 
  * @extends Entity
  */
@@ -35,46 +36,6 @@ class Mob extends Entity
         this.inventory = new Inventory();
         this.mobHostile = hostile;
         this.actionDict = AIDict;
-    }
-
-    get getName() 
-    {
-        return this.mobName;
-    }
-
-    set setName(name) 
-    {
-        this.mobName = name;
-    }
-
-    get getHealth() 
-    {
-        return this.mobHealth;
-    }
-
-    set setHealth(health) 
-    {
-        this.mobHealth = health;
-    }
-
-    get getInventory() 
-    {
-        return this.inventory;
-    }
-
-    set setInventory(inventory) 
-    {
-        this.inventory = inventory;
-    }
-
-    get getHostile() 
-    {
-        return this.mobHostile;
-    }
-
-    set setHostile(hostile) 
-    {
-        this.mobHostile = hostile;
     }
 
     isEnemy(Mob) 
@@ -108,10 +69,10 @@ class Mob extends Entity
 
     damage(damageDone)
     {
-        health -= damageDone;
-        if(health < 1)
+        this.health -= damageDone;
+        if(health <= 0)
         {
-            //enemy dies
+            Entity.destroy();
         }
     }
 
@@ -174,19 +135,17 @@ class Mob extends Entity
         switch (action) {
             case 'Attack':
                 
-                // check if attack is valid
-                // if yes, combat
-                // if not, call method again with next index of action dictionary
                 initializeCombat();
                 break;
             case 'Move':
-                // Get valid directions to move
+                
                 let directions = [Direction.Up, Direction.Down, Direction.Left, Direction.Right];
                 let validMoves = [];
                 for (const dir in directions)
                 {
                     const isValid = true;
                     const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(dir, this.game.grid.cellSize));
+
                     // Get collisions for the given direction
                     const collisions = this.game.getEntities((e) => {
                         return e.transform.position.equals(pos);
