@@ -1,8 +1,5 @@
-
-
-import { MazeLayout, GenerationParameters } from "./MazeLayout.js";
 import { profanity } from "https://cdn.skypack.dev/@2toad/profanity";
-import { Game } from "./Game.js";
+import { levelBuilder } from "./app.js";
 // BEGIN SUPABASE ;
 
 // CLIENT INITIALIZATION
@@ -232,11 +229,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       const user = await s.auth.getUser();
       var username = JSON.stringify(user.data.user.user_metadata.username);
 
-      // Create a new Game object
-      const game = new Game;
-
       // Call the saveRoom() function to get the level file and index
-      const levelObject = game.saveRoom();
+      const levelObject = levelBuilder.saveRoom();
 
       // Insert data into Supabase
       const { data, error } = await s.from('levels').insert([

@@ -1,5 +1,5 @@
 { "frames": {
-   "spear.aseprite": {
+   "spear": {
     "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -23,5 +23,8 @@
   ],
   "slices": [
   ]
+ },
+ "animations" : {
+  "default" : [ "spear" ]
  }
 }

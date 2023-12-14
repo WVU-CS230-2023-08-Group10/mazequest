@@ -130,6 +130,7 @@ class Combat
         }
     }
 }
+/*
 //temp traceGame
         let mouseTracePoints = new Array();
         let tracePoints = new Array();
@@ -242,3 +243,4 @@ function Accuracy(tracePoints)
         }
     } 
 }
+*/

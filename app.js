@@ -11,7 +11,7 @@ const app = new PIXI.Application(
         view: canvas, 
         width: canvasWidth, 
         height: canvasHeight, 
-        backgroundColor: 0xFFFFFF,
+        backgroundColor: 0xFFFFFF
     }
 );
 document.getElementById("Gam").appendChild(app.view);
@@ -309,3 +309,5 @@ function clearEditorUI()
 {
     document.querySelector('.vars').replaceChildren();
 }
+
+export { game, levelBuilder }
