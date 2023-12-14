@@ -205,7 +205,9 @@ class Player extends Entity
         const roomHeight = this.game.grid.cellSize * this.game.grid.height;
         if (pos.x < 0 || pos.x >= roomWidth || pos.y < 0 || pos.y >= roomHeight)
         {
+            // Go to the next room
             this.game.nextRoom(direction);
+            // Wrap player position
             if (pos.x < 0)
             {
                 this.transform.position.x = roomWidth-32;
@@ -226,6 +228,7 @@ class Player extends Entity
                 this.transform.position.y = 0;
                 this.transform.position.x = roomWidth/2;
             }
+            this.moveTarget = this.transform.position;
             return;
         }
 

@@ -89,10 +89,8 @@ for (let i = 1; i < 16; i++)
     roomData.push(set);
 }
 
-console.log(roomData);
-
 const game = new Game(app.stage, roomData);
-//game.loadRoom();
+game.loadRoom();
 
 game.deserializeEntity(prefabs.Player);
 // game.deserializeEntity(prefabs.Wall);

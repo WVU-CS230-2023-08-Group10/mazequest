@@ -123,7 +123,8 @@ class MazeLayout
                 }
 
                 logStr += tiles[toBeGenerated[i][j]];
-                //this.roomArray[i][j] = query room with index (toBeGenerated[i][j]);
+                const roomSet = this.roomData[toBeGenerated[i][j]];
+                this.roomArray[i][j] = roomSet[Math.floor(Math.random() * (roomSet.length-1))];
             }
             logStr += "\n";
         }

@@ -47,7 +47,7 @@ class ExitIndicator extends Entity
     update(delta)
     {
         // Whenever we are updating the game (so outside the level builder) we want to delete this entity.
-        this.game.unregister(this);
+        this.destroy();
     }
     
     /**
