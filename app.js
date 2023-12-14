@@ -14,12 +14,13 @@ const canvasHeight = 512;
 const canvas = document.getElementById("canvas");
 const app = new PIXI.Application(
     { 
-        view: canvas, 
-        width: canvasWidth, 
-        height: canvasHeight, 
-        backgroundColor: 0xFFFFFF
+        view : canvas, 
+        width : canvasWidth, 
+        height : canvasHeight, 
+        backgroundColor : 0xFFFFFF
     }
 );
+app.stage.sortableChildren = true;
 document.getElementById("Gam").appendChild(app.view);
 
 // Stores the background image as a new sprite

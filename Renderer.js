@@ -118,6 +118,7 @@ class Renderer
         if (this.sprite == undefined) return;
 
         var t = this.transform;
+        this.sprite.zIndex = t.position.y;
         const w = this.sprite.width, h = this.sprite.height;
         this.sprite.setTransform(t.position.x + w/2, t.position.y+ h/2, t.scale.x, t.scale.y, t.rotation/180*Math.PI, 0, 0, w/2/t.scale.x, h/2/t.scale.y);
     }

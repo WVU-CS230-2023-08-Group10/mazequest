@@ -117,7 +117,6 @@ class Game
      */
     renderEntities(delta)
     {
-        this.stage.sortChildren();
         for (const entity of this.entityList) {
             entity.render(delta);
         }
