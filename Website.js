@@ -518,36 +518,46 @@ var hintsText = ["To engage in combat, move into the enemy!",
    "Do not drop STAT 215. Worst mistake I ever made.",
    "We love StoodBood.",
    "The Sons of Feral Sods is a good read!",
-   ""];
+   "World of wings addictions end here!"];
 
-var counter = 0;
+// Keeps track of number of hints that have been displayed in the current shuffle
+let counter = 0;
+// Sets the time each hint is displayed on the website
+let interval = 5000;
 shuffle(hintsText);
-setInterval(changeHints, 5000);
+// Changes the hint on the website based on
+setInterval(changeHints, interval);
+
+/**
+ * Function to randomly shuffle the contents of a list
+ * @param {*} array - list to shuffle
+ * @returns - returns the shuffled array
+ */
 function shuffle(array) {
-   let currentIndex = array.length,  randomIndex;
-   
+   let currentIndex = array.length, randomIndex;
+
    // While there remain elements to shuffle.
    while (currentIndex > 0) {
-   
+
       // Pick a remaining element.
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
-   
+
       // And swap it with the current element.
       [array[currentIndex], array[randomIndex]] = [
          array[randomIndex], array[currentIndex]];
    }
-   
+
    return array;
 }
-function changeHints() 
-{
+/**
+ * Changes the current hint being showed on the website.
+ */
+function changeHints() {
    elem.textContent = hintsText[counter];
    counter++;
-   if (counter >= hintsText.length)
-   {
+   if (counter >= hintsText.length) {
       counter = 0;
       shuffle(hintsText);
    }
 }
-//^ Hint rotation

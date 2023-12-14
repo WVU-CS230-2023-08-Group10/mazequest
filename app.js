@@ -24,10 +24,21 @@ document.getElementById("Gam").appendChild(app.view);
 const bkgTexture = PIXI.Texture.from("./images/preview.png");
 const bkg = new PIXI.Sprite(bkgTexture);
 
+// Load prefabs from .json file
+const prefabs = await fetch('./prefabs.json')
+    .then((response) => response.json()).catch(error => console.error(error));
+
+console.log(prefabs.Player.inventory.weapon.renderer.spriteSheetInfo.img)
+
+    // Load our weapons from .json file
+const masterList = await fetch('./Items/Weapons.json')
+    .then((response) => response.json()).catch(error => console.error(error));
+
 // Temporary implementation of sidebar with loaded elements
 const loadSidebar = async () =>
 {
     const sheet = await PIXI.Assets.load('./images/sb/sidebar.json');
+    const wpnTexture = prefabs.Player.inventory.weapon.renderer.spriteSheetInfo.img;
     const sidebar = new PIXI.Sprite(sheet.textures['sidebar']);
         sidebar.anchor.set(-4, 0);
         sidebar.height = 512;
@@ -112,20 +123,18 @@ const loadSidebar = async () =>
         weaponSlot.width = 64;
         weaponSlot.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
     app.stage.addChild(weaponSlot);
+    const currWeapon = new PIXI.Sprite(PIXI.Texture.from(wpnTexture));
+        currWeapon.anchor.set(-8.5, -6.75);
+        currWeapon.height = 64;
+        currWeapon.width = 64;
+        currWeapon.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    app.stage.addChild(currWeapon);
 }
 
 app.stage.addChild(bkg);
 loadSidebar();
 
 const game = new Game(app.stage);
-
-// Load our weapons from .json file
-const masterList = await fetch('./Items/Weapons.json')
-    .then((response) => response.json()).catch(error => console.error(error));
-
-// Load prefabs from .json file
-const prefabs = await fetch('./prefabs.json')
-    .then((response) => response.json()).catch(error => console.error(error));
    
 let currWeapon = JSON.stringify(masterList.starter_sword);
 console.log(prefabs);
