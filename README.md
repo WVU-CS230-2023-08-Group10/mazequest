@@ -5,7 +5,7 @@ MazeQuest is a website that contains the 2-Dimensional Dungeon Exploration Game,
 MazeQuest was built as a group project for an Intro to Software Engineering class where we were tasked with building a website to offer a service. Our group decided to create a video game that can be played on the website itself. Our decision to build a game stemmed from our shared interest in video games, and it was motivated by our interest in learning more about how video games are made. Having little no experience with building websites and video games. Our group took this project as way to challenge ourselves and build a unique video game that we would want to play ourselves. Part of what we felt would make our game more unique and expandable is the ability for user's to design their own levels, we wanted to create tools for the user to create new levels for the game within the website itself.
 
 ## Getting Started
-MazeQuest is competely contained within the website itself and does not require any downloads or installations to be able to use. In order to use the LevelBuilder and access the Game Window, user's must create an authenticated account or login with an authenticated account. The website can be found here [MazeQuest](https://dev.d1nqqr84hhhv1o.amplifyapp.com/)
+MazeQuest is competely contained within the website itself and does not require any downloads or installations to be able to use. In order to use the LevelBuilder and access the Game Window, user's must create an authenticated account or login with an authenticated account. The website can be found [here](https://dev.d1nqqr84hhhv1o.amplifyapp.com/).
 
 ### Navigating the Website
 ##### The website is broken into 8 tabs that contains different information and functionalities of the website. 
@@ -19,7 +19,7 @@ MazeQuest is competely contained within the website itself and does not require 
 
 ### Creating an Account
 To play MazeQuest or use the LevelBuilder, you must first create and authenticate an account. Here are the steps to create an account:
-1. Go to the website [MazeQuest](https://dev.d1nqqr84hhhv1o.amplifyapp.com/)
+1. Go to the [website](https://dev.d1nqqr84hhhv1o.amplifyapp.com/).
 2. Navigate to the "Sign Up" tab and enter an email, a new username, and a password. Click submit.
 3. You'll be prompted to check your email for a validation link.
 4. Click the link in the email to be redirected back to the website, signed in and ready to go!
@@ -30,8 +30,8 @@ To play MazeQuest or use the LevelBuilder, you must first create and authenticat
 ![GameWindow Preview](https://github.com/WVU-CS230-2023-08-Group10/mazequest/blob/main/images/preview.png)
 ## Tech/framework used
 ### Built with
-* [Pixi.js](https://pixijs.com/) - Rendering engine
-* [Supabase](http://supabase.com/) - Backend as a service
+* [Pixi.js](https://pixijs.com/) - 2D Rendering engine
+* [Supabase](http://supabase.com/) - Back-end as a service
 
 ## Authors
 * Visnu	Pandian
