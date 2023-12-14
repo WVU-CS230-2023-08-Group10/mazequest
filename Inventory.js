@@ -14,11 +14,19 @@ class Inventory
         this.consumables = consumables;
     }
 
+    /**
+     * Gets the currently equipped weapon
+     * @returns - returns this weapon
+     */
     getWeapon()
     {
         return this.weapon;
     }
 
+    /**
+     * Gets the currently equipped armor
+     * @returns 
+     */
     getArmor()
     {
         return this.armor;
@@ -58,6 +66,14 @@ class Inventory
         }
     }
 
+    /**
+     * Drops the item passed as a parameter. If the item is the currently equipped weapon,
+     * the weapon is set to null, if it is the currently equipped armor, the armor is set to null.
+     * If the item is a consumable, the item is checked among the item's in the inventory, and if
+     * if its in the list, the item is removed.
+     * @param {*} item - item to remove from the inventory
+     * @returns - true if the item is removed, false if the item is not in the inventory
+     */
     drop(item)
     {
         if (this.weapon.equals(item))
@@ -86,7 +102,7 @@ class Inventory
     {
         const weapon_serialized = (this.weapon == null) ? null : this.weapon.serialize();
         const armor_serialized = (this.armor == null) ? null : this.armor.serialize();
-        let str = '{ "type":"Inventory", "weapon":' + weapon_serialized + ', "armor":' + armor_serialized + ', "consumables":[';
+        const str = '{ "type":"Inventory", "weapon":' + weapon_serialized + ', "armor":' + armor_serialized + ', "consumables":[';
         for (let i = 0; i < this.consumables.length; i++)
         {
             const c = this.consumables[i];
