@@ -1,6 +1,15 @@
 import { Item, Weapon, Armor, Consumable } from "./Item.js";
 export { Inventory };
 
+/**
+ * Class representing the player's inventory
+ * 
+ * Fields:
+ *  - weapon : the player's currently equipped weapon
+ *  - armor : the player's currently equipped armor
+ *  - consumables : list to keep all of the player's consumable items
+ * 
+ */
 class Inventory
 {
     weapon;
@@ -98,6 +107,10 @@ class Inventory
         }
     }
 
+    /**
+     * Creates a simplified JSON version of an instance of an object, keeping only the important information to be used.
+     * @returns - returns the serialized object as a string.
+     */
     serialize()
     {
         const weapon_serialized = (this.weapon == null) ? "null" : this.weapon.serialize();
@@ -114,6 +127,12 @@ class Inventory
         return str;
     }
 
+    /**
+     * Take an object that has been serialized and turn it into an instance of inventory.
+     * @param {*} obj - object to deserialize.
+     * @param {*} game - instance of game used to derserialize the fields into usable fields.
+     * @returns - returns new instance of inventory with intialized fields if applicable.
+     */
     static deserialize(obj, game)
     {
         const consumables = [];
