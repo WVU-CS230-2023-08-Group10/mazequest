@@ -14,6 +14,7 @@ export {Game};
  *  - currentRoomPosition ({@link Vector2}) : the coordinates in the layout of the currently rendered room
  * 
  * Useful methods to know:
+ *  - {@link generateRoomLayout} : Generates a new maze layout.
  *  - {@link registerEntity} : Required for entities to recieve updates.
  *  - {@link updateEntities} : Updates registered entities and their renderers.
  *  - {@link broadcastToEntities} : Broadcasts an event to all registered entities.
@@ -58,7 +59,7 @@ class Game
     }
 
     /**
-     * Generates a new maze layout for the game
+     * Generates a new maze layout for the game.
      */
     generateRoomLayout()
     {

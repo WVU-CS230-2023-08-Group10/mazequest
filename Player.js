@@ -48,7 +48,7 @@ class Player extends Entity
      * This method requires Inventory usage to account for items  
      * which allows the game to add new graphics to the canvas for rendering.
      * @param {string} name the users name.
-     * @param {transfrom} transform Player position, scale, and rotation.
+     * @param {transform} transform Player position, scale, and rotation.
      * @param {renderer} renderer Player renderer.
      * @param {game} game The Game this is attached to (if any).
      * @param {integer} health Initial health of the user.
