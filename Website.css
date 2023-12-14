@@ -58,13 +58,13 @@ body {
   background-color: rgb(15, 15, 15)
 }
 
-#entityList
+.entityList
 {
   width: 100%;
   height: 200px;
   overflow-y: scroll;
 }
-#entityList button
+.entityList button
 {
   height: 40px;
   font-family:"Alagard";
@@ -75,12 +75,12 @@ body {
   display: block;
   width: 100%;
 }
-#entityList button:hover
+.entityList button:hover
 {
   background-color: var(--secondary-font-color);
   color: black;
 }
-#entityList > .selected-entity
+.entityList > .selected-entity
 {
   background-color: rgb(60, 60, 60);
 }

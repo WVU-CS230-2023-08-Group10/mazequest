@@ -45,7 +45,8 @@ class Player extends Entity
     damage(damageDone)
     {
         this.health -= damageDone;
-        if(health <= 0)
+        
+        if(this.health <= 0)
         {
             //game over
         }
@@ -138,8 +139,8 @@ class Player extends Entity
 
     serialize()
     {
-        return '{ "type":"Player", "name": "' + this._Name + '", "transform": ' + this._Transform.serialize() + ', "renderer": '
-            + this._Renderer.serialize() + ', "inventory":' + this.inventory.serialize() + '}';
+        return '{ "type":"Player", "name": "' + this.name + '", "transform": ' + this.transform.serialize() + ', "renderer": '
+            + this.renderer.serialize() + ', "inventory":' + this.inventory.serialize() + '}';
     }
 
     static deserialize(obj, game)

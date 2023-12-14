@@ -184,7 +184,7 @@ class Game
         {
             const e = this.entityList[i];
             str += e.serialize();
-            if (i == this.entityList.length-1)
+            if (i != this.entityList.length-1)
                 str += ", ";
         }
         str += "]";
