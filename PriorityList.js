@@ -27,27 +27,33 @@ class Action
 
 class PriorityList
 {
-    AIDict;
+    AIDict = [];
 
-    PriorityList(actions){
+    constructor(actions){
+
         this.AIDict = actions;
+
     }
 
-    addPriority(){
+    addPriority()
+    {
         for (const action of this.AIDict)
-            action.addPriority();
+            action.incrementPriority();
 
         this.sortPriority();
     }
 
     resetPriority(i=0){
+
         this.AIDict[i].resetPriority();
 
         this.sortPriority();
     }
 
     sortPriority(){
+
         this.AIDict.sort((a, b) => b.priority - a.priority);
+        
     }
 
     getPriorityAction()

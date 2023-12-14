@@ -4,9 +4,6 @@ export {Renderer};
 /**
  * Class representing a Renderer object, which draws sprites to the game canvas.
  * 
- * Fields:
- * No fields are exposed by the Renderer.
- * 
  * Methods:
  * - getAnimation() : Returns the animation name of the current animation
  * - updateSpriteSheet(spriteSheetInfo) : Changes the current sprite information
@@ -20,6 +17,7 @@ class Renderer
     sprite;
     spriteSheet;
     stage;
+    zIndexForce;
 
     /**
      * Constructs a new Renderer on the provided staage, with the provided spriteSheetInfo.
@@ -29,11 +27,12 @@ class Renderer
      * @param {Stage} stage PIXI.Stage to be rendered to.
      * @param {Transform} transform Transform defining position, rotation, and scale of the sprite.
      */
-    constructor(spriteSheetInfo, stage, transform = new Transform(), animation='default')
+    constructor(spriteSheetInfo, stage, transform = new Transform(), animation='default', zIndexForce = null)
     {
         if (stage == undefined)
             throw new Error('Renderer stage undefined! Was the renderer initialized correctly?');
         
+        this.zIndexForce = zIndexForce;
         this.stage = stage;
         this.transform = transform;
         this.updateSpriteSheet(spriteSheetInfo).then(() => {
@@ -48,6 +47,22 @@ class Renderer
         return this._CurrentAnimation;
     }
     
+    /**
+     * Forces the sprite's zIndex (aka draw depth) to be set to a specific number
+     * @param {Number} zIndex 
+     */
+    forceZIndex(zIndex)
+    {
+        this.zIndexForce = zIndex;
+    }
+    /**
+     * Frees the sprite's zIndex (aka draw depth), causing it to be based on the renderer's position in the room
+     */
+    unforceZIndex()
+    {
+        this.zIndexForce = null;
+    }
+
     /**
      * Links this renderer to the stage. This will allow the sprite to be rendered to the canvas
      */
@@ -115,21 +130,38 @@ class Renderer
         this.sprite.play();
         console.log("Successfully changed animation to "+animationId);
     }
+
+    /**
+     * Updates the position & transform of object being renddered
+     * @param {*} delta 
+     */
     update(delta)
     {
         if (this.sprite == undefined) return;
 
         var t = this.transform;
-        this.sprite.setTransform(t._Position._X, t._Position._Y, t._Scale._X, t._Scale._Y, t._Rotation);
+        this.sprite.zIndex = (this.zIndexForce == null) ? t.position.y : this.zIndexForce;
+        const w = this.sprite.width, h = this.sprite.height;
+        this.sprite.setTransform(t.position.x + w/2, t.position.y+ h/2, t.scale.x, t.scale.y, t.rotation/180*Math.PI, 0, 0, w/2/t.scale.x, h/2/t.scale.y);
     }
 
+    /**
+     * Serializes the this renderer to a JSON object string
+     * @returns the JSON string representation
+     */
     serialize()
     {
         return '{ "type":"Renderer", "spriteSheetInfo": { "json":"' + this._SpriteSheetInfo._Json +
          '", "img":"'+this._SpriteSheetInfo._Img+'"}, "transform": ' + this.transform.serialize() + 
-         '"animation": '+this.getAnimation()+'}';
+         ', "animation": "'+this.getAnimation()+'"}';
     }
 
+    /**
+     * Deserializes the JSON object to a renderer object
+     * @param {*} obj the JSON object
+     * @param {*} stage the current game stage
+     * @returns new renderer object
+     */
     static deserialize(obj, stage)
     {
         return new Renderer(

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./Website.css">
     <script type="module" src = "./Website.js"></script>
     <script type="module" src="./app.js"></script>
-    <script type="module" src="./Combat.js"></script>
+    <!--<script type="module" src="./Combat.js"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://pixijs.download/release/pixi.js"></script>
   </head>
@@ -131,14 +131,13 @@
         -->
         <div id="Bui" class="tabcontent">
           <h1 class = "form__title">Level Builder</h1>
-          <p>CAUTION Construction in Progress.</p>
           <div class="grid-container">
             <div class="entities grid-item">
               <h2>Give your level a name!</h2>
               <p>Name must be less than 15 characters.</p>
             <input type = "text" id = "levelName" class = "form__input" autofocus placeholder="Level Name">
               <h4>Entities</h4>
-              <div id="entityList">
+              <div id="entityList" class="entityList">
 
               </div>
             </div>
@@ -146,16 +145,9 @@
               <canvas id="levelBuilderCanvas"></canvas>
             </div>
             <div class="vars grid-item">
-              <h4>Transform</h4>
             </div>
             <div class="prefabs grid-item">
               <h4>Prefabs</h4>
-              <div class="dropdown">
-                <button class="dropbtn">Player</button>
-                <div class="dropdown-content">
-                  <button class="prefab-button dropbtn" type="submit">Player</button>
-                </div>
-              </div>
               <div class="dropdown">
                 <button class="dropbtn">Enemies</button>
                 <div class="dropdown-content">
@@ -196,65 +188,19 @@
           </div>
           <button class="form__button" type="submit" id = "saveLevel">Save Level</button>
           
-          <div id = "userLevels"></div>
+          <div id = "userLevels">
+            <h2>Your Levels</h2>
+            <div id="levelList" class="entityList">
+
+            </div>
+          </div>
         </div>
         <!-- 
           Game Window Tab 
         -->
         <div id="Gam" class="tabcontent" >
           <div id="HitboxContainer" style="position: relative;z-index: 1;">
-            <div id="hitbox" style="position: relative;z-index: 2;">
-              <div id="circlePosition1" >
-                <div class="circle">1</div>
-              </div>
-              <div id="circlePosition2" >
-                <div class="circle">2</div>
-              </div>
-              <div id="circlePosition3" >
-                <div class="circle">3</div>
-              </div>
-              <div id="circlePosition4" >
-                <div class="circle">4</div>
-              </div>
-                <style>
-                  .circle {
-                    position: absolute;
-                    height: 20px;
-                    width: 20px;
-                    background-color: #555;
-                    border-radius: 50%;
-                  }
-                  #circlePosition1{
-                    position: relative;
-                    z-index: 1;
-                    margin:auto 15px;
-                    width:10px;
-                    top:20px;
-                  }
-                  #circlePosition2{
-                    position: relative;
-                    z-index: 1;
-                    margin:auto;
-                    width:20px;
-                    top:40px;
-                  }
-                  #circlePosition3{
-                    position: relative;
-                    z-index: 1;
-                    margin:auto 105px ;
-                    width:20px;
-                    top:155px;
-                  }
-                  #circlePosition4{
-                    position: relative;
-                    z-index: 1;
-                    margin:auto;
-                    width:40px;
-                    top:80px;
-                    
-                  }
-                  </style>
-            </div>
+            <div id="hitbox" style="position: relative;z-index: 2;"></div>
           </div>
           <canvas id="canvas" style="position: relative;z-index: 0;"></canvas>
         </div>

@@ -1,10 +1,8 @@
 import { Entity } from "./Entity.js";
-import { Transform } from "./Transform.js";
 import { Vector2 } from "./Vectors.js";
-import { Renderer } from "./Renderer.js";
 import { Player } from "./Player.js";
-import { Weapon, Armor, Consumable } from "./Item.js";
-import { Collider, ExitIndicator } from "./LevelElements.js";
+import { Item, Weapon, Armor, Consumable } from "./Item.js";
+import { Collider, ExitIndicator, Tile } from "./LevelElements.js";
 import { Enemy } from "./Enemy.js";
 import { MazeLayout, GenerationParameters } from "./MazeLayout.js";
 export {Game};
@@ -16,6 +14,7 @@ export {Game};
  *  - currentRoomPosition ({@link Vector2}) : the coordinates in the layout of the currently rendered room
  * 
  * Useful methods to know:
+ *  - {@link generateRoomLayout} : Generates a new maze layout.
  *  - {@link registerEntity} : Required for entities to recieve updates.
  *  - {@link updateEntities} : Updates registered entities and their renderers.
  *  - {@link broadcastToEntities} : Broadcasts an event to all registered entities.
@@ -31,8 +30,9 @@ class Game
     isInEditMode;
     grid;
     layout;
-    currentRoomPosition;
+    currentRoomPosition = new Vector2(0, 0);
     needsInitialization = true;
+    roomData;
 
     /**
      * Creates a new game manager instance that handles the top level game functions.
@@ -40,10 +40,11 @@ class Game
      * which allows the game to add new graphics to the canvas for rendering.
      * @param {Container} stage The application stage for the game to run on
      */
-    constructor(stage) 
+    constructor(stage, roomData = null) 
     {
         this.entityList = [];
         this.stage = stage;
+        this.roomData = roomData;
 
         this.grid = {
             cellSize: 32,
@@ -51,13 +52,33 @@ class Game
             height: 16
         }
 
-        this.layout = new MazeLayout(new GenerationParameters(10, 10, 16, 64, .5));
-        this.currentRoomPosition = this.layout.startPosition;
+        if (this.roomData != null)
+        {
+            this.generateRoomLayout()
+        }
     }
 
+    /**
+     * Getter for the current room
+     */
     get currentRoom()
     {
-        return this.layout.roomArray[currentRoomPosition.y][currentRoomPosition.x];
+        console.log(this.layout.roomArray);
+        return this.layout.roomArray[this.currentRoomPosition.y][this.currentRoomPosition.x];
+    }
+
+    /**
+     * Generates a new maze layout for the game.
+     */
+    generateRoomLayout()
+    {
+        if (this.roomData != null)
+        {
+            console.warn("This Game instance was not initialized with roomData, indicating it was not intended to generate layouts.");
+        }
+
+        this.layout = new MazeLayout(new GenerationParameters(10, 10, 16, 64, .5), this.roomData);
+        this.currentRoomPosition = this.layout.startPosition;
     }
 
     /**
@@ -178,13 +199,17 @@ class Game
         {
             const e = this.entityList[i];
             str += e.serialize();
-            if (i == this.entityList.length-1)
+            if (i != this.entityList.length-1)
                 str += ", ";
         }
         str += "]";
         return str;
     }
 
+    /**
+     * Determines index & shape of room based on exit indicators, saves the current game state & room to a new object
+     * @returns an JSON object representing the current room
+     */
     saveRoom()
     {
         var roomId = 0;
@@ -210,14 +235,13 @@ class Game
 
     /**
      * Moves to the next room in the given direction.
-     * 
      * @param {Vector2} direction 
      */
     nextRoom(direction)
     {
         this.currentRoomPosition.add(direction);
-        unloadRoom();
-        loadRoom();
+        this.unloadRoom();
+        this.loadRoom();
     }
 
     /**
@@ -226,7 +250,9 @@ class Game
     unloadRoom()
     {
         // Get all non-player entities
-        const entities = this.getEntities((e) => { return !(e instanceof Player); });
+        const entities = this.getEntities((e) => { 
+            return !(e instanceof Player || e instanceof Item); 
+        });
         // Delete those entites (consquently unregistering them)
         for (const e of entities)
         {
@@ -241,7 +267,7 @@ class Game
      */
     loadRoom()
     {
-        deserializeGameState(this.currentRoom);
+        this.deserializeGameState(this.currentRoom);
     }
 
     /**
@@ -255,6 +281,7 @@ class Game
      */
     deserializeGameState(json)
     {
+        console.log(json);
         for (const o of json)
         {
             this.deserializeEntity(o);
@@ -294,13 +321,15 @@ class Game
                 e = ExitIndicator.deserialize(obj, this);
                 break;
             case "Entity":
-                e = ExitIndicator.deserialize(obj, this);
+                e = Entity.deserialize(obj, this);
+                break;
+            case "Tile":
+                e = Tile.deserialize(obj, this);
                 break;
             default:
                 console.log("Entity of type: '" + obj.type + "' not recognized!" );
                 break;
         }
-        this.registerEntity(e);
         return e;
     }
 }

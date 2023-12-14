@@ -10,20 +10,42 @@ class Item extends Entity
     {
         super(name, transform, renderer, game);
     }
-      
-    static isWeapon(obj)
+    
+    /**
+     * Checks if passed item is a weapon
+     * @param {*} item 
+     * @returns boolean result of statement
+     */
+    static isWeapon(item)
     {
-        return obj instanceof Weapon;
+        return item instanceof Weapon;
     }
-    static isArmor(obj)
+
+    /**
+     * Checks if passed item is an armor set
+     * @param {*} item 
+     * @returns boolean result of statement
+     */
+    static isArmor(item)
     {
-        return obj instanceof Armor;
+        return item instanceof Armor;
     }
-    static isConsumable(obj)
+
+    /**
+     * Checks if passed item is a consumable
+     * @param {*} item 
+     * @returns boolean result of statement
+     */
+    static isConsumable(item)
     {
-        return obj instanceof Consumable;
+        return item instanceof Consumable;
     }
     
+    /**
+     * Take an object, checks if it is an item. If so, compares their names to check for equality
+     * @param {*} obj represents the object being compared
+     * @returns boolean result of comparison
+     */
     equals(obj)
     {
         if (!(obj instanceof Item))
@@ -62,6 +84,18 @@ class Weapon extends Item
         return accuracy * (highDamage - lowDamage) + lowDamage;
     }
 
+    /**
+     * @returns trace pattern of this weapon
+     */
+    getTrace()
+    {
+        return this.trace;
+    }
+
+    /**
+     * Serializes Weapon object to a string representation of a JSON object
+     * @returns the JSON string of this weapon
+     */
     serialize()
     {
         return '{ "type":"Weapon", "name":"' + this._Name +
@@ -70,9 +104,15 @@ class Weapon extends Item
             + ', "trace":"' + this.trace + '" }';
     }
 
+    /**
+     * Deserializes the passed JSON to a new Weapon object
+     * @param {*} obj the JSON object representation
+     * @param {*} game the current game instance
+     * @returns a new Weapon object defined by the JSON object
+     */
     static deserialize(obj, game)
     {
-        return new Weapon(obj.name, obj.damage.low, obj.damage.high, obj.trace, Renderer.deserialize(obj.renderer, game.stage));
+        return new Weapon(obj.name, obj.damage.low, obj.damage.high, obj.trace, Renderer.deserialize(obj.renderer, game.stage), Transform.deserialize(obj.transform), game);
     }
 }
 
@@ -90,11 +130,20 @@ class Armor extends Item
         this.trace = trace;
     }
 
+    /**
+     * Calculates the protection value of this armor due to an attack
+     * @param {Number} accuracy 
+     * @returns the value of protection calculated via the accuracy of an associated attack
+     */
     protection(accuracy)
     {
         return accuracy * (highProtection - lowProtection) + lowProtection;
     }
 
+    /**
+     * Serializes the current armor object into a JSON string
+     * @returns the JSON string of this Armor object
+     */
     serialize()
     {
         return '{ "type":"Armor", "name" : "' + this._Name 
@@ -102,6 +151,12 @@ class Armor extends Item
             + '", "protection":' + this.protection + '}';
     }
 
+    /**
+     * Deserializes & establishes a new Armor object based on the passed JSON representation
+     * @param {*} obj the JSON object 
+     * @param {*} game the current game instance
+     * @returns a new Armor object created from the passed JSON
+     */
     static deserialize(obj, game)
     {
         return new Armor(obj.name, obj.protection, Renderer.deserialize(obj.renderer), Transform.deserialize(obj.transform), game);
@@ -110,6 +165,7 @@ class Armor extends Item
 
 class Consumable extends Item
 {
+    // Amount of items that can be held of the variety
     stackCount;
 
     constructor(name, renderer, count = 1, transform = new Transform(), game = undefined)
@@ -128,6 +184,10 @@ class Consumable extends Item
         this.stackCount += consumable.stackCount;
     }
 
+    /**
+     * Serializes the current consumable object into a JSON string
+     * @returns the JSON string of this consumable object
+     */
     serialize()
     {
         return '{ "type":"Consumable", "name" : "' + this._Name 
@@ -135,6 +195,12 @@ class Consumable extends Item
             + '", "count":' + this.stackCount + '}';
     }
 
+    /**
+     * Deserializes & establishes a new consumable object based on the passed JSON representation
+     * @param {*} obj the JSON object 
+     * @param {*} game the current game instance
+     * @returns a new consumable object created from the passed JSON
+     */
     static deserialize(obj, game)
     {
         return new Consumable(obj.name, Renderer.deserialize(obj.renderer), obj.count, Transform.deserialize(obj.transform), game);

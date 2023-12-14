@@ -1,18 +1,47 @@
 import { Direction, Vector2 } from "./Vectors.js";
-import { Armor, Consumable, Item, Weapon } from "./Item.js";
-import { Inventory } from "./Inventory.js";
 import { Transform } from "./Transform.js";
 import { Renderer } from "./Renderer.js";
 import { Entity } from "./Entity.js";
-// import { actions } from "./PriorityList.js";
+import { Inventory } from "./Inventory.js";
+import { Collider } from "./LevelElements.js";
+import { Enemy } from "./Enemy.js";
+import { PriorityList, Action } from "./PriorityList.js";
+import { Combat } from "./Combat.js";
+import { Player } from "./Player.js";
 
 export {Mob};
 
 /**
- * Class representing generic mobs
+ * Class representing generic entities
  * 
- * @extends Entity
- */
+ * Fields: 
+ *  - mobName : String
+ *  - mobHealth : integer
+ *  - inventory : ({@link Inventory}) Array
+ *  - mobHostile : Boolean
+ *  - speed : integer
+ *  - moveTarget : ({@link Vector2}) Vector
+ *  - animationSpeed : double
+ *  - actionDict : ({@link PriorityList}) PriorityList
+ * 
+ * Methods:
+ *  - {@link isEnemy} : Checks if a Mob is an Enemy.
+ *  - {@link isNPC} : Checks if an Mob is an NPC.
+ *  - {@link equals} : Checks if two Mobs are the same.
+ *  - {@link pickUp} : Updates inventory with new item. 
+ *  - {@link drop} : Updates Inventory, removes item.
+ *  - {@link damage} : Updates health with incoming damage. Calls gameOver function.
+ *  - {@link initializeCombat} : Creates new instance of Combat.
+ *  - {@link update} : Called by the game object every tick.
+ *  - {@link move} : Moves player across canvas, takes into consideration of collisions with walls and other entities.
+ *  - {@link updateAction} : How mob updates its behavior.
+ *  - {@link broadcast} : How Mob recieves events.
+ *  - {@link mobAction} : Determines Mob actions for movement, attacking and items.
+ *  - {@link serialize} : Creates a simplified JSON version of an instance of an Player, keeping only the important information to be used.
+ *  - {@link deserialize} : Take an object that has been serialized and turn it into an instance of Player.
+ *
+ *  @extends Entity 
+*/
 class Mob extends Entity
 {
     mobName;
@@ -21,12 +50,24 @@ class Mob extends Entity
     mobHostile;
 
     speed = 2;
-    moveTarget = new Vector2(0.0, 0.0);
-    animationSpeed = 1/3;
+    moveTarget = new Vector2(0, 0);
+    animationSpeed = 1/6;
 
     actionDict = new PriorityList();
 
-    constructor(name, health, hostile, AIDict, transform = new Transform(), renderer = new Renderer(), game = undefined) {
+    /**
+     * Creates a new mob instance on the game canvas.
+     * This method requires Inventory usage to account for items  
+     * which allows the game to add new graphics to the canvas for rendering.
+     * @param {string} name the mobs name.
+     * @param {transform} transform Mob position, scale, and rotation.
+     * @param {renderer} renderer Mob renderer.
+     * @param {game} game The Game this is attached to (if any).
+     * @param {integer} health Initial health of the mob.
+     * @param {boolean} hostile Default orientation of mob.
+     * @param {PriorityList} AIDict Default behavior of mob.
+     */
+    constructor(name = "", transform = new Transform(), renderer = new Renderer(), game = undefined, health = 1, hostile = undefined, AIDict = new PriorityList([new Action("Move", 1, 1, 1)])) {
         
         super(name, transform, renderer, game);
         
@@ -35,58 +76,29 @@ class Mob extends Entity
         this.inventory = new Inventory();
         this.mobHostile = hostile;
         this.actionDict = AIDict;
-    }
 
-    get getName() 
-    {
-        return this.mobName;
+        this.moveTarget = this.transform.position;
     }
-
-    set setName(name) 
-    {
-        this.mobName = name;
-    }
-
-    get getHealth() 
-    {
-        return this.mobHealth;
-    }
-
-    set setHealth(health) 
-    {
-        this.mobHealth = health;
-    }
-
-    get getInventory() 
-    {
-        return this.inventory;
-    }
-
-    set setInventory(inventory) 
-    {
-        this.inventory = inventory;
-    }
-
-    get getHostile() 
-    {
-        return this.mobHostile;
-    }
-
-    set setHostile(hostile) 
-    {
-        this.mobHostile = hostile;
-    }
-
+    /**
+     * Checks if Mob is an instance of Enemy.
+     * @param {Mob} Mob Mob to be checked.
+     */
     isEnemy(Mob) 
     {
         return Mob instanceof Enemy;
     }
-
+    /**
+     * Checks if Mob is an instance of NPC.
+     * @param {Mob} Mob Mob to be checked.
+     */
     isNPC(Mob) 
     {
         return Mob instanceof NPC;
     }
-
+    /**
+     * Checks if two instances of mob have the same name.
+     * @param {Object} obj Mob to be checked.
+     */
     equals(obj)
     {
         if (!(obj instanceof Mob))
@@ -95,35 +107,49 @@ class Mob extends Entity
         if (this.mobName == obj.mobName)
             return true;
     }
-
+     /**
+     * Accesses Inventory, and updates items.
+     * @param {item} item new item that is added to inventory.
+     */
     pickUp(item) 
     {
         this.inventory.store(item);
     }
-
+     /**
+     * Accesses Inventory, and updates items.
+     * @param {item} item item that is deleted from inventory.
+     */
     drop(item)
     {
         this.inventory.drop(item);
     }
-
+    /**
+     * Updates Health based on damage done, then calls destroy function if health is depleted.
+     * @param {integer} damageDone integer that is subtracted from health.
+     */
     damage(damageDone)
     {
-        health -= damageDone;
-        if(health < 1)
+        this.health -= damageDone;
+        if(health <= 0)
         {
-            //enemy dies
+            this.destroy();
         }
     }
-
+    /**
+     * Calls new instance of Combat.
+     */
     initializeCombat() 
     {
-        //call combat
+        return new Combat;
     }
-    
+    /**
+     * Called by the game object every tick.
+     * @param {number} delta amount of time between ticks.
+     */
     update(delta)
     {
         const difference = Vector2.subtract(this.moveTarget, this.transform.position);
-        if (difference.getMagnitude() < 0.1)
+        if (difference.getMagnitude() < 1)
         {
             this.transform.position = this.moveTarget.copy();
         }
@@ -134,10 +160,13 @@ class Mob extends Entity
             this.transform.translate(difference);
         }
     }
-
+    /**
+     * Moves mob across canvas, takes into consideration of collisions with walls and other entities
+     * @param {direction} direction indicates the direction that mob object must move.
+     */
     move(direction)
     {
-        const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.game.grid.cellSize));
+        const pos = Vector2.add(this.moveTarget, Vector2.scalarMultiply(direction, this.game.grid.cellSize));
 
         const roomWidth = this.game.grid.cellSize * this.game.grid.width;
         const roomHeight = this.game.grid.cellSize * this.game.grid.height;
@@ -148,13 +177,18 @@ class Mob extends Entity
 
         this.moveTarget = pos;
     }
-
+    /**
+     * How mobs updates their behavior.
+     */
     updateAction() {
         for (let i = 0; i < this.AIDict.size(); i++) {
             this.AIDict[i].addPriority();
         }
     }
-
+    /**
+     * How mob registers that the player has been passed an event and acts according to its behavior.
+     * @param {event} event the event being passed to the player.
+     */
     broadcast(event)
     {
         console.log(this.event);
@@ -166,59 +200,74 @@ class Mob extends Entity
                 break;
         }
     }
-
+    /**
+     * How mob calls the appropriate functions according to its behavior to control its actions.
+     */
     mobAction()
     {
         const action = this.actionDict.getPriorityAction().name;
         this.actionDict.resetPriority();
         switch (action) {
             case 'Attack':
-                
-                // check if attack is valid
-                // if yes, combat
-                // if not, call method again with next index of action dictionary
+                // checks if attack has valid target.
+                // if yes, attacks.
+                // if not, calls method again with updated priority.
                 initializeCombat();
                 break;
             case 'Move':
-                // Get valid directions to move
+                
                 let directions = [Direction.Up, Direction.Down, Direction.Left, Direction.Right];
                 let validMoves = [];
-                for (const dir in directions)
+                for (const dir of directions)
                 {
-                    const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(dir, this.game.grid.cellSize));
+                    let isValid = true;
+                    const pos = Vector2.add(this.moveTarget, Vector2.scalarMultiply(dir, this.game.grid.cellSize));
+
+                    // Get collisions for the given direction
                     const collisions = this.game.getEntities((e) => {
+                        if (e instanceof Player || e instanceof Mob)
+                            return e.moveTarget.equals(pos);
+
                         return e.transform.position.equals(pos);
                     });
                     for (const e of collisions)
                     {
-                        if (!(e instanceof Collider))
-                            validMoves.push(dir);
+                        // If move would colide with player, wall, or other mob, the move is not valid
+                        if (e instanceof Collider || e instanceof Player || e instanceof Mob)
+                            isValid = false;
+                    }
+                    if (isValid)
+                    {
+                        validMoves.push(dir.copy());
                     }
                 }
                 // If no valid tiles...
                 if (validMoves.length <= 0)
                 {
+                    // ...retry action
                     this.mobAction();
                     break;
                 }
 
                 // Pick a random valid move
-                const i = floor(Math.random() * (validMoves.length - 1));
+                const i = Math.floor(Math.random() * validMoves.length);
+                const move = validMoves[i];
+                console.log(move);
                 // Change animation
-                if (validMoves[i].equals(Direction.Up)) {
+                if (move.equals(Direction.Up)) {
                     this.renderer.setAnimation('walkup', this.animationSpeed);
                 }
-                else if (validMoves[i].equals(Direction.Down)) {
+                else if (move.equals(Direction.Down)) {
                     this.renderer.setAnimation('walkdown', this.animationSpeed);
                 }
-                else if (validMoves[i].equals(Direction.Left)) {
+                else if (move.equals(Direction.Left)) {
                     this.renderer.setAnimation('walkleft', this.animationSpeed);
                 }
-                else if (validMoves[i].equals(Direction.Right)) {
+                else if (move.equals(Direction.Right)) {
                     this.renderer.setAnimation('walkright', this.animationSpeed);
                 }
                 // Move in the direction
-                this.move(Vector2.scalarMultiply(validMoves[i], this.game.grid.cellSize));
+                this.move(move);
                 break;
             case 'Item':
                 // use consumable
@@ -228,5 +277,29 @@ class Mob extends Entity
             default:
                 break;
         }
+    }
+
+    /**
+     * Creates a simplified JSON version of an instance of a mob, keeping only the important information to be used.
+     * @returns - returns the serialized mob as a string.
+     */
+    serialize()
+    {
+        return '{ "type":"Mob", "name": "' + this._Name + '", "transform": ' + this._Transform.serialize() + ', "renderer": '
+            + this._Renderer.serialize() + ', "inventory":' + this.inventory.serialize() + '}';
+    }
+
+    /**
+     * Take an object that has been serialized and turn it into an instance of mob.
+     * @param {*} obj - object to deserialize.
+     * @param {*} game - instance of game used to derserialize the fields into usable fields.
+     * @returns - returns new instance of mob with intialized fields if applicable.
+     */
+    static deserialize(obj, game)
+    {
+        const p = new Mob(obj.mobName, Transform.deserialize(obj.transform), Renderer.deserialize(obj.renderer, game.stage), game)
+        p.inventory = Inventory.deserialize(obj.inventory, game);
+        return p;
+   
     }
 }

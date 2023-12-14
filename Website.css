@@ -3,7 +3,7 @@
   --theme-dark-color: #557A95;
   --primary-font-color: #F6C90E;
   --secondary-font-color: #E3963E;
-  --link-font-color: #white;
+  --link-font-color: white;
 
   background-image: url(./images/WebsiteBackground.png);
   background-size: cover;
@@ -58,13 +58,13 @@ body {
   background-color: rgb(15, 15, 15)
 }
 
-#entityList
+.entityList
 {
   width: 100%;
   height: 200px;
   overflow-y: scroll;
 }
-#entityList button
+.entityList button
 {
   height: 40px;
   font-family:"Alagard";
@@ -75,12 +75,12 @@ body {
   display: block;
   width: 100%;
 }
-#entityList button:hover
+.entityList button:hover
 {
   background-color: var(--secondary-font-color);
   color: black;
 }
-#entityList > .selected-entity
+.entityList > .selected-entity
 {
   background-color: rgb(60, 60, 60);
 }
@@ -288,4 +288,10 @@ canvas {
   opacity: 0.5; 
   cursor: not-allowed; 
   color: #777; 
+}
+
+#userLevels{
+    width: 30%; /* Set a width for the div */
+    margin-left: auto;
+    margin-right: auto;
 }

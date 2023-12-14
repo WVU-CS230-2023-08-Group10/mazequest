@@ -1,8 +1,5 @@
-
-
-import { MazeLayout, GenerationParameters } from "./MazeLayout.js";
 import { profanity } from "https://cdn.skypack.dev/@2toad/profanity";
-import { Game } from "./Game.js";
+
 // BEGIN SUPABASE ;
 
 // CLIENT INITIALIZATION
@@ -10,6 +7,7 @@ const supabaseUrl = "https://inyelmyxiphvbfgmhmrk.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlueWVsbXl4aXBodmJmZ21obXJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTc0Nzg3NzEsImV4cCI6MjAxMzA1NDc3MX0.9ByIuA4tv1oMmEr2UPAbCvNQYSvH-wY8aU-4Y8JSprg";
 const s = supabase.createClient(supabaseUrl, supabaseKey);
 
+/* Event listener for when the contents of the DOM are loaded */
 document.addEventListener("DOMContentLoaded", async () => {
 
    // Save the initial contents of login form
@@ -63,14 +61,14 @@ document.addEventListener("DOMContentLoaded", async () => {
    // BEGIN LOGIN
    document.getElementById("login").addEventListener("submit", async (e) => {
 
+      // Prevent the webpage from reloading
       e.preventDefault();
 
-
-
+      // Get user's entered email and password
       const email = document.getElementById("liEmail").value
       const password = document.getElementById("liPassword").value
 
-      // Switch to Home view
+      // Call Supabase sign-in function
       const { data, error } = await s.auth.signInWithPassword({
          email: email,
          password: password
@@ -80,7 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (error) {
          alert("Incorrect email or password")
       } else {
-         // successful login
+         // Successful login
          alert("Success! Logged In");
          location.reload();
 
@@ -131,6 +129,7 @@ document.addEventListener("DOMContentLoaded", async () => {
    // BEGIN SIGNUP
    document.getElementById("signup").addEventListener("submit", async (e) => {
 
+      // Prevent the webpage from reloading
       e.preventDefault();
 
       // Grabbing email and password entered by user
@@ -180,6 +179,7 @@ document.addEventListener("DOMContentLoaded", async () => {
    // BEGIN RESET PASSWORD
    document.getElementById("resetPassword").addEventListener("click", async (e) => {
 
+      // Prevent the webpage from reloading
       e.preventDefault();
 
       // Get the user's entered password
@@ -198,76 +198,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
    });
 
-   /* Event listener for the "saveLevel" button on leve builder tab */
-   document.getElementById("saveLevel").addEventListener("click", async (e) => {
-
-      e.preventDefault();
-
-      // Integer that represents max length allowed for a level name
-      let maxNameSize = 15;
-
-      // Get the level name text box
-      const levelNameTextBox = document.getElementById("levelName");
-
-      // Check to see if there is a name in the text box
-      if (levelNameTextBox.value == 0) {
-         // Textbox is empty, make user enter a name
-         alert("Error: No name provided for the level.")
-         levelNameTextBox.style.backgroundColor = "#E3963E";
-         return;
-      }
-
-      // Check to see if name exceeds maximum length
-      if (levelNameTextBox.value.length > maxNameSize) {
-         // Name is too long. Make user enter a new name
-         alert("Error: Level name cannot be longer than 15 characters. Please enter a new name.");
-         levelNameTextBox.style.backgroundColor = "#E3963E";
-         return;
-      }
-
-      // Get the user's level name
-      const level_name = levelNameTextBox.value;
-
-      // Get the user's username
-      const user = await s.auth.getUser();
-      var username = JSON.stringify(user.data.user.user_metadata.username);
-
-      // Create a new Game object
-      const game = new Game;
-
-      // Call the saveRoom() function to get the level file and index
-      const levelObject = game.saveRoom();
-
-      // Insert data into Supabase
-      const { data, error } = await s.from('levels').insert([
-         {
-            username: username,
-            level_file: levelObject.level_file,
-            index: levelObject.index,
-            level_name: level_name,
-            published: false,
-         },
-      ])
-
-      if (error) {
-         // Error saving to database
-         alert("Error: There was an error saving your level. Please retry.");
-         return;
-      }
-      else {
-         // Level was successfully added
-         alert("Level saved!");
-         // Change text box color back to original (if necessary)
-         levelNameTextBox.style.backgroundColor = '';
-         return;
-      }
-   });
-
 });
 // END SUPABASE
 
 /**
- * Function to update the leaderboard, including both top and user stats
+ * Function to update the leaderboard, including both top player's statistics and the user's personal stats.
  * @param {*} none
  */
 async function updateLeaderboard() {
@@ -275,149 +210,149 @@ async function updateLeaderboard() {
    var topDragonSlayersPromise
    var topMazeRunnersPromise
    var topEnemySlayersPromise
-   
-
-   
-      // retrieve promises
-   topDragonSlayersPromise =  s
-   .from("player_stats")
-   .select()
-   .order("dragons_slain", {ascending:false})
-   .limit(3)
-  
-   topMazeRunnersPromise =  s
-   .from("player_stats")
-   .select()
-   .order("mazes_escaped", {ascending:false})
-   .limit(3)
-
-   topEnemySlayersPromise =  s
-   .from("player_stats")
-   .select()
-   .order("enemies_slain", {ascending:false})
-   .limit(3)
-
-   
-   
-   // resolve all promises at once so db calls don't block each other
-     const[topDragonSlayers, topEnemySlayers, topMazeRunners] = 
-     await Promise.all([
-      topDragonSlayersPromise, 
-      topEnemySlayersPromise, 
-      topMazeRunnersPromise,
-     
-   ]).catch(error => {
-      console.log(error)
-   })
-      
 
 
 
+   // retrieve promises
+   topDragonSlayersPromise = s
+      .from("player_stats")
+      .select()
+      .order("dragons_slain", { ascending: false })
+      .limit(3)
 
-      // convert data to js objects and ready to load into
-         
-            //TODO : Create dummy data to test
-           
-         
-               // grabs stats and usernames for leaderboard
-         var firstDragonSlayer = topDragonSlayers.data[0].username
-         var secondDragonSlayer = topDragonSlayers.data[1].username
-         var thirdDragonSlayer = topDragonSlayers.data[2].username
+   topMazeRunnersPromise = s
+      .from("player_stats")
+      .select()
+      .order("mazes_escaped", { ascending: false })
+      .limit(3)
 
-         var firstDragonSlayerStat = topDragonSlayers.data[0].dragons_slain
-         var secondDragonSlayerStat= topDragonSlayers.data[1].dragons_slain
-         var thirdDragonSlayerStat = topDragonSlayers.data[2].dragons_slain
-         
-         var firstMazeRunner = topMazeRunners.data[0].username
-         var secondMazeRunner = topMazeRunners.data[1].username
-         var thirdMazeRunner = topMazeRunners.data[2].username
+   topEnemySlayersPromise = s
+      .from("player_stats")
+      .select()
+      .order("enemies_slain", { ascending: false })
+      .limit(3)
 
-         var firstMazeRunnerStat = topMazeRunners.data[0].mazes_escaped
-         var secondMazeRunnerStat = topMazeRunners.data[1].mazes_escaped
-         var thirdMazeRunnerStat = topMazeRunners.data[2].mazes_escaped
 
-         var firstEnemySlayer = topEnemySlayers.data[0].username
-         var secondEnemySlayer = topEnemySlayers.data[1].username
-         var thirdEnemySlayer = topEnemySlayers.data[2].username
 
-         var firstEnemySlayerStat = topEnemySlayers.data[0].enemies_slain
-         var secondEnemySlayerStat = topEnemySlayers.data[1].enemies_slain
-         var thirdEnemySlayerStat = topEnemySlayers.data[2].enemies_slain
+   // resolve all promises at once so database calls don't block each other
+   const [topDragonSlayers, topEnemySlayers, topMazeRunners] =
+      await Promise.all([
+         topDragonSlayersPromise,
+         topEnemySlayersPromise,
+         topMazeRunnersPromise,
 
-  
-   
-     
-      const user =  await s.auth.getUser()
-     
+      ]).catch(error => {
+         console.log(error)
+      })
 
-      // if user is logged in, retrieve personal stats
-  if (user.data.user){
-      
-      
-  // console.log(JSON.stringify(user))
-   var stringId= JSON.stringify(user.data.user.id)
-   
- // retrieve user id to access stats table
-   const id = stringId.substring(1,stringId.length-1)
 
-   
 
-  const personalStats = await s
-   .from("player_stats")
-   .select()
-   .eq("id", id)
 
-   
-// convert username to json and display
-   // console.log(JSON.stringify(personalStats.data[0].username))
-   const usernameString = JSON.stringify(personalStats.data[0].username)
 
-   //const username = usernameString.substring(1,usernameString.length-1)
-   document.getElementById("personal_stat").innerHTML = usernameString.substring(3,usernameString.length-3)+ "'s conquests..."
+   // convert data to js objects and ready to load into
 
-  
+   //TODO : Create dummy data to test
+
+
+   // grabs stats and usernames for leaderboard
+   var firstDragonSlayer = topDragonSlayers.data[0].username
+   var secondDragonSlayer = topDragonSlayers.data[1].username
+   var thirdDragonSlayer = topDragonSlayers.data[2].username
+
+   var firstDragonSlayerStat = topDragonSlayers.data[0].dragons_slain
+   var secondDragonSlayerStat = topDragonSlayers.data[1].dragons_slain
+   var thirdDragonSlayerStat = topDragonSlayers.data[2].dragons_slain
+
+   var firstMazeRunner = topMazeRunners.data[0].username
+   var secondMazeRunner = topMazeRunners.data[1].username
+   var thirdMazeRunner = topMazeRunners.data[2].username
+
+   var firstMazeRunnerStat = topMazeRunners.data[0].mazes_escaped
+   var secondMazeRunnerStat = topMazeRunners.data[1].mazes_escaped
+   var thirdMazeRunnerStat = topMazeRunners.data[2].mazes_escaped
+
+   var firstEnemySlayer = topEnemySlayers.data[0].username
+   var secondEnemySlayer = topEnemySlayers.data[1].username
+   var thirdEnemySlayer = topEnemySlayers.data[2].username
+
+   var firstEnemySlayerStat = topEnemySlayers.data[0].enemies_slain
+   var secondEnemySlayerStat = topEnemySlayers.data[1].enemies_slain
+   var thirdEnemySlayerStat = topEnemySlayers.data[2].enemies_slain
+
+
+
+
+   const user = await s.auth.getUser()
+
+
+   // if user is logged in, retrieve personal stats
+   if (user.data.user) {
+
+
+      // console.log(JSON.stringify(user))
+      var stringId = JSON.stringify(user.data.user.id)
+
+      // retrieve user id to access stats table
+      const id = stringId.substring(1, stringId.length - 1)
+
+
+
+      const personalStats = await s
+         .from("player_stats")
+         .select()
+         .eq("id", id)
+
+
+      // convert username to json and display
+      // console.log(JSON.stringify(personalStats.data[0].username))
+      const usernameString = JSON.stringify(personalStats.data[0].username)
+
+      //const username = usernameString.substring(1,usernameString.length-1)
+      document.getElementById("personal_stat").innerHTML = usernameString.substring(3, usernameString.length - 3) + "'s conquests..."
+
+
       //console.log(JSON.stringify(personalStats))
-       var personalDragons =  personalStats.data[0].dragons_slain
-       var personalMazes = personalStats.data[0].mazes_escaped
-       var personalenemies = personalStats.data[0].enemies_slain
+      var personalDragons = personalStats.data[0].dragons_slain
+      var personalMazes = personalStats.data[0].mazes_escaped
+      var personalenemies = personalStats.data[0].enemies_slain
 
       document.getElementById("PD").innerHTML = personalDragons
       document.getElementById("PM").innerHTML = personalMazes
       document.getElementById("PE").innerHTML = personalenemies
 
-     
+
    }
-                  
-
-          //error handling is redundant as long as 3 profiles exist
 
 
-            // stat assignments
-      document.getElementById("dragonSlayer1").innerHTML = firstDragonSlayer
-      document.getElementById("dragonSlayer2").innerHTML = secondDragonSlayer
-      document.getElementById("dragonSlayer3").innerHTML = thirdDragonSlayer
+   //error handling is redundant as long as 3 profiles exist
 
-      document.getElementById("U1D").innerHTML = firstDragonSlayerStat
-      document.getElementById("U2D").innerHTML = secondDragonSlayerStat
-      document.getElementById("U3D").innerHTML = thirdDragonSlayerStat
 
-      document.getElementById("enemySlayer1").innerHTML = firstEnemySlayer
-      document.getElementById("enemySlayer2").innerHTML = secondEnemySlayer
-      document.getElementById("enemySlayer3").innerHTML = thirdEnemySlayer
+   // stat assignments
+   document.getElementById("dragonSlayer1").innerHTML = firstDragonSlayer
+   document.getElementById("dragonSlayer2").innerHTML = secondDragonSlayer
+   document.getElementById("dragonSlayer3").innerHTML = thirdDragonSlayer
 
-      document.getElementById("U1E").innerHTML = firstEnemySlayerStat
-      document.getElementById("U2E").innerHTML = secondEnemySlayerStat
-      document.getElementById("U3E").innerHTML = thirdEnemySlayerStat
+   document.getElementById("U1D").innerHTML = firstDragonSlayerStat
+   document.getElementById("U2D").innerHTML = secondDragonSlayerStat
+   document.getElementById("U3D").innerHTML = thirdDragonSlayerStat
 
-      document.getElementById("mazeRunner1").innerHTML = firstMazeRunner
-      document.getElementById("mazeRunner2").innerHTML = secondMazeRunner
-      document.getElementById("mazeRunner3").innerHTML = thirdMazeRunner
+   document.getElementById("enemySlayer1").innerHTML = firstEnemySlayer
+   document.getElementById("enemySlayer2").innerHTML = secondEnemySlayer
+   document.getElementById("enemySlayer3").innerHTML = thirdEnemySlayer
 
-      document.getElementById("U1M").innerHTML = firstMazeRunnerStat
-      document.getElementById("U2M").innerHTML = secondMazeRunnerStat
-      document.getElementById("U3M").innerHTML = thirdMazeRunnerStat
-           
-      
+   document.getElementById("U1E").innerHTML = firstEnemySlayerStat
+   document.getElementById("U2E").innerHTML = secondEnemySlayerStat
+   document.getElementById("U3E").innerHTML = thirdEnemySlayerStat
+
+   document.getElementById("mazeRunner1").innerHTML = firstMazeRunner
+   document.getElementById("mazeRunner2").innerHTML = secondMazeRunner
+   document.getElementById("mazeRunner3").innerHTML = thirdMazeRunner
+
+   document.getElementById("U1M").innerHTML = firstMazeRunnerStat
+   document.getElementById("U2M").innerHTML = secondMazeRunnerStat
+   document.getElementById("U3M").innerHTML = thirdMazeRunnerStat
+
+
 }
 
 /**
@@ -430,27 +365,38 @@ function isStrongPassword(password, passwordBox, rePasswordBox) {
    // Check if the two password boxes contain the same text
    if (passwordBox.value == rePasswordBox.value) {
       rePasswordBox.style.backgroundColor = '';
+
       // Passwords match, check other requirements
-      let isStrong = true
+
+      // Create boolean to return the result of the function 
+      let isStrong = true;
+
       let validationRegex = [{ regex: /.{8,}/ }, { regex: /[0-9]/ }, { regex: /[A-Z]/ }, { regex: /[^A-Za-z0-9]/ }]
       validationRegex.forEach((item) => {
-         let isValid = item.regex.test(password)
+
+         // Set a boolean value to reflect the result of the password test
+         let isValid = item.regex.test(password);
+
+         // If the password is not valid
          if (!isValid) {
             // Remove text from text boxes
             passwordBox.value = "";
             rePasswordBox.value = "";
             // Make the text box orange
             passwordBox.style.backgroundColor = "#E3963E";
-            console.log("invalid password")
-            isStrong = false
+            console.log("invalid password");
+            // Set boolean to false
+            isStrong = false;
          }
       })
-      if (isStrong)
+      if (isStrong) {
+         // Password is strong, change textbox color to default color
          passwordBox.style.backgroundColor = '';
-
+      }
+      // Return the current boolean value of isStrong
       return isStrong
-
    }
+
    // Text boxes did not match. Make them re-enter.
    alert("Passwords do not match.")
    // Remove text from text boxes
@@ -459,6 +405,7 @@ function isStrongPassword(password, passwordBox, rePasswordBox) {
    // Make text boxes orange
    passwordBox.style.backgroundColor = "#E3963E";
    rePasswordBox.style.backgroundColor = "#E3963E";
+   // Return false
    return false;
 }
 
@@ -471,7 +418,7 @@ function removeSignUpForm(form, message){
    // Remove the text boxes and instructions from the form
    form.innerHTML = ' ';
 
-   // Add "Check Email" message
+   // Add parameter message
    const SigDiv = document.getElementById("signup");
    const successMessage = document.createElement("h2");
    successMessage.textContent = message;
@@ -495,7 +442,7 @@ function removeLoginForm(form, message) {
    // Remove the text boxes and intstructions from the form
    form.innerHTML = ' ';
 
-   // Add "Logged in" message
+   // Add parameter message
    const LoginDiv = document.getElementById("login");
    const successMessage = document.createElement("h2");
    successMessage.textContent = message;
@@ -533,28 +480,33 @@ async function loadUserLevels(username) {
       // No levels pulled. Do nothing and return
       return;
    }
-   else {
-
+   else 
+   {
       // Find the HTML element to display the data
       const listElement = document.getElementById('userLevels');
 
-      // Create a list to hold the names
-      const ul = document.createElement('ul');
+      const lList = document.querySelector('#levelList');
 
       // Loop through the data and create list items for each name
       data.forEach(item => {
-         const li = document.createElement('li');
-         li.textContent = String(item.level_name);
-         ul.appendChild(li);
+         const button = document.createElement('button');
+         button.textContent = String(item.level_name);
+         button.setAttribute('class','levelbtn dropbtn');
+         button.addEventListener('click', (e) => {
+            const jstring = String(item.level_file);
+            const event = new CustomEvent('loadLevel', { detail : { level_obj : JSON.parse(jstring), level_name : item.level_name } });
+            document.getElementById("Bui").dispatchEvent(event);
+         })
+         lList.appendChild(button);
       });
 
       // Append the list to the selected HTML element
-      listElement.appendChild(ul);
+      listElement.appendChild(lList);
    }
 }
 
-//below is used for hint rotation
-var hintsText = ["To engage in combat, move into the enemy!",
+// List of all the hints to be rotated regularly on the bottom of the website
+let hintsText = ["To engage in combat, move into the enemy!",
    "Different weapons have different attack patterns. Find one that works for you!",
    "The better you trace an attack pattern, the more damage you deal.",
    "Gather items to help fight off enemies.", 
@@ -568,36 +520,64 @@ var hintsText = ["To engage in combat, move into the enemy!",
    "I used to be an adventurer like you. Then I took an arrow to the knee...",
    "Beware the Jabberwock! It's jaws that bite, it's claws that catch!",
    "Have you heard of the High Elves?",
-   "Grand Theft Auto 6 releases in 2025."];
+   "Grand Theft Auto 6 releases in 2025.",
+   "We fr got the GTA 6 trailer before MazeQuest.",
+   "Did you know that mochi is not a good consolation gift?",
+   "Remember not to drop the keyfob to your motorcycle!",
+   "Blood, sweat, and tears went into this game... you better like it. Or else.",
+   "There is currently no way for the dragon to entire your home... yet.",
+   "Try out our new level builder!",
+   "Recombobulating the discombobulators...",
+   "Watch the tram car please.",
+   "Press Ctrl+W for more hints!",
+   "Press Alt+F4 to unlock super saiyan mode.",
+   "If you're seeing this, the dragon already knows your location and he is rapidly approaching.",
+   "Follow your attack trace accurately to get the best damage roll!",
+   "There are hot goblins in your area waiting to meet you!",
+   "\"F*** JavaScript.\" - Lead developer",
+   "According to all known laws of aviation, there is no way that a bee should be able to fly.",
+   "Do not drop STAT 215. Worst mistake I ever made.",
+   "We love StoodBood.",
+   "World of wings addictions end here!"];
 
-var counter = 0;
+// Keeps track of number of hints that have been displayed in the current shuffle
+let counter = 0;
+// Sets the time each hint is displayed on the website
+let interval = 5000;
 shuffle(hintsText);
-setInterval(changeHints, 5000);
+// Changes the hint on the website based on
+setInterval(changeHints, interval);
+
+/**
+ * Function to randomly shuffle the contents of a list
+ * @param {*} array - list to shuffle
+ * @returns - returns the shuffled array
+ */
 function shuffle(array) {
-   let currentIndex = array.length,  randomIndex;
-   
+   let currentIndex = array.length, randomIndex;
+
    // While there remain elements to shuffle.
    while (currentIndex > 0) {
-   
+
       // Pick a remaining element.
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
-   
+
       // And swap it with the current element.
       [array[currentIndex], array[randomIndex]] = [
          array[randomIndex], array[currentIndex]];
    }
-   
+
    return array;
 }
-function changeHints() 
-{
+/**
+ * Changes the current hint being showed on the website.
+ */
+function changeHints() {
    elem.textContent = hintsText[counter];
    counter++;
-   if (counter >= hintsText.length)
-   {
+   if (counter >= hintsText.length) {
       counter = 0;
       shuffle(hintsText);
    }
 }
-//^ Hint rotation

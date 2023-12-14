@@ -1,34 +1,46 @@
 {
-    "starter_sword":
-    { 
+    "starter_sword": { 
         "type":"Weapon", 
         "name":"Starter Sword",
         "damage": { "low":5, "high":20 },
-        "trace":[ {"x":0, "y":0} , {"x":0, "y":1} , {"x":0, "y":2} , {"x":0, "y":3} ],
+        "trace":[ {"x":64, "y":24} , {"x":64, "y":70} , {"x":64, "y":116} , {"x":64, "y":150} ],
+        "transform": 
+        { 
+            "position" : { "x" : 256, "y" : 256}, 
+            "scale" : { "x" : 2, "y" : 2}, 
+            "rotation" : 0
+        },
         "renderer": { 
             "type":"Renderer", 
-            "spriteSheetInfo": { "json":"./images/weapons/sword.json", "img":"./images/weapons/sword.png" }, 
+            "spriteSheetInfo": { "json":"./images/items/Items.json", "img":"./images/items/Items.png" }, 
             "transform" : {
                 "position" : { "x":0, "y":0 },
                 "scale" : { "x":1, "y":1 },
                 "rotation" : 0
-            } 
+            },
+            "animation":"sword"
         }
     },
-    "master_sword":
-    {
+    "master_sword": {
         "type":"Weapon", 
         "name":"Dragonslayer",
         "damage": { "low":20, "high":50 },
-        "trace":[ {"x":0, "y":2} , {"x":1, "y":0} , {"x":1, "y":1} , {"x":0, "y":0} ],
+        "trace":[ {"x":32, "y":150} , {"x":96, "y":24} , {"x":96, "y":150} , {"x":32, "y":24} ],
+        "transform": 
+        { 
+            "position" : { "x" : 256, "y" : 256}, 
+            "scale" : { "x" : 2, "y" : 2}, 
+            "rotation" : 0
+        },
         "renderer": { 
-            "type":"Renderer", 
-            "spriteSheetInfo": { "json":"./images/weapons/goldenSword.json", "img": "./images/weapons/goldenSword.png"} ,
+            "type":"Renderer",
+            "spriteSheetInfo": { "json":"./images/items/Items.json", "img": "./images/items/Items.png"} ,
             "transform" : {
                 "position" : { "x":0, "y":0 },
                 "scale" : { "x":1, "y":1 },
                 "rotation" : 0
-            } 
+            },
+            "animation":"goldenSword"
         } 
     }
 }

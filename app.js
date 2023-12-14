@@ -3,154 +3,97 @@ import { Game } from "./Game.js";
 import { Renderer } from "./Renderer.js";
 import { Vector2 } from "./Vectors.js";
 
+// New supabase session 
+const supabaseUrl = "https://inyelmyxiphvbfgmhmrk.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlueWVsbXl4aXBodmJmZ21obXJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTc0Nzg3NzEsImV4cCI6MjAxMzA1NDc3MX0.9ByIuA4tv1oMmEr2UPAbCvNQYSvH-wY8aU-4Y8JSprg";
+const s = supabase.createClient(supabaseUrl, supabaseKey);
+
+// Creating the game window
 const canvasWidth = 640;
 const canvasHeight = 512;
 const canvas = document.getElementById("canvas");
 const app = new PIXI.Application(
     { 
-        view: canvas, 
-        width: canvasWidth, 
-        height: canvasHeight, 
-        backgroundColor: 0xFFFFFF,
-    }
-);
+        view : canvas, 
+        width : canvasWidth, 
+        height : canvasHeight, 
+        backgroundColor : 0xFFFFFF
+    });
+app.stage.sortableChildren = true;
 document.getElementById("Gam").appendChild(app.view);
 
-const bkgTexture = PIXI.Texture.from("./images/preview.png");
-const bkg = new PIXI.Sprite(bkgTexture);
-
-// Temporary implementation of sidebar with loaded elements
-const loadSidebar = async () =>
-{
-    const sheet = await PIXI.Assets.load('./images/sb/sidebar.json');
-    const sidebar = new PIXI.Sprite(sheet.textures['sidebar']);
-        sidebar.anchor.set(-4, 0);
-        sidebar.height = 512;
-        sidebar.width = 128;
-        sidebar.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(sidebar);
-    const battleBkg = new PIXI.Sprite(PIXI.Texture.from('./images/sb/frutiger.png'));
-        battleBkg.anchor.set(-4.145, -0.01);
-        battleBkg.height = 172;
-        battleBkg.width = 124;
-        battleBkg.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(battleBkg);
-    const goblin = new PIXI.Sprite(PIXI.Texture.from('./images/sb/goblin.png'));
-        goblin.anchor.set(-4.94, -0.4);
-        goblin.height = 106;
-        goblin.width = 106;
-        goblin.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(goblin);
-    // const screen = new PIXI.Sprite(sheet.textures['screen']);
-    //     screen.anchor.set(-4, 0);
-    //     screen.height = 176;
-    //     screen.width = 128;
-    //     screen.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    // app.stage.addChild(screen);
-    // const testTxt = new PIXI.Sprite(sheet.textures['test_text']);
-    //     testTxt.anchor.set(-8.5, -2);
-    //     testTxt.height = 32;
-    //     testTxt.width = 64;
-    //     testTxt.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    // app.stage.addChild(testTxt);
-    const invTxt = new PIXI.Sprite(sheet.textures['inv_text']);
-        invTxt.anchor.set(-4, -5.5);
-        invTxt.height = 32;
-        invTxt.width = 128;
-        invTxt.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(invTxt);
-    const invSlot = new PIXI.Sprite(sheet.textures['circle_slot']);
-        invSlot.anchor.set(-16.2, -6.65);
-        invSlot.height = 32;
-        invSlot.width = 32;
-        invSlot.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(invSlot);
-    const invSlot2 = new PIXI.Sprite(sheet.textures['circle_slot']);
-        invSlot2.anchor.set(-17.5, -6.65);
-        invSlot2.height = 32;
-        invSlot2.width = 32;
-        invSlot2.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(invSlot2);
-    const invSlot3 = new PIXI.Sprite(sheet.textures['circle_slot']);
-        invSlot3.anchor.set(-18.8, -6.65);
-        invSlot3.height = 32;
-        invSlot3.width = 32;
-        invSlot3.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(invSlot3);
-    const invSlot4 = new PIXI.Sprite(sheet.textures['circle_slot']);
-        invSlot4.anchor.set(-16.2, -7.9);
-        invSlot4.height = 32;
-        invSlot4.width = 32;
-        invSlot4.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(invSlot4);
-    const invSlot5 = new PIXI.Sprite(sheet.textures['circle_slot']);
-        invSlot5.anchor.set(-17.5, -7.9);
-        invSlot5.height = 32;
-        invSlot5.width = 32;
-        invSlot5.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(invSlot5);
-    const invSlot6 = new PIXI.Sprite(sheet.textures['circle_slot']);
-        invSlot6.anchor.set(-18.8, -7.9);
-        invSlot6.height = 32;
-        invSlot6.width = 32;
-        invSlot6.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(invSlot6);
-    const armorTxt = new PIXI.Sprite(sheet.textures['armor_text']);
-        armorTxt.anchor.set(-5.5, -9.1);
-        armorTxt.height = 32;
-        armorTxt.width = 96;
-        armorTxt.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(armorTxt);
-    const armorSlot = new PIXI.Sprite(sheet.textures['square_slot_big']);
-        armorSlot.anchor.set(-8.5, -5.1);
-        armorSlot.height = 64;
-        armorSlot.width = 64;
-        armorSlot.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(armorSlot);
-    const weaponTxt = new PIXI.Sprite(sheet.textures['weapon_text']);
-        weaponTxt.anchor.set(-4, -12.3);
-        weaponTxt.height = 32;
-        weaponTxt.width = 128;
-        weaponTxt.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(weaponTxt);
-    const weaponSlot = new PIXI.Sprite(sheet.textures['circle_slot_big']);
-        weaponSlot.anchor.set(-8.5, -6.75);
-        weaponSlot.height = 64;
-        weaponSlot.width = 64;
-        weaponSlot.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    app.stage.addChild(weaponSlot);
-}
-
-// Custom background + sprite for screen
-const encounterScreen = () => 
-{
-    
-}
-
+// Stores the background image as a new sprite
+const bkgTexture = PIXI.Texture.from("./images/tiles/default_bg.png");
+let bkg = new PIXI.Sprite(bkgTexture);
+bkg.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+bkg.setTransform(0, 0, 2, 2);
 app.stage.addChild(bkg);
-loadSidebar();
-encounterScreen();
 
-const game = new Game(app.stage);
+// Load prefabs from .json file
+const prefabs = await fetch('./prefabs.json')
+    .then((response) => response.json()).catch(error => console.error(error));
 
+// Load our weapons from .json file
 const masterList = await fetch('./Items/Weapons.json')
     .then((response) => response.json()).catch(error => console.error(error));
-   
-let currWeapon = JSON.stringify(masterList.starter_sword);
-console.log(currWeapon);
 
-game.deserializeEntity(JSON.parse(`{ "type":"Player", "name": "Player", "transform": 
-{ "position" : { "x" : 256, "y" : 256}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
-"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/armor/leatherArmor.json", 
-"img":"./images/armor/leatherArmor.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
-"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"default"}, "inventory":{ "type":"Inventory", "weapon":` + currWeapon +  `, 
-"armor":null, "consumables":[]}}`));
+// Load sidebar & assets, revised
+const sheet = await PIXI.Assets.load('./images/sb/sidebar.json');
+const sidebar = new PIXI.Sprite(sheet.textures['sidebar']);
+    sidebar.setTransform(512, 0, 2, 2);
+    sidebar.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+app.stage.addChild(sidebar);
+const battleBkg = new PIXI.Sprite(PIXI.Texture.from('./images/sb/frutiger.png'));
+    battleBkg.setTransform(514, 2, 2, 2);
+    battleBkg.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+app.stage.addChild(battleBkg);
+const invTxt = new PIXI.Sprite(sheet.textures['inv_text']);
+    invTxt.setTransform(512, 176, 2, 2);
+app.stage.addChild(invTxt);
+const invColumns = 3, invRows = 2, slotSize = 42;
+for (let i = 0; i < invColumns; i++)
+{
+    for (let j = 0; j < invRows; j++)
+    {
+        const slot = new PIXI.Sprite(sheet.textures['circle_slot']);
+            slot.setTransform(518 + i*slotSize, 212 + j*slotSize, 2, 2);
+        app.stage.addChild(slot);
+    }
+}
+const armorTxt = new PIXI.Sprite(sheet.textures['armor_text']);
+    armorTxt.setTransform(528, 292, 2, 2);
+app.stage.addChild(armorTxt);
+const armorSlot = new PIXI.Sprite(sheet.textures['square_slot_big']);
+    armorSlot.setTransform(544, 326, 2, 2);
+app.stage.addChild(armorSlot);
+const weaponTxt = new PIXI.Sprite(sheet.textures['weapon_text']);
+    weaponTxt.setTransform(512, 394, 2, 2);
+app.stage.addChild(weaponTxt);
+const weaponSlot = new PIXI.Sprite(sheet.textures['circle_slot_big']);
+    weaponSlot.setTransform(544, 432, 2, 2);
+app.stage.addChild(weaponSlot);
 
-game.deserializeEntity(JSON.parse(`{ "type":"Collider", "name": "Wall", "transform": 
-{ "position" : { "x" : 128, "y" : 256}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
-"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/armor/leatherArmor.json", 
-"img":"./images/armor/leatherArmor.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
-"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"default"}}`));
+// Pull all levels from the database
+const roomData = [[]];
+for (let i = 1; i < 16; i++)
+{
+    const set = [];
+    const { data, error } = await s
+        .from('levels')
+        .select('*')
+        .eq('index', i);
+
+    data.forEach(item => {
+        set.push(JSON.parse(String(item.level_file)));
+    });
+    roomData.push(set);
+}
+
+const game = new Game(app.stage, roomData);
+game.loadRoom();
+
+game.deserializeEntity(prefabs.Player);
+// game.deserializeEntity(prefabs.Wall);
 
 const gameWindowTab = document.querySelector("#GameWindow");
 
@@ -163,14 +106,12 @@ document.addEventListener('keydown', function(input) {
 
 app.ticker.add((delta) => {
     if (!gameWindowTab.classList.contains("active")) return;
-
     game.updateEntities(delta);
 });
 
 /**
  *  Level Builder Stuff
  */
-
 const lbcanvas = document.getElementById("levelBuilderCanvas");
 const lbapp = new PIXI.Application(
     { 
@@ -180,12 +121,19 @@ const lbapp = new PIXI.Application(
         backgroundColor: 0x000000,
     }
 )
+lbapp.stage.sortableChildren = true;
 document.getElementById("lbCanvasAnchor").appendChild(lbapp.view);
+
+bkg = new PIXI.Sprite(bkgTexture);
+bkg.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+bkg.setTransform(0, 0, 2, 2);
+lbapp.stage.addChild(bkg);
 
 const levelBuilder = new Game(lbapp.stage);
 const lbui = new PIXI.Graphics();
 lbui.eventMode = 'static';
 lbui.cursor = 'pointer';
+lbui.zIndex = 1024;
 lbapp.stage.addChild(lbui);
 
 let selectedEntity = null;
@@ -207,84 +155,25 @@ lbapp.stage.hitArea = lbapp.screen;
 lbapp.stage.on('pointerup', onDragEnd);
 lbapp.stage.on('pointerupoutside', onDragEnd);
 
-const prefabs = new Map();
-prefabs.set('Player', JSON.parse(`{ "type":"Player", "name": "Player", "transform": 
-{ "position" : { "x" : 256, "y" : 256}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
-"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/armor/leatherArmor.json", 
-"img":"./images/armor/leatherArmor.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
-"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"default"}, "inventory":{ "type":"Inventory", "weapon":null, 
-"armor":null, "consumables":[]}}`));
-prefabs.set('Goblin', JSON.parse(`{ "type":"Player", "name": "Goblin", "transform": 
-{ "position" : { "x" : 128, "y" : 256}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
-"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/enemies/goblin.json", 
-"img":"./images/enemies/goblin.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
-"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"walkright"}, "inventory":{ "type":"Inventory", "weapon":null, 
-"armor":null, "consumables":[]}}`));
-prefabs.set('Slime', JSON.parse(`{ "type":"Player", "name": "Slime", "transform": 
-{ "position" : { "x" : 256, "y" : 256}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
-"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/enemies/slime.json", 
-"img":"./images/enemies/slime.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
-"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"walkright"}, "inventory":{ "type":"Inventory", "weapon":null, 
-"armor":null, "consumables":[]}}`));
-prefabs.set('Exit Indicator', JSON.parse(`{ "type":"ExitIndicator", "name": "Exit Indicator", "transform": 
-{ "position" : { "x" : 256, "y" : 32}, "scale" : { "x" : 2, "y" : 2}, "rotation" : 0}, 
-"renderer": { "type":"Renderer", "spriteSheetInfo": { "json":"./images/levelEditor/exit_indicator.json",
-"img":"./images/levelEditor/exit_indicator.png"}, "transform": { "position" : { "x" : 0, "y" : 0}, 
-"scale" : { "x" : 1, "y" : 1}, "rotation" : 0}, "animation":"up"}}`));
-prefabs.set('Wall', {
-    type: "Collider", name: "Wall", transform:
-        { position: { x: 256, y: 256 }, scale: { x: 2, y: 2 }, rotation: 0 },
-    renderer: {
-        type: "Renderer", spriteSheetInfo: {
-            json: "./images/tiles/tiles.json",
-            img: "./images/tiles/tiles.png"
-        }, transform: {
-            position: { x: 0, y: 0 },
-            scale: { x: 1, y: 1 }, rotation: 0
-        }, animation: "stone_wall"
-    }
-});
-prefabs.set('Grass', {
-    type: "Entity", name: "Grass", transform:
-        { position: { x: 256, y: 256 }, scale: { x: 2, y: 2 }, rotation: 0 },
-    renderer: {
-        type: "Renderer", spriteSheetInfo: {
-            json: "./images/tiles/tiles.json",
-            img: "./images/tiles/tiles.png"
-        }, transform: {
-            position: { x: 0, y: 0 },
-            scale: { x: 1, y: 1 }, rotation: 0
-        }, animation: "grass"
-    }
-});
-prefabs.set('Path', {
-    type: "Entity", name: "Path", transform:
-        { position: { x: 256, y: 256 }, scale: { x: 2, y: 2 }, rotation: 0 },
-    renderer: {
-        type: "Renderer", spriteSheetInfo: {
-            json: "./images/tiles/tiles.json",
-            img: "./images/tiles/tiles.png"
-        }, transform: {
-            position: { x: 0, y: 0 },
-            scale: { x: 1, y: 1 }, rotation: 0
-        }, animation: "path"
-    }
-});
 
 const prefabButtons = document.querySelectorAll('.prefab-button');
 
 for (const e of prefabButtons)
 {
-    e.addEventListener('click', () => addToLevelBuilder(e.textContent));
+    e.addEventListener('click', () => addToLevelBuilder(prefabs[e.textContent]));
 }
 
-function addToLevelBuilder(id)
+function addToLevelBuilder(obj, rawAdd = false)
 {
-    const obj = prefabs.get(id);
     const entity = levelBuilder.deserializeEntity(obj);
-    if (selectedEntity != null)
+    if (selectedEntity != null && !rawAdd)
     {
         entity.transform.position = Vector2.add(selectedEntity.transform.position, {x:32, y:0});
+        if (entity.transform.position.x >= 512)
+        {
+            entity.transform.position.y += 32;
+            entity.transform.position.x = 0;
+        }
     }
     const eList = document.querySelector('#entityList');
     const button = document.createElement('button');
@@ -292,7 +181,8 @@ function addToLevelBuilder(id)
     button.setAttribute('id','id'+entity.getID());
     button.setAttribute('class','entity-select dropbtn');
     button.addEventListener('click', highlightEntity);
-    button.click();
+    if (!rawAdd)
+        button.click();
     eList.appendChild(button);
 }
 
@@ -387,3 +277,85 @@ function clearEditorUI()
 {
     document.querySelector('.vars').replaceChildren();
 }
+
+document.getElementById("Bui").addEventListener('loadLevel', (e) => {
+    levelBuilder.unloadRoom();
+    for (const obj of e.detail.level_obj)
+    {
+        addToLevelBuilder(obj, true);
+    }
+    document.getElementById("levelName").value = e.detail.level_name;
+});
+
+/* Event listener for saving levels to supabase */
+document.getElementById("saveLevel").addEventListener("click", async (e) => {
+
+    e.preventDefault();
+
+    // Integer that represents max length allowed for a level name
+    let maxNameSize = 15;
+
+    // Get the level name text box
+    const levelNameTextBox = document.getElementById("levelName");
+
+    // Check to see if there is a name in the text box
+    if (levelNameTextBox.value == 0) {
+       // Textbox is empty, make user enter a name
+       alert("Error: No name provided for the level.")
+       levelNameTextBox.style.backgroundColor = "#E3963E";
+       return;
+    }
+
+    // Check to see if name exceeds maximum length
+    if (levelNameTextBox.value.length > maxNameSize) {
+       // Name is too long. Make user enter a new name
+       alert("Error: Level name cannot be longer than 15 characters. Please enter a new name.");
+       levelNameTextBox.style.backgroundColor = "#E3963E";
+       return;
+    }
+
+    // Get the user's level name
+    const level_name = levelNameTextBox.value;
+
+    // Get the user's username
+    const user = await s.auth.getUser();
+    var username = JSON.stringify(user.data.user.user_metadata.username);
+
+    await removeLevel(username, level_name);
+
+    // Call the saveRoom() function to get the level file and index
+    const levelObject = levelBuilder.saveRoom();
+
+    // Insert data into Supabase
+    const { data, error } = await s.from('levels').insert([
+       {
+          username: username,
+          level_file: levelObject.level_file,
+          index: levelObject.index,
+          level_name: level_name,
+          published: false,
+       },
+    ])
+
+    if (error) {
+       // Error saving to database
+       alert("Error: There was an error saving your level. Please retry.");
+       return;
+    }
+    else {
+       // Level was successfully added
+       alert("Level saved!");
+       // Change text box color back to original (if necessary)
+       levelNameTextBox.style.backgroundColor = '';
+       return;
+    }
+ });
+
+ async function removeLevel(username, levelname)
+ {
+    const { data, error } = await s
+        .from('levels')
+        .delete()
+        .eq('username', username)
+        .eq('level_name', levelname);
+ }

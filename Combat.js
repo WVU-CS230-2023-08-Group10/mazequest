@@ -6,17 +6,6 @@ export {Combat}
 
 /**
  * Class representing game combat.
- * 
- * Fields:
- *  - attacker    : String
- *  - defender    : Transform
- *  - run         : Boolean
- *  - minDistance :
- *  - maxDistance :
- *  - Renderer    : Renderer
- * 
- * Methods:
- *  - 
  */
 class Combat
 {
@@ -24,20 +13,29 @@ class Combat
     defender;
     run = false;
     minDistance;
-    MaxDistance;
-    Renderer;
+    maxDistance;
+    graphics;
+    stage;
 
-    constructor(attacker,defender)
+    constructor(attacker, defender, stage)
     {
         this.attacker = attacker;
         this.defender = defender;
+
+        this.stage = stage;
+        this.graphics = new PIXI.Graphics();
+        this.stage.addChild(graphics);
+
         initiateCombat();
     }
 
+    /**
+     * Initiates combat conditions & starts encounter
+     */
     initiateCombat()
     {
         //originally put "initialize combat UI", might just keep to side of screen
-        let combatDamage;
+        let combatDamage, floatAccuracy;
         //needs establishment of attackers high/low damage of weapon
         const attackingWeapon = this.attacker.inventory.getWeapon();
         //needs establishment of defenders high/low damage of weapon
@@ -45,6 +43,7 @@ class Combat
         
         if(this.isAttackerPlayer())
         {
+            this.drawPattern(attackingWeapon.trace);
             //floatAccuracy = traceGame(vertical swipe)
             combatDamage = attackingWeapon.damage(floatAccuracy);
         }
@@ -53,16 +52,26 @@ class Combat
             combatDamage = attackingWeapon.damage(Math.random());
         }
 
-        if(isDefenderPlayer())
+        if(this.isDefenderPlayer())
         {
+            this.drawPattern(defendingArmor.trace);
             //floatAccuracy = traceGame(horizantel swipe)
-            // combat += floatAccuracy * (highDamageDefender - lowDamageDefender) + lowDamageDefender;
+            combatDamage -= defendingArmor.damage(floatAccuracy);
         }
-        // defender.damage(combatDamage)
+        else
+        {
+            combatDamage -= defendingArmor.damage(Math.random());
+        }
+        this.defender.damage(combatDamage);
         //endCombat
         return;
     }
-    traceGame()
+
+    /**
+     * Description
+     * @param {*} member description
+     */
+    traceGame(member)
     {
         // In the top right of the game canvas, a pattern will appear (in the tranparent hitbox) over the creature. 
         // Press and Drag the mouse over the pattern to deal damage to the creature, 
@@ -75,6 +84,7 @@ class Combat
             //only works from top so invert it ->
             //(155 - y) coord
             //maximum width is 105px
+        
 
         //after done, place temp traceGame here
         
@@ -84,26 +94,50 @@ class Combat
 
     }
     
-    //might need adjustment
+    /**
+     * Checks if the player is the attacker
+     * @returns boolean result of if attacker is the player
+     */
     isAttackerPlayer()
     {
-        if(this.attacker instanceof Player)
-        {
-            return true;
-        }
-        return false;
-    }
-    //might need adjustment
-    isDefenderPlayer()
-    {
-        if(this.defender instanceof Player)
-        {
-            return true;
-        }
-        return false;
+        return this.attacker instanceof Player;
     }
 
+    /**
+     * Checks if the player is the defender of the attack
+     * @returns boolean result of if defender/reeiver is the player 
+     */
+    isDefenderPlayer()
+    {
+        return this.defender instanceof Player;
+    }
+
+    /**
+     * Draws the given attack pattern to the game window
+     * @param {Array<Vector2>} pattern the passed attack pattern of a weapon
+     */
+    drawPattern(pattern)
+    {
+        if (trace.length <= 0)
+            return;
+
+        const baseCoord = new Vector2(512, 0);
+
+        this.graphics.lineStyle({
+            native:true, 
+            color:0xffffff,
+            width:2
+        });
+        this.graphics.moveTo(pattern[0].x + baseCoord.x, pattern[0].y + baseCoord.y);
+        // remove the starting point
+        pattern.splice(0, 1);
+        for (const vec of pattern)
+        {
+            this.graphics.lineTo(vec.x + baseCoord.x, vec.y + baseCoord.y);
+        }
+    }
 }
+/*
 //temp traceGame
         let mouseTracePoints = new Array();
         let tracePoints = new Array();
@@ -140,18 +174,15 @@ class Combat
             tracePoints = mouseTracePoints;
             // Clear the mouse trace array
             mouseTracePoints = new Array();
-            continueGame = true;
+            var damagePercentage = Accuracy(tracePoints);
         });
-        if(continueGame){
-            var damagePercentage = Accuracy(mouseTracePoints);
-            return damagePercentage;
-        }
+        
 //end temp traceGame
 function Accuracy(tracePoints)
 {
     
     //connect basicPatternPoints to weapons pattern
-    let basicPatternPoints = new Array();
+    let basicPatternPoints = attackingWeapon.getTrace();
     let points =4;
     //Makes array divisible by 4
     let extra = tracePoints%3;
@@ -219,3 +250,4 @@ function Accuracy(tracePoints)
         }
     } 
 }
+*/
