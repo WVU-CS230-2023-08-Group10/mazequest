@@ -72,7 +72,7 @@ class Mob extends Entity
         this.health -= damageDone;
         if(health <= 0)
         {
-            Entity.destroy();
+            this.destroy();
         }
     }
 

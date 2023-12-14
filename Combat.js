@@ -73,7 +73,7 @@ class Combat
         //endCombat
         return;
     }
-    traceGame()
+    traceGame(member)
     {
         // In the top right of the game canvas, a pattern will appear (in the tranparent hitbox) over the creature. 
         // Press and Drag the mouse over the pattern to deal damage to the creature, 
@@ -86,6 +86,7 @@ class Combat
             //only works from top so invert it ->
             //(155 - y) coord
             //maximum width is 105px
+        
 
         //after done, place temp traceGame here
         
