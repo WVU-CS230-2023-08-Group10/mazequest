@@ -53,6 +53,7 @@ class Inventory
         {
             const currentWeapon = this.weapon;
             this.weapon = item;
+            this.weapon.transform
             return currentWeapon;
         }
         else if (Item.isArmor(item))
