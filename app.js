@@ -18,8 +18,7 @@ const app = new PIXI.Application(
         width : canvasWidth, 
         height : canvasHeight, 
         backgroundColor : 0xFFFFFF
-    }
-);
+    });
 app.stage.sortableChildren = true;
 document.getElementById("Gam").appendChild(app.view);
 
@@ -123,7 +122,6 @@ const loadSidebar = async () =>
     app.stage.addChild(weaponSlot);
 }
 
-app.stage.addChild(bkg);
 loadSidebar();
 
 const game = new Game(app.stage);

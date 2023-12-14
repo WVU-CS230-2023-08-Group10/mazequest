@@ -138,7 +138,7 @@
  },
  "animations":
  {
-    "default":["down_s1"],
+    "default":["down_r1"],
     "walkup":["up_r1", "up_s1","up_s2", "up_r2"],
     "walkleft":["left_r1", "left_s1", "left_s2", "left_r2"],
     "walkdown":["down_r1", "down_s1", "down_s2", "down_r2"],
