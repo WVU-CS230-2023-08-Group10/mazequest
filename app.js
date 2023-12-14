@@ -18,14 +18,14 @@ const app = new PIXI.Application(
         width : canvasWidth, 
         height : canvasHeight, 
         backgroundColor : 0xFFFFFF
-    }
-);
+    });
 app.stage.sortableChildren = true;
 document.getElementById("Gam").appendChild(app.view);
 
-// Stores the background image as a new sprite
+// Stores the background image as a new sprite, to be removed for built levels
 const bkgTexture = PIXI.Texture.from("./images/preview.png");
 const bkg = new PIXI.Sprite(bkgTexture);
+app.stage.addChild(bkg);
 
 // Load prefabs from .json file
 const prefabs = await fetch('./prefabs.json')
@@ -121,7 +121,6 @@ const loadSidebar = async () =>
     app.stage.addChild(weaponSlot);
 }
 
-app.stage.addChild(bkg);
 loadSidebar();
 
 const game = new Game(app.stage);
