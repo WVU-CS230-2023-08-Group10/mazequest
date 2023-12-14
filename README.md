@@ -19,7 +19,7 @@ MazeQuest is competely contained within the website itself and does not require 
 
 ### Creating an Account
 To play MazeQuest or use the Level Builder, you must first create and authenticate an account. Here are the steps to create an account:
-1. Go to the website [MazeQuest](https://dev.d1nqqr84hhhv1o.amplifyapp.com/)
+1. Go to the [website](https://dev.d1nqqr84hhhv1o.amplifyapp.com/).
 2. Navigate to the "Sign Up" tab and enter an email, a new username, and a password. Click submit.
 3. You'll be prompted to check your email for a validation link.
 4. Click the link in the email to be redirected back to the website, signed in and ready to go!
