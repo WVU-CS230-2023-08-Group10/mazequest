@@ -124,7 +124,7 @@ class MazeLayout
 
                 logStr += tiles[toBeGenerated[i][j]];
                 const roomSet = this.roomData[toBeGenerated[i][j]];
-                this.roomArray[i][j] = roomSet[Math.floor(Math.random() * (roomSet.length-1))];
+                this.roomArray[i][j] = roomSet[Math.floor(Math.random() * roomSet.length)];
             }
             logStr += "\n";
         }

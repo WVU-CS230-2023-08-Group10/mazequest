@@ -1,6 +1,8 @@
 import { Mob } from "./Mob.js";
 import { Transform } from "./Transform.js";
 import { Renderer } from "./Renderer.js";
+import { PriorityList, Action } from "./PriorityList.js";
+import { Inventory } from "./Inventory.js";
 export {Enemy};
 
 /**
@@ -11,7 +13,7 @@ export {Enemy};
 class Enemy extends Mob 
 {
 
-    constructor(name = "", transform = new Transform(), renderer = new Renderer(), game = undefined, health = 1, hostile = undefined, AIDict = new PriorityList([new Action(), new Action(), new Action()]))
+    constructor(name = "", transform = new Transform(), renderer = new Renderer(), game = undefined, health = 1, hostile = undefined, AIDict = new PriorityList([new Action("Move", 1, 1, 1)]))
     {
         super(name, transform, renderer, game, health, hostile, AIDict);
     }

@@ -1,8 +1,8 @@
 import { Entity } from "./Entity.js";
 import { Vector2 } from "./Vectors.js";
 import { Player } from "./Player.js";
-import { Weapon, Armor, Consumable } from "./Item.js";
-import { Collider, ExitIndicator } from "./LevelElements.js";
+import { Item, Weapon, Armor, Consumable } from "./Item.js";
+import { Collider, ExitIndicator, Tile } from "./LevelElements.js";
 import { Enemy } from "./Enemy.js";
 import { MazeLayout, GenerationParameters } from "./MazeLayout.js";
 export {Game};
@@ -250,7 +250,9 @@ class Game
     unloadRoom()
     {
         // Get all non-player entities
-        const entities = this.getEntities((e) => { return !(e instanceof Player); });
+        const entities = this.getEntities((e) => { 
+            return !(e instanceof Player || e instanceof Item); 
+        });
         // Delete those entites (consquently unregistering them)
         for (const e of entities)
         {
@@ -319,7 +321,10 @@ class Game
                 e = ExitIndicator.deserialize(obj, this);
                 break;
             case "Entity":
-                e = ExitIndicator.deserialize(obj, this);
+                e = Entity.deserialize(obj, this);
+                break;
+            case "Tile":
+                e = Tile.deserialize(obj, this);
                 break;
             default:
                 console.log("Entity of type: '" + obj.type + "' not recognized!" );

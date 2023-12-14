@@ -57,7 +57,7 @@
     },
     "Goblin":
     {
-        "type":"Player", 
+        "type":"Enemy", 
         "name": "Goblin", 
         "transform": 
         { 
@@ -91,7 +91,7 @@
     },
     "Slime":
     { 
-        "type":"Player", 
+        "type":"Enemy", 
         "name": "Slime", 
         "transform": 
         { 
@@ -125,7 +125,7 @@
     },
     "Dragon":
     { 
-        "type":"Player", 
+        "type":"Enemy", 
         "name": "Dragon", 
         "transform": 
         { 
@@ -213,7 +213,7 @@
     },
     "Grass":
     {
-        "type": "Entity", 
+        "type": "Tile", 
         "name": "Grass", 
         "transform":
         { 
@@ -240,7 +240,7 @@
     },
     "Path":
     {
-        "type": "Entity", "name": "Path", "transform":
+        "type": "Tile", "name": "Path", "transform":
             { "position": { "x": 256, "y": 256 }, "scale": { "x": 2, "y": 2 }, "rotation": 0 },
         "renderer": 
         {

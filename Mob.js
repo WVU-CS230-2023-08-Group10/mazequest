@@ -5,8 +5,9 @@ import { Entity } from "./Entity.js";
 import { Inventory } from "./Inventory.js";
 import { Collider } from "./LevelElements.js";
 import { Enemy } from "./Enemy.js";
-import { PriorityList } from "./PriorityList.js";
+import { PriorityList, Action } from "./PriorityList.js";
 import { Combat } from "./Combat.js";
+import { Player } from "./Player.js";
 
 export {Mob};
 
@@ -49,8 +50,8 @@ class Mob extends Entity
     mobHostile;
 
     speed = 2;
-    moveTarget = new Vector2(0.0, 0.0);
-    animationSpeed = 1/3;
+    moveTarget = new Vector2(0, 0);
+    animationSpeed = 1/6;
 
     actionDict = new PriorityList();
 
@@ -66,7 +67,7 @@ class Mob extends Entity
      * @param {boolean} hostile Default orientation of mob.
      * @param {PriorityList} AIDict Default behavior of mob.
      */
-    constructor(name = "", transform = new Transform(), renderer = new Renderer(), game = undefined, health = 1, hostile = undefined, AIDict = new PriorityList([new Action(), new Action(), new Action()])) {
+    constructor(name = "", transform = new Transform(), renderer = new Renderer(), game = undefined, health = 1, hostile = undefined, AIDict = new PriorityList([new Action("Move", 1, 1, 1)])) {
         
         super(name, transform, renderer, game);
         
@@ -75,6 +76,8 @@ class Mob extends Entity
         this.inventory = new Inventory();
         this.mobHostile = hostile;
         this.actionDict = AIDict;
+
+        this.moveTarget = this.transform.position;
     }
     /**
      * Checks if Mob is an instance of Enemy.
@@ -146,7 +149,7 @@ class Mob extends Entity
     update(delta)
     {
         const difference = Vector2.subtract(this.moveTarget, this.transform.position);
-        if (difference.getMagnitude() < 0.1)
+        if (difference.getMagnitude() < 1)
         {
             this.transform.position = this.moveTarget.copy();
         }
@@ -163,7 +166,7 @@ class Mob extends Entity
      */
     move(direction)
     {
-        const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(direction, this.game.grid.cellSize));
+        const pos = Vector2.add(this.moveTarget, Vector2.scalarMultiply(direction, this.game.grid.cellSize));
 
         const roomWidth = this.game.grid.cellSize * this.game.grid.width;
         const roomHeight = this.game.grid.cellSize * this.game.grid.height;
@@ -215,13 +218,16 @@ class Mob extends Entity
                 
                 let directions = [Direction.Up, Direction.Down, Direction.Left, Direction.Right];
                 let validMoves = [];
-                for (const dir in directions)
+                for (const dir of directions)
                 {
-                    const isValid = true;
-                    const pos = Vector2.add(this.transform.position, Vector2.scalarMultiply(dir, this.game.grid.cellSize));
+                    let isValid = true;
+                    const pos = Vector2.add(this.moveTarget, Vector2.scalarMultiply(dir, this.game.grid.cellSize));
 
                     // Get collisions for the given direction
                     const collisions = this.game.getEntities((e) => {
+                        if (e instanceof Player || e instanceof Mob)
+                            return e.moveTarget.equals(pos);
+
                         return e.transform.position.equals(pos);
                     });
                     for (const e of collisions)
@@ -231,7 +237,9 @@ class Mob extends Entity
                             isValid = false;
                     }
                     if (isValid)
-                        validMoves.push(dir);
+                    {
+                        validMoves.push(dir.copy());
+                    }
                 }
                 // If no valid tiles...
                 if (validMoves.length <= 0)
@@ -242,22 +250,24 @@ class Mob extends Entity
                 }
 
                 // Pick a random valid move
-                const i = floor(Math.random() * (validMoves.length - 1));
+                const i = Math.floor(Math.random() * validMoves.length);
+                const move = validMoves[i];
+                console.log(move);
                 // Change animation
-                if (validMoves[i].equals(Direction.Up)) {
+                if (move.equals(Direction.Up)) {
                     this.renderer.setAnimation('walkup', this.animationSpeed);
                 }
-                else if (validMoves[i].equals(Direction.Down)) {
+                else if (move.equals(Direction.Down)) {
                     this.renderer.setAnimation('walkdown', this.animationSpeed);
                 }
-                else if (validMoves[i].equals(Direction.Left)) {
+                else if (move.equals(Direction.Left)) {
                     this.renderer.setAnimation('walkleft', this.animationSpeed);
                 }
-                else if (validMoves[i].equals(Direction.Right)) {
+                else if (move.equals(Direction.Right)) {
                     this.renderer.setAnimation('walkright', this.animationSpeed);
                 }
                 // Move in the direction
-                this.move(Vector2.scalarMultiply(validMoves[i], this.game.grid.cellSize));
+                this.move(move);
                 break;
             case 'Item':
                 // use consumable

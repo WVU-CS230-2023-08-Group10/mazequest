@@ -39,10 +39,10 @@ class Entity
         if (!(renderer instanceof Renderer))
             throw new Error("Type mismatch: renderer parameter is not of type Renderer (was "+renderer.constructor.name+" instead).");
         
-        this._Transform = transform;
-        this._Renderer = renderer;
+        this.transform = transform;
+        this.renderer = renderer;
         this.game = game;
-        this._Name = name;
+        this.name = name;
         
         this.uuid = crypto.randomUUID();
 
@@ -52,12 +52,21 @@ class Entity
     get name() {
         return this._Name;
     }
-
+    set name(n) {
+        this._Name = n;
+    }
     get transform() {
         return this._Transform;
     }
+    set transform(t)
+    {
+        this._Transform = t;
+    }
     get renderer() {
         return this._Renderer;
+    }
+    set renderer(r) {
+        this._Renderer = r;
     }
 
     getID()
@@ -74,8 +83,8 @@ class Entity
      */
     render(delta)
     {
-        this._Renderer.transform = this._Transform;
-        this._Renderer.update(delta);
+        this.renderer.transform = this.transform;
+        this.renderer.update(delta);
     }
 
     broadcast(event) {}
@@ -108,8 +117,8 @@ class Entity
      */
     serialize()
     {
-        return '{ "type":"Entity", "name": "' + this._Name + '", "transform": ' + this._Transform.serialize() + ', "renderer": '
-            + this._Renderer.serialize() + '}';
+        return '{ "type":"Entity", "name": "' + this.name + '", "transform": ' + this.transform.serialize() + ', "renderer": '
+            + this.renderer.serialize() + '}';
     }
 
     /**

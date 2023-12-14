@@ -17,6 +17,7 @@ class Renderer
     sprite;
     spriteSheet;
     stage;
+    zIndexForce;
 
     /**
      * Constructs a new Renderer on the provided staage, with the provided spriteSheetInfo.
@@ -26,11 +27,12 @@ class Renderer
      * @param {Stage} stage PIXI.Stage to be rendered to.
      * @param {Transform} transform Transform defining position, rotation, and scale of the sprite.
      */
-    constructor(spriteSheetInfo, stage, transform = new Transform(), animation='default')
+    constructor(spriteSheetInfo, stage, transform = new Transform(), animation='default', zIndexForce = null)
     {
         if (stage == undefined)
             throw new Error('Renderer stage undefined! Was the renderer initialized correctly?');
         
+        this.zIndexForce = zIndexForce;
         this.stage = stage;
         this.transform = transform;
         this.updateSpriteSheet(spriteSheetInfo).then(() => {
@@ -45,6 +47,22 @@ class Renderer
         return this._CurrentAnimation;
     }
     
+    /**
+     * Forces the sprite's zIndex (aka draw depth) to be set to a specific number
+     * @param {Number} zIndex 
+     */
+    forceZIndex(zIndex)
+    {
+        this.zIndexForce = zIndex;
+    }
+    /**
+     * Frees the sprite's zIndex (aka draw depth), causing it to be based on the renderer's position in the room
+     */
+    unforceZIndex()
+    {
+        this.zIndexForce = null;
+    }
+
     /**
      * Links this renderer to the stage. This will allow the sprite to be rendered to the canvas
      */
@@ -122,7 +140,7 @@ class Renderer
         if (this.sprite == undefined) return;
 
         var t = this.transform;
-        this.sprite.zIndex = t.position.y;
+        this.sprite.zIndex = (this.zIndexForce == null) ? t.position.y : this.zIndexForce;
         const w = this.sprite.width, h = this.sprite.height;
         this.sprite.setTransform(t.position.x + w/2, t.position.y+ h/2, t.scale.x, t.scale.y, t.rotation/180*Math.PI, 0, 0, w/2/t.scale.x, h/2/t.scale.y);
     }
