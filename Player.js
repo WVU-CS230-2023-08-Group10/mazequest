@@ -28,8 +28,8 @@ export { Player };
  *  - {@link move} : Moves player across canvas, takes into consideration of collisions with walls and other entities.
  *  - {@link broadcast} : 
  *  - {@link playerInput} : Recieves player input through keys
- *  - {@link serialize} : 
- *  - {@link deserialize} : 
+ *  - {@link serialize} : Creates a simplified JSON version of an instance of an Player, keeping only the important information to be used.
+ *  - {@link deserialize} : Take an object that has been serialized and turn it into an instance of Player.
  * 
  *  @extends Entity
  */
@@ -255,13 +255,21 @@ class Player extends Entity
                 break;
         }
     }
-
+    /**
+     * Creates a simplified JSON version of an instance of an Player, keeping only the important information to be used.
+     * @returns - returns the serialized Player as a string.
+     */
     serialize()
     {
         return '{ "type":"Player", "name": "' + this._Name + '", "transform": ' + this._Transform.serialize() + ', "renderer": '
             + this._Renderer.serialize() + ', "inventory":' + this.inventory.serialize() + '}';
     }
-
+    /**
+     * Take an object that has been serialized and turn it into an instance of Player.
+     * @param {*} obj - object to deserialize.
+     * @param {*} game - instance of game used to derserialize the fields into usable fields.
+     * @returns - returns new instance of Player with intialized fields if applicable.
+     */
     static deserialize(obj, game)
     {
         const p = new Player(obj.name, Transform.deserialize(obj.transform), Renderer.deserialize(obj.renderer, game.stage), game)
