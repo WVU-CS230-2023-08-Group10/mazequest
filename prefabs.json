@@ -42,12 +42,13 @@
                 },
                 "renderer": { 
                     "type":"Renderer", 
-                    "spriteSheetInfo": { "json":"./images/weapons/sword.json", "img":"./images/weapons/sword.png" }, 
+                    "spriteSheetInfo": { "json":"./images/items/Items.json", "img":"./images/items/Items.png" }, 
                     "transform" : {
                         "position" : { "x":0, "y":0 },
                         "scale" : { "x":1, "y":1 },
                         "rotation" : 0
-                    } 
+                    },
+                    "animation":"sword"
                 }
             }, 
             "armor":"null", 
@@ -103,8 +104,8 @@
             "type":"Renderer", 
             "spriteSheetInfo": 
             { 
-                "json":"./images/enemies/slime.json", 
-                "img":"./images/enemies/slime.png"
+                "json":"./images/enemies/Slime.json", 
+                "img":"./images/enemies/Slime.png"
             }, 
             "transform": 
             { 

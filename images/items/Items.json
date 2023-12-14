@@ -34,6 +34,7 @@
  },
  "animations" : {
   "default" : ["sword"],
+  "sword" : ["sword"],
   "spear" : ["spear"],
   "ironArmor" : ["ironArmor"]
  }
