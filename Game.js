@@ -30,8 +30,9 @@ class Game
     isInEditMode;
     grid;
     layout;
-    currentRoomPosition;
+    currentRoomPosition = new Vector2(0, 0);
     needsInitialization = true;
+    roomData;
 
     /**
      * Creates a new game manager instance that handles the top level game functions.
@@ -39,10 +40,11 @@ class Game
      * which allows the game to add new graphics to the canvas for rendering.
      * @param {Container} stage The application stage for the game to run on
      */
-    constructor(stage) 
+    constructor(stage, roomData = null) 
     {
         this.entityList = [];
         this.stage = stage;
+        this.roomData = roomData;
 
         this.grid = {
             cellSize: 32,
@@ -50,7 +52,10 @@ class Game
             height: 16
         }
 
-        this.generateRoomLayout()
+        if (this.roomData != null)
+        {
+            this.generateRoomLayout()
+        }
     }
 
     /**
@@ -66,7 +71,12 @@ class Game
      */
     generateRoomLayout()
     {
-        this.layout = new MazeLayout(new GenerationParameters(10, 10, 16, 64, .5));
+        if (this.roomData != null)
+        {
+            console.warn("This Game instance was not initialized with roomData, indicating it was not intended to generate layouts.");
+        }
+
+        this.layout = new MazeLayout(new GenerationParameters(10, 10, 16, 64, .5), this.roomData);
         this.currentRoomPosition = this.layout.startPosition;
     }
 
@@ -229,8 +239,8 @@ class Game
     nextRoom(direction)
     {
         this.currentRoomPosition.add(direction);
-        unloadRoom();
-        loadRoom();
+        this.unloadRoom();
+        this.loadRoom();
     }
 
     /**
@@ -254,7 +264,7 @@ class Game
      */
     loadRoom()
     {
-        deserializeGameState(this.currentRoom);
+        this.deserializeGameState(this.currentRoom);
     }
 
     /**

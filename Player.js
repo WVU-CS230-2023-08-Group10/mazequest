@@ -206,6 +206,26 @@ class Player extends Entity
         if (pos.x < 0 || pos.x >= roomWidth || pos.y < 0 || pos.y >= roomHeight)
         {
             this.game.nextRoom(direction);
+            if (pos.x < 0)
+            {
+                this.transform.position.x = roomWidth-32;
+                this.transform.position.y = roomHeight/2;
+            }
+            else if (pos.x >= roomWidth)
+            {
+                this.transform.position.x = 0;
+                this.transform.position.y = roomHeight/2;
+            }
+            else if (pos.y < 0)
+            {
+                this.transform.position.y = roomHeight-32;
+                this.transform.position.x = roomWidth/2;
+            }
+            else if (pos.y >= roomHeight)
+            {
+                this.transform.position.y = 0;
+                this.transform.position.x = roomWidth/2;
+            }
             return;
         }
 

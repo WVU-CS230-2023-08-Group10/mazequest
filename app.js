@@ -23,10 +23,11 @@ app.stage.sortableChildren = true;
 document.getElementById("Gam").appendChild(app.view);
 
 // Stores the background image as a new sprite
-let bkgTexture = PIXI.Texture.from("./images/tiles/default_bg.png");
+const bkgTexture = PIXI.Texture.from("./images/tiles/default_bg.png");
 let bkg = new PIXI.Sprite(bkgTexture);
 bkg.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 bkg.setTransform(0, 0, 2, 2);
+app.stage.addChild(bkg);
 
 // Load prefabs from .json file
 const prefabs = await fetch('./prefabs.json')
@@ -72,8 +73,26 @@ const weaponSlot = new PIXI.Sprite(sheet.textures['circle_slot_big']);
     weaponSlot.setTransform(544, 432, 2, 2);
 app.stage.addChild(weaponSlot);
 
+// Pull all levels from the database
+const roomData = [[]];
+for (let i = 1; i < 16; i++)
+{
+    const set = [];
+    const { data, error } = await s
+        .from('levels')
+        .select('*')
+        .eq('index', i);
 
-const game = new Game(app.stage);
+    data.forEach(item => {
+        set.push(JSON.parse(String(item.level_file)));
+    });
+    roomData.push(set);
+}
+
+console.log(roomData);
+
+const game = new Game(app.stage, roomData);
+//game.loadRoom();
 
 game.deserializeEntity(prefabs.Player);
 // game.deserializeEntity(prefabs.Wall);
@@ -107,7 +126,6 @@ const lbapp = new PIXI.Application(
 lbapp.stage.sortableChildren = true;
 document.getElementById("lbCanvasAnchor").appendChild(lbapp.view);
 
-bkgTexture = PIXI.Texture.from("./images/tiles/default_bg.png");
 bkg = new PIXI.Sprite(bkgTexture);
 bkg.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 bkg.setTransform(0, 0, 2, 2);
