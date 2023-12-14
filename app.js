@@ -3,8 +3,6 @@ import { Game } from "./Game.js";
 import { Renderer } from "./Renderer.js";
 import { Vector2 } from "./Vectors.js";
 
-export { levelBuilder };
-
 const canvasWidth = 640;
 const canvasHeight = 512;
 const canvas = document.getElementById("canvas");
@@ -204,11 +202,16 @@ for (const e of prefabButtons)
 
 function addToLevelBuilder(id)
 {
-    const obj = prefabs.get(id);
+    const obj = prefabs[id];
     const entity = levelBuilder.deserializeEntity(obj);
     if (selectedEntity != null)
     {
         entity.transform.position = Vector2.add(selectedEntity.transform.position, {x:32, y:0});
+        if (entity.transform.position.x >= 512)
+        {
+            entity.transform.position.y += 32;
+            entity.transform.position.x = 0;
+        }
     }
     const eList = document.querySelector('#entityList');
     const button = document.createElement('button');
