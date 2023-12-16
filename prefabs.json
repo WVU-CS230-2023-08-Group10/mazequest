@@ -12,11 +12,7 @@
         "renderer": 
         { 
             "type":"Renderer", 
-            "spriteSheetInfo": 
-            { 
-                "json":"./images/armor/leatherArmor.json", 
-                "img":"./images/armor/leatherArmor.png"
-            }, 
+            "spriteSheet" : "LeatherArmor",
             "transform": 
             { 
                 "position" : { "x" : 0, "y" : 0}, 
@@ -42,7 +38,7 @@
                 },
                 "renderer": { 
                     "type":"Renderer", 
-                    "spriteSheetInfo": { "json":"./images/items/Items.json", "img":"./images/items/Items.png" }, 
+                    "spriteSheet": "Items", 
                     "transform" : {
                         "position" : { "x":0, "y":0 },
                         "scale" : { "x":1, "y":1 },
@@ -68,11 +64,7 @@
         "renderer": 
         { 
             "type":"Renderer", 
-            "spriteSheetInfo": 
-            { 
-                "json":"./images/enemies/goblin.json", 
-                "img":"./images/enemies/goblin.png"
-            }, 
+            "spriteSheet" : "Goblin",
             "transform": 
             { 
                 "position" : { "x" : 0, "y" : 0}, 
@@ -102,11 +94,7 @@
         "renderer": 
         { 
             "type":"Renderer", 
-            "spriteSheetInfo": 
-            { 
-                "json":"./images/enemies/Slime.json", 
-                "img":"./images/enemies/Slime.png"
-            }, 
+            "spriteSheet" : "Slime",
             "transform": 
             { 
                 "position" : { "x" : 0, "y" : 0}, 
@@ -137,11 +125,7 @@
         { 
             "type":"Renderer",
             "anchor": { "x" : 0.5, "y" : 0.75 },
-            "spriteSheetInfo": 
-            { 
-                "json":"./images/enemies/whiteEyesBlueDragon.json", 
-                "img":"./images/enemies/whiteEyesBlueDragon.png"
-            }, 
+            "spriteSheet" : "Dragon", 
             "transform": 
             { 
                 "position" : { "x" : 0, "y" : 0}, 
@@ -171,11 +155,7 @@
         "renderer": 
         { 
             "type":"Renderer", 
-            "spriteSheetInfo": 
-            { 
-                "json":"./images/levelEditor/exit_indicator.json",
-                "img":"./images/levelEditor/exit_indicator.png"
-            }, 
+            "spriteSheet" : "ExitIndicator",
             "transform": 
             { 
                 "position" : { "x" : 0, "y" : 0}, 
@@ -198,11 +178,7 @@
         "renderer": 
         {
             "type": "Renderer", 
-            "spriteSheetInfo": 
-            {
-                "json": "./images/tiles/tiles.json",
-                "img": "./images/tiles/tiles.png"
-            }, 
+            "spriteSheet" : "Tiles",
             "transform": 
             {
                 "position": { "x": 0, "y": 0 },
@@ -225,11 +201,7 @@
         "renderer": 
         {
             "type": "Renderer", 
-            "spriteSheetInfo": 
-            {
-                "json": "./images/tiles/tiles.json",
-                "img": "./images/tiles/tiles.png"
-            }, 
+            "spriteSheet" : "Tiles",
             "transform": 
             {
                 "position": { "x": 0, "y": 0 },
@@ -252,11 +224,7 @@
         "renderer": 
         {
             "type": "Renderer", 
-            "spriteSheetInfo": 
-            {
-                "json": "./images/tiles/tiles.json",
-                "img": "./images/tiles/tiles.png"
-            }, 
+            "spriteSheet" : "Tiles",
             "transform": 
             {
                 "position": { "x": 0, "y": 0 },
@@ -273,11 +241,7 @@
         "renderer": 
         {
             "type": "Renderer", 
-            "spriteSheetInfo": 
-            {
-                "json": "./images/tiles/tiles.json",
-                "img": "./images/tiles/tiles.png"
-            }, 
+            "spriteSheet" : "Tiles",
             "transform": 
             {
                 "position": { "x": 0, "y": 0 },

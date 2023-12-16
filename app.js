@@ -100,8 +100,6 @@ const gameWindowTab = document.querySelector("#GameWindow");
 const levelBuildTab = document.querySelector("#LevelBuilder");
 
 document.addEventListener('keydown', function(input) {
-    console.log(input.key);
-    
     if (gameWindowTab.classList.contains("active"))
     {
         game.broadcastToEntities({type:'keydown', key:input.key});
@@ -268,6 +266,8 @@ function loadEditorUI(parent, entity, indent=0)
             dropbtn.addEventListener('click', () => {
                 val.nextValue();
                 dropbtn.textContent = val.selected;
+                clearEditorUI();
+                loadEditorUI(document.querySelector('.vars'), selectedEntity);
             });
             // TODO : Get the drop down button working here.
             /*

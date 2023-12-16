@@ -3,7 +3,40 @@ import { Vector2 } from "./Vectors.js";
 import EnumeratedValue from "./EnumeratedValue.js";
 export {Renderer};
 
-const spriteSheets = [];
+const spriteSheets = {
+    Goblin : {
+        json : "./images/enemies/goblin.json",
+        img : "./images/enemies/goblin.png"
+    },
+    Slime : {
+        json : "./images/enemies/slime.json",
+        img : "./images/enemies/slime.png"
+    },
+    Dragon : {
+        json : "./images/enemies/whiteEyesBlueDragon.json",
+        img : "./images/enemies/whiteEyesBlueDragon.png"
+    },
+    Items : {
+        json : "./images/items/Items.json",
+        img : "./images/items/Items.png"
+    },
+    Tiles : {
+        json : "./images/tiles/tiles.json",
+        img : "./images/tiles/tiles.png"
+    },
+    LeatherArmor : {
+        json : "./images/armor/leatherArmor.json",
+        img : "./images/armor/leatherArmor.png"
+    },
+    IronArmor : {
+        json : "./images/armor/ironArmor.json",
+        img : "./images/armor/ironArmor.png"
+    },
+    ExitIndicator : {
+        json : "./images/levelEditor/exit_indicator.json",
+        img : "./images/levelEditor/exit_indicator.png"
+    }
+};
 
 /**
  * Class representing a Renderer object, which draws sprites to the game canvas.
@@ -14,6 +47,7 @@ const spriteSheets = [];
  */
 class Renderer
 {
+    _SpriteSheet
     _Anchor;
     _Animation;
 
@@ -27,23 +61,26 @@ class Renderer
     /**
      * Constructs a new Renderer on the provided staage, with the provided spriteSheetInfo.
      * 
-     * @param {Object} spriteSheetInfo An object with a "_Json" key and a "_Img" key, providing the animation
+     * @param {Object} spriteSheet An object with a "_Json" key and a "_Img" key, providing the animation
      * and frame data and the base texture, respectively.
      * @param {Stage} stage PIXI.Stage to be rendered to.
      * @param {Transform} transform Transform defining position, rotation, and scale of the sprite.
      */
-    constructor(spriteSheetInfo, stage, transform = new Transform(), animation='default', zIndexForce = null, anchor = new Vector2(0.5, 0.5))
+    constructor(spriteSheet, stage, transform = new Transform(), animation='default', zIndexForce = null, anchor = new Vector2(0.5, 0.5))
     {
         if (stage == undefined)
             throw new Error('Renderer stage undefined! Was the renderer initialized correctly?');
         
-        const func = function(anim) { this.setAnimation(anim); }
-        this._Animation = new EnumeratedValue({ 'default' : animation}, func, this);
+        this._Animation = new EnumeratedValue({ 'default' : animation }, (anim) => this.setAnimation(anim), this);
+        this._SpriteSheet = new EnumeratedValue(spriteSheets, (sheet) => {
+            this.updateSpriteSheet(sheet).then(() => this.setAnimation('default'));
+        }, this);
+        this._SpriteSheet.selected = spriteSheet;
         this.zIndexForce = zIndexForce;
         this.anchor = anchor;
         this.stage = stage;
         this.transform = transform;
-        this.updateSpriteSheet(spriteSheetInfo).then(() => {
+        this.updateSpriteSheet(this._SpriteSheet.map[this._SpriteSheet.selected]).then(() => {
             this.setAnimation(animation);
             this.sprite.textures[0].baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
             this.link();
@@ -58,6 +95,8 @@ class Renderer
     {
         this._Animation.value = value;
     }
+
+    get spriteSheetName() { return this._SpriteSheet.selected; }
 
     getAnimation()
     {
@@ -138,18 +177,17 @@ class Renderer
     async updateSpriteSheet(spriteSheetInfo)
     {
         this.spriteSheetInfo = spriteSheetInfo;
-        var data = await PIXI.Assets.load(spriteSheetInfo._Json);
-        this.spriteSheet = new PIXI.Spritesheet(PIXI.Texture.from(spriteSheetInfo._Img), data.data);
+        var data = await PIXI.Assets.load(spriteSheetInfo.json);
+        this.spriteSheet = new PIXI.Spritesheet(PIXI.Texture.from(spriteSheetInfo.img), data.data);
         await this.spriteSheet.parse();
         
         // Load animations for level builder use
-        const animations = {};
+        let animations = {};
         for (const anim in data.animations)
         {
             animations[anim] = anim;
         }
-        const func = function(anim) { this.setAnimation(anim); }
-        this._Animation = new EnumeratedValue(animations, func, this);
+        this._Animation = new EnumeratedValue(animations, (anim) => this.setAnimation(anim), this);
     }
     /**
      * Changes the animation of this Renderer. The animation must be defined by the current sprite
@@ -202,8 +240,8 @@ class Renderer
      */
     serialize()
     {
-        return '{ "type":"Renderer", "anchor":' + this.anchor.serialize() + ', "zIndex":' + this.zIndexForce + ',"spriteSheetInfo": { "json":"' + this.spriteSheetInfo._Json +
-         '", "img":"'+this.spriteSheetInfo._Img+'"}, "transform": ' + this.transform.serialize() + 
+        return '{ "type":"Renderer", "anchor":' + this.anchor.serialize() + ', "zIndex":' + this.zIndexForce + ',"spriteSheet": ' + this.spriteSheetName +
+         ', "transform": ' + this.transform.serialize() + 
          ', "animation": "'+this.getAnimation()+'"}';
     }
 
@@ -221,10 +259,7 @@ class Renderer
             obj.anchor = new Vector2(0.5, 0.5);
 
         return new Renderer(
-            {
-                _Json : obj.spriteSheetInfo.json,
-                _Img : obj.spriteSheetInfo.img
-            }, 
+            obj.spriteSheet,
             stage,
             Transform.deserialize(obj.transform), 
             obj.animation, 

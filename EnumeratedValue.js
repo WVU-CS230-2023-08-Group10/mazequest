@@ -14,8 +14,11 @@ export default class EnumeratedValue
             throw new Error("EnumeratedValue: 'map' argument must contain at minimum 1 key-value pair.");
         }
 
+        console.log("Param : Actual");
+        console.log(map);
         this.owner = owner;
         this.map = map;
+        console.log(this.map);
         this.selected = Object.keys(this.map).at(0);
         this.updateFunction = valueUpdatedFunc;
     }
@@ -48,12 +51,13 @@ export default class EnumeratedValue
 
     nextValue()
     {
+        console.log(this.map);
         let flag = false;
         for (const prop in this.map)
         {
             if (flag)
             {
-                this.setValue(this.map[prop]);
+                this.value = prop;
                 return;
             }
             else if (prop == this.selected)
