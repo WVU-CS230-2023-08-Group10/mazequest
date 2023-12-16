@@ -191,10 +191,9 @@ class Mob extends Entity
      */
     broadcast(event)
     {
-        console.log(this.event);
         switch (event.type)
         {
-            case "keydown":
+            case "player_action":
                 this.actionDict.addPriority();
                 this.mobAction()
                 break;

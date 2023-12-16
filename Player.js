@@ -6,6 +6,7 @@ import { Inventory } from "./Inventory.js";
 import { Collider } from "./LevelElements.js";
 import { Enemy } from "./Enemy.js";
 import { Combat } from "./Combat.js";
+import { Mob } from "./Mob.js";
 export { Player };
 
 /**
@@ -233,8 +234,11 @@ class Player extends Entity
         }
 
         const collisions = this.game.getEntities((e) => {
+            if (e instanceof Player || e instanceof Mob)
+                return e.moveTarget.equals(pos);
+
             return e.transform.position.equals(pos);
-        })
+        });
         for (const e of collisions)
         {
             if (e instanceof Collider)
@@ -275,21 +279,29 @@ class Player extends Entity
             case 'w':
                 this.renderer.setAnimation('walkup', this.animationSpeed);
                 this.move(Direction.Up);
+                this.game.broadcastToEntities({ type : "player_action" });
                 break;
             case 'ArrowLeft':
             case 'a':
                 this.renderer.setAnimation('walkleft', this.animationSpeed);
                 this.move(Direction.Left);
+                this.game.broadcastToEntities({ type : "player_action" });
                 break;
             case 'ArrowDown':
             case 's':
                 this.renderer.setAnimation('walkdown', this.animationSpeed);
                 this.move(Direction.Down);
+                this.game.broadcastToEntities({ type : "player_action" });
                 break;
             case 'ArrowRight':
             case 'd':
                 this.renderer.setAnimation('walkright', this.animationSpeed);
                 this.move(Direction.Right);
+                this.game.broadcastToEntities({ type : "player_action" });
+                break;
+            case ' ':
+            case 'z':
+                this.game.broadcastToEntities({ type : "player_action" });
                 break;
             default:
                 break;
