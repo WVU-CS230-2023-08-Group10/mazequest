@@ -62,6 +62,11 @@ class Renderer
         return this.currentAnimation;
     }
     
+    isLoaded()
+    {
+        return this.sprite != undefined;
+    }
+
     /**
      * Forces the sprite's zIndex (aka draw depth) to be set to a specific number
      * @param {Number} zIndex 
@@ -152,7 +157,6 @@ class Renderer
         this.sprite.loop = loop;
         this.sprite.animationSpeed = speed;
         this.sprite.play();
-        console.log("Successfully changed animation to "+animationId);
         this.update(0);
     }
 
@@ -166,14 +170,12 @@ class Renderer
 
         var t = this.transform;
         this.sprite.zIndex = (this.zIndexForce == null) ? t.position.y : this.zIndexForce;
+        this.sprite.scale.set(t.scale.x, t.scale.y);
         const w = this.sprite.width;
         const h = this.sprite.height;
-        this.sprite.setTransform(t.position.x + 32 * this.anchor.x, t.position.y + 32 * this.anchor.y, // Position
-            t.scale.x, t.scale.y, // Scale
-            t.rotation/180*Math.PI, // Rotation
-            0, 0, // Skew
-            w * this.anchor.x / t.scale.x, h * this.anchor.y / t.scale.y // Pivot
-            );
+        this.sprite.position.set(t.position.x + 8 * t.scale.x, t.position.y + 8 * t.scale.y);
+        this.sprite.rotation = t.rotation/180*Math.PI;
+        this.sprite.anchor.set(this.anchor.x, this.anchor.y);
     }
 
     /**

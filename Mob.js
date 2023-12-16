@@ -251,7 +251,6 @@ class Mob extends Entity
                 // Pick a random valid move
                 const i = Math.floor(Math.random() * validMoves.length);
                 const move = validMoves[i];
-                console.log(move);
                 // Change animation
                 if (move.equals(Direction.Up)) {
                     this.renderer.setAnimation('walkup', this.animationSpeed);

@@ -147,8 +147,9 @@ lbapp.ticker.add((delta) => {
     {
         lbapp.stage.on('pointerdown', onDragStart, lbui);
         lbui.lineStyle(1, 0xFF0000, 1);
-        const t = selectedEntity._Transform
-        lbui.drawRect(t._Position.x, t._Position.y, 16 * t._Scale.x, 16 * t._Scale.y);
+        const t = selectedEntity.transform
+        // Draw bounding box
+        lbui.drawRect(t.position.x, t.position.y, 16 * t.scale.x, 16 * t.scale.y);
     }
 });
 lbapp.stage.eventMode = 'static';
@@ -213,8 +214,9 @@ function highlightEntity()
 
 function onDragMove(event)
 {
-    selectedEntity._Transform._Position.x = Math.floor(event.global.x / levelBuilder.grid.cellSize) * levelBuilder.grid.cellSize;
-    selectedEntity._Transform._Position.y = Math.floor(event.global.y / levelBuilder.grid.cellSize) * levelBuilder.grid.cellSize;
+    let r = selectedEntity.renderer;
+    selectedEntity.transform.position.x = Math.floor((event.global.x - r.sprite.width / 2) / levelBuilder.grid.cellSize) * levelBuilder.grid.cellSize;
+    selectedEntity.transform.position.y = Math.floor((event.global.y - r.sprite.height / 2) / levelBuilder.grid.cellSize) * levelBuilder.grid.cellSize;
 }
 
 function onDragStart()

@@ -136,7 +136,7 @@
         "renderer": 
         { 
             "type":"Renderer",
-            "anchor": { "x" : 0.5, "y" : 1 },
+            "anchor": { "x" : 0.5, "y" : 0.75 },
             "spriteSheetInfo": 
             { 
                 "json":"./images/enemies/whiteEyesBlueDragon.json", 
