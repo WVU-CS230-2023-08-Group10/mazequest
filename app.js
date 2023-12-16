@@ -101,8 +101,8 @@ const gameWindowTab = document.querySelector("#GameWindow");
 document.addEventListener('keydown', function(input) {
     if (!gameWindowTab.classList.contains("active")) return;
 
-    if (!input.repeat)
-        game.broadcastToEntities({type:'keydown', key:input.key});
+    //if (!input.repeat)
+    game.broadcastToEntities({type:'keydown', key:input.key});
 });
 
 app.ticker.add((delta) => {

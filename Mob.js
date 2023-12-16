@@ -44,10 +44,9 @@ export {Mob};
 */
 class Mob extends Entity
 {
-    mobName;
-    mobHealth;
+    health;
     inventory;
-    mobHostile;
+    hostile;
 
     speed = 2;
     moveTarget = new Vector2(0, 0);
@@ -71,10 +70,9 @@ class Mob extends Entity
         
         super(name, transform, renderer, game);
         
-        this.mobName = name;
-        this.mobHealth = health;
+        this.health = health;
         this.inventory = new Inventory();
-        this.mobHostile = hostile;
+        this.hostile = hostile;
         this.actionDict = AIDict;
 
         this.moveTarget = this.transform.position;
@@ -268,7 +266,15 @@ class Mob extends Entity
                 this.move(move);
                 break;
             case 'Item':
-                // use consumable
+                // If no items to use...
+                if (!this.inventory.hasConsumable())
+                {
+                    // ...retry action
+                    this.mobAction();
+                    break;
+                }
+                    
+
                 break;
             case 'Wait':
                 break;

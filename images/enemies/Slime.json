@@ -141,7 +141,7 @@
     "default":["down_r1"],
     "walkup":["up_s1", "up_s2", "up_r2", "up_r1"],
     "walkleft":["left_s1", "left_s2", "left_r2", "left_r1"],
-    "walkdown":["down_s1", "down_s1", "down_r2", "down_r1" ],
+    "walkdown":["down_s1", "down_s2", "down_r2", "down_r1" ],
     "walkright":["right_s1", "right_s2", "right_r2", "right_r1"]
  }
 }

@@ -99,13 +99,16 @@ class Renderer
     }
     /**
      * Unlinks and destroys the sprite associated with this renderer.
+     * @returns True if the renderer was successfully disposed, false otherwise.
      */
     dispose()
     {
-        if (this.sprite == undefined) return;
+        if (this.sprite == undefined)
+            return false;
 
         this.unlink();
         this.sprite.destroy(true);
+        return true;
     }
     /**
      * So long as all your animations and frames are contained on a single sheet, you should be able

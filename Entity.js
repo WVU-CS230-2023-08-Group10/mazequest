@@ -20,7 +20,7 @@ class Entity
     _Name;
     _Transform;
     _Renderer;
-    
+
     game;
     uuid;
 
@@ -93,14 +93,23 @@ class Entity
     /**
      * Unregisters this entity from its respective game's registry, disposes its renderer,
      * and deletes itself.
+     * @returns True if the renderer is properly disposed, false otherwise.
      */
     destroy()
     {
         if (this.game == undefined)
-            return;
+            return false;
 
-        this.game.unregisterEntity(this);
-        this.renderer.dispose();
+        
+        if (this.renderer.dispose())
+        {
+            this.game.unregisterEntity(this);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /**

@@ -25,7 +25,7 @@ class Inventory
 
     /**
      * Gets the currently equipped weapon
-     * @returns - returns this weapon
+     * @returns returns this weapon
      */
     getWeapon()
     {
@@ -34,11 +34,20 @@ class Inventory
 
     /**
      * Gets the currently equipped armor
-     * @returns 
+     * @returns Returns this armor
      */
     getArmor()
     {
         return this.armor;
+    }
+
+    /**
+     * Checks if the inventory contains any consumables.
+     * @return True if the inventory contains consumables, false if empty.
+     */
+    hasConsumable()
+    {
+        return this.consumables.length > 0;
     }
 
     /**
