@@ -117,7 +117,6 @@ body {
   padding: 0% 10%;
   overflow-y: scroll;
   overflow-x: scroll;
-  height: 75%;
 }
 .vars div{
   display: flex;

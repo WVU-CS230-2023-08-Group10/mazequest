@@ -1,23 +1,28 @@
 /**
- *  EnumeratedValue class. Wraps a value and array of valid values.
+ *  EnumeratedValue class. Wraps a key, value, and map of valid key-value pairs.
  */
 export default class EnumeratedValue
 {
-    values;
+    map;
     selected;
     updateFunction;
     owner;
 
-    constructor(values, valueUpdatedFunc=null, owner=null)
+    constructor(map, valueUpdatedFunc=null, owner=null)
     {
-        if (values.length <= 0) {
-            throw new Error("EnumeratedValue: 'values' argument must contain at minimum 1 value.");
+        if (Object.keys(map).length <= 0) {
+            throw new Error("EnumeratedValue: 'map' argument must contain at minimum 1 key-value pair.");
         }
 
         this.owner = owner;
-        this.values = values;
-        this.selected = this.values[0];
+        this.map = map;
+        this.selected = Object.keys(this.map).at(0);
         this.updateFunction = valueUpdatedFunc;
+    }
+
+    get value()
+    {
+        return this.map[this.selected];
     }
 
     /**
@@ -30,14 +35,36 @@ export default class EnumeratedValue
         this.selected = value;
 
         if (this.owner != null)
-            this.updateFunction.call(this.owner, value);
+            this.updateFunction.call(this.owner, this.value);
     }
 
     setValue(value)
     {
-        if (this.values.find((e) => e == value) == undefined)
+        if (!(value in this.map))
             throw new Error('Cannot set value of EnumeratedValue to invalid value.');
 
         this.value = value;
+    }
+
+    nextValue()
+    {
+        let flag = false;
+        for (const prop in this.map)
+        {
+            if (flag)
+            {
+                this.setValue(this.map[prop]);
+                return;
+            }
+            else if (prop == this.selected)
+            {
+                flag = true;
+            }
+        }
+
+        if (flag)
+        {
+            this.setValue(Object.keys(this.map).at(0));
+        }
     }
 }

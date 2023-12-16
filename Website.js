@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       // Enable access to account tab
       document.getElementById("Account").disabled = false;
-      document.getElementById("Level_Builder").disabled = false;
+      document.getElementById("LevelBuilder").disabled = false;
       document.getElementById("GameWindow").disabled = false;
 
       // Remove sign-up and login forms
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
          // Enable access to Account tab
          document.getElementById("Account").disabled = false;
-         document.getElementById("Level_Builder").disabled = false;
+         document.getElementById("LevelBuilder").disabled = false;
          document.getElementById("GameWindow").disabled = false;
 
          // Remove login tab content
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", async () => {
          location.reload()
          // User is logged out. Disable the Account tab
          document.getElementById("Account").disabled = true;
-         document.getElementById("Level_Builder").disabled = true;
+         document.getElementById("LevelBuilder").disabled = true;
          document.getElementById("GameWindow").disabled = true;
 
 

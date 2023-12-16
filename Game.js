@@ -187,6 +187,11 @@ class Game
         return output;
     }
 
+    getAllEntities()
+    {
+        return this.entityList;
+    }
+
     /**
      * Serializes all entities in the registry, returning them as a stringified JSON array.
      * @returns {String} A JSON array as a string

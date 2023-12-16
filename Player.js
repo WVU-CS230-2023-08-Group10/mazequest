@@ -175,6 +175,7 @@ class Player extends Entity
         {
             this.inventory.weapon.transform.position = new Vector2(544, 432);
             this.inventory.weapon.transform.scale = new Vector2(4, 4);
+            this.inventory.weapon.renderer.playAnimation(1/4, true);
         }
         if (this.inventory.armor != null)
         {

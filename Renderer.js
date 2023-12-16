@@ -3,6 +3,8 @@ import { Vector2 } from "./Vectors.js";
 import EnumeratedValue from "./EnumeratedValue.js";
 export {Renderer};
 
+const spriteSheets = [];
+
 /**
  * Class representing a Renderer object, which draws sprites to the game canvas.
  * 
@@ -12,13 +14,13 @@ export {Renderer};
  */
 class Renderer
 {
-    _SpriteSheetInfo;
     _Anchor;
     _Animation;
 
     transform;
     sprite;
     spriteSheet;
+    spriteSheetInfo;
     stage;
     zIndexForce;
 
@@ -36,7 +38,7 @@ class Renderer
             throw new Error('Renderer stage undefined! Was the renderer initialized correctly?');
         
         const func = function(anim) { this.setAnimation(anim); }
-        this._Animation = new EnumeratedValue([animation], func, this);
+        this._Animation = new EnumeratedValue({ 'default' : animation}, func, this);
         this.zIndexForce = zIndexForce;
         this.anchor = anchor;
         this.stage = stage;
@@ -65,6 +67,19 @@ class Renderer
     isLoaded()
     {
         return this.sprite != undefined;
+    }
+
+    playAnimation(speed=1, loop=false)
+    {
+        if (this.sprite == undefined)
+            return;
+
+        if (!this.sprite.playing)
+        {
+            this.sprite.animationSpeed = speed;
+            this.sprite.loop = loop;
+            this.sprite.play();
+        }
     }
 
     /**
@@ -107,7 +122,7 @@ class Renderer
             return false;
 
         this.unlink();
-        this.sprite.destroy(true);
+        //this.sprite.destroy(true);
         return true;
     }
     /**
@@ -122,16 +137,16 @@ class Renderer
      */
     async updateSpriteSheet(spriteSheetInfo)
     {
-        this._SpriteSheetInfo = spriteSheetInfo;
+        this.spriteSheetInfo = spriteSheetInfo;
         var data = await PIXI.Assets.load(spriteSheetInfo._Json);
         this.spriteSheet = new PIXI.Spritesheet(PIXI.Texture.from(spriteSheetInfo._Img), data.data);
         await this.spriteSheet.parse();
         
         // Load animations for level builder use
-        const animations = [];
+        const animations = {};
         for (const anim in data.animations)
         {
-            animations.push(anim);
+            animations[anim] = anim;
         }
         const func = function(anim) { this.setAnimation(anim); }
         this._Animation = new EnumeratedValue(animations, func, this);
@@ -187,8 +202,8 @@ class Renderer
      */
     serialize()
     {
-        return '{ "type":"Renderer", "anchor":' + this.anchor.serialize() + ', "zIndex":' + this.zIndexForce + ',"spriteSheetInfo": { "json":"' + this._SpriteSheetInfo._Json +
-         '", "img":"'+this._SpriteSheetInfo._Img+'"}, "transform": ' + this.transform.serialize() + 
+        return '{ "type":"Renderer", "anchor":' + this.anchor.serialize() + ', "zIndex":' + this.zIndexForce + ',"spriteSheetInfo": { "json":"' + this.spriteSheetInfo._Json +
+         '", "img":"'+this.spriteSheetInfo._Img+'"}, "transform": ' + this.transform.serialize() + 
          ', "animation": "'+this.getAnimation()+'"}';
     }
 

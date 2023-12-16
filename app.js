@@ -97,12 +97,22 @@ game.deserializeEntity(prefabs.Player);
 // game.deserializeEntity(prefabs.Wall);
 
 const gameWindowTab = document.querySelector("#GameWindow");
+const levelBuildTab = document.querySelector("#LevelBuilder");
 
 document.addEventListener('keydown', function(input) {
-    if (!gameWindowTab.classList.contains("active")) return;
-
-    //if (!input.repeat)
-    game.broadcastToEntities({type:'keydown', key:input.key});
+    console.log(input.key);
+    
+    if (gameWindowTab.classList.contains("active"))
+    {
+        game.broadcastToEntities({type:'keydown', key:input.key});
+    }
+    else if (levelBuildTab.classList.contains('active'))
+    {
+        if (selectedEntity != null && input.key == 'Delete')
+        {
+            deleteEntity(selectedEntity);
+        }
+    }
 });
 
 app.ticker.add((delta) => {
@@ -196,10 +206,7 @@ function highlightEntity()
     {
         if (newEntity.getID() == selectedEntity.getID())
         {
-            this.setAttribute('class','entity-select dropbtn');
-            selectedEntity = null;
-            onDragEnd();
-            lbapp.stage.off('pointerdown', onDragStart, lbui);
+            deselectCurrentEntity();
             return;
         }
 
@@ -212,11 +219,19 @@ function highlightEntity()
     loadEditorUI(document.querySelector('.vars'), selectedEntity);
 }
 
+function deselectCurrentEntity()
+{
+    document.querySelector(`#id${selectedEntity.getID()}`).setAttribute('class','entity-select dropbtn');
+    selectedEntity = null;
+    onDragEnd();
+    lbapp.stage.off('pointerdown', onDragStart, lbui);
+}
+
 function onDragMove(event)
 {
-    let r = selectedEntity.renderer;
-    selectedEntity.transform.position.x = Math.floor((event.global.x - r.sprite.width / 2) / levelBuilder.grid.cellSize) * levelBuilder.grid.cellSize;
-    selectedEntity.transform.position.y = Math.floor((event.global.y - r.sprite.height / 2) / levelBuilder.grid.cellSize) * levelBuilder.grid.cellSize;
+    let t = selectedEntity.transform;
+    selectedEntity.transform.position.x = Math.floor((event.global.x - 8 * t.scale.x) / levelBuilder.grid.cellSize) * levelBuilder.grid.cellSize;
+    selectedEntity.transform.position.y = Math.floor((event.global.y - 8 * t.scale.y) / levelBuilder.grid.cellSize) * levelBuilder.grid.cellSize;
 }
 
 function onDragStart()
@@ -251,9 +266,7 @@ function loadEditorUI(parent, entity, indent=0)
             dropbtn.textContent = val.selected;
             dropbtn.setAttribute('class', 'dropbtn');
             dropbtn.addEventListener('click', () => {
-                let i = val.values.findIndex((e) => e == val.selected);
-                i = (i + 1) % val.values.length;
-                val.value = val.values[i];
+                val.nextValue();
                 dropbtn.textContent = val.selected;
             });
             // TODO : Get the drop down button working here.
@@ -319,8 +332,27 @@ function clearEditorUI()
     document.querySelector('.vars').replaceChildren();
 }
 
+function deleteEntity(entity)
+{
+    if (entity == selectedEntity)
+        deselectCurrentEntity();
+
+    document.querySelector(`#id${entity.getID()}`).remove();
+    entity.destroy();
+}
+
 document.getElementById("Bui").addEventListener('loadLevel', (e) => {
-    levelBuilder.unloadRoom();
+    let entities = levelBuilder.getAllEntities();
+    while (entities.length > 0)
+    {
+        for (const entity of entities)
+        {
+            deleteEntity(entity);
+        }
+        entities = levelBuilder.getAllEntities();
+    }
+    
+
     for (const obj of e.detail.level_obj)
     {
         addToLevelBuilder(obj, true);

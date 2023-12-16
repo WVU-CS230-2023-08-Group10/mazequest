@@ -1,59 +1,110 @@
 { "frames": {
-   "sword": {
-    "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
+   "sword0": {
+    "frame": { "x": 0, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "spear": {
-    "frame": { "x": 16, "y": 0, "w": 16, "h": 16 },
+   "spear0": {
+    "frame": { "x": 32, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "ironArmor": {
-    "frame": { "x": 32, "y": 0, "w": 16, "h": 16 },
+   "ironArmor0": {
+    "frame": { "x": 64, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "goldenSword": {
-    "frame": { "x": 48, "y": 0, "w": 16, "h": 16 },
+   "goldenSword0": {
+    "frame": { "x": 96, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
-   "leatherArmor": {
-    "frame": { "x": 64, "y": 0, "w": 16, "h": 16 },
+   "leatherArmor0": {
+    "frame": { "x": 128, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   "greatsword0": {
+    "frame": { "x": 160, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   "flametongue0": {
+    "frame": { "x": 192, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   "flametongue1": {
+    "frame": { "x": 224, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   "flametongue2": {
+    "frame": { "x": 256, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   "flametongue3": {
+    "frame": { "x": 288, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   "10": {
+    "frame": { "x": 320, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    }
  },
  "meta": {
   "app": "https://www.aseprite.org/",
-  "version": "1.3-rc6-dev",
+  "version": "1.3.2-x64",
   "image": "Items.png",
   "format": "RGBA8888",
-  "size": { "w": 64, "h": 16 },
+  "size": { "w": 352, "h": 32 },
   "scale": "1"
- },
+ }
+ ,
  "animations" : {
-  "default" : ["sword"],
-  "sword" : ["sword"],
-  "spear" : ["spear"],
-  "ironArmor" : ["ironArmor"],
-  "goldenSword" : ["goldenSword"],
-  "leatherArmor" : ["leatherArmor"]
+  "default" : ["sword0"],
+  "sword" : ["sword0"],
+  "spear" : ["spear0"],
+  "ironArmor" : ["ironArmor0"],
+  "goldenSword" : ["goldenSword0"],
+  "leatherArmor" : ["leatherArmor0"],
+  "greatsword" : ["greatsword0"],
+  "flametongue" : ["flametongue0", "flametongue1", "flametongue2", "flametongue3"]
  }
 }

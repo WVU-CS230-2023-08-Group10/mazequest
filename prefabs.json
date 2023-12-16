@@ -48,7 +48,7 @@
                         "scale" : { "x":1, "y":1 },
                         "rotation" : 0
                     },
-                    "animation":"sword"
+                    "animation":"flametongue"
                 }
             }, 
             "armor":"null", 
@@ -210,6 +210,33 @@
                 "rotation": 0
             }, 
             "animation": "stone_wall"
+        }
+    },
+    "Hedge":
+    {
+        "type": "Collider", 
+        "name": "Hedge", 
+        "transform":
+        {
+            "position": { "x": 256, "y": 256 }, 
+            "scale": { "x": 2, "y": 2 }, 
+            "rotation": 0 
+        },
+        "renderer": 
+        {
+            "type": "Renderer", 
+            "spriteSheetInfo": 
+            {
+                "json": "./images/tiles/tiles.json",
+                "img": "./images/tiles/tiles.png"
+            }, 
+            "transform": 
+            {
+                "position": { "x": 0, "y": 0 },
+                "scale": { "x": 1, "y": 1 }, 
+                "rotation": 0
+            }, 
+            "animation": "hedge"
         }
     },
     "Grass":
