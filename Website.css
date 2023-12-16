@@ -105,21 +105,19 @@ body {
   background: var(--secondary-font-color);
 }
 
-.canvas{ grid-area: canvas; width: 50%;}
-.entities{ grid-area: entities; width: 70%;}
-.prefabs{ grid-area: prefabs; width: 70%;}
+.saved-levels{ grid-area: levels;}
+.canvas{ grid-area: canvas;}
+.entities{ grid-area: entities;}
+.prefabs{ grid-area: prefabs;}
 .vars
 {
   grid-area: vars;
   text-align: left;
   margin: 0px;
   padding: 0% 10%;
-  position: absolute;
-  right: 0;
   overflow-y: scroll;
   overflow-x: scroll;
-  height: 100%;
-  width: 130%;
+  height: 70%;
 }
 .vars div{
   display: flex;
@@ -151,9 +149,10 @@ body {
   display: grid;
   grid-template-areas: 
     'entities canvas vars'
-    'prefabs canvas vars';
-  height: 512;
-  position: relative;
+    'prefabs levels vars';
+  grid-template-rows: 50% 50%;
+  grid-template-columns: 30% 40% 30%;
+  position: sticky;
 }
 
 .dropbtn {
@@ -172,16 +171,16 @@ body {
 .dropdown-content {
   display: none;
   position: absolute;
-  top: 0px; left: 100%;
-  
+  top: 0px; 
+  left: 100%;
 }
 /* Links inside the dropdown */
-.dropdown-content a {
+.dropdown-content:hover .dropbtn {
   text-decoration: none;
   display: block;
 }
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content 
+.dropdown:hover > .dropdown-content 
 {
   display: grid;
 }
@@ -291,7 +290,6 @@ canvas {
 }
 
 #userLevels{
-    width: 30%; /* Set a width for the div */
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 10%;
+    margin-right: 10%;
 }

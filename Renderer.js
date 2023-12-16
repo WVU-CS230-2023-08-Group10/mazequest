@@ -1,4 +1,6 @@
 import { Transform } from "./Transform.js";
+import { Vector2 } from "./Vectors.js";
+import EnumeratedValue from "./EnumeratedValue.js";
 export {Renderer};
 
 /**
@@ -11,7 +13,8 @@ export {Renderer};
 class Renderer
 {
     _SpriteSheetInfo;
-    _CurrentAnimation;
+    _Anchor;
+    _Animation;
 
     transform;
     sprite;
@@ -27,12 +30,15 @@ class Renderer
      * @param {Stage} stage PIXI.Stage to be rendered to.
      * @param {Transform} transform Transform defining position, rotation, and scale of the sprite.
      */
-    constructor(spriteSheetInfo, stage, transform = new Transform(), animation='default', zIndexForce = null)
+    constructor(spriteSheetInfo, stage, transform = new Transform(), animation='default', zIndexForce = null, anchor = new Vector2(0.5, 0.5))
     {
         if (stage == undefined)
             throw new Error('Renderer stage undefined! Was the renderer initialized correctly?');
         
+        const func = function(anim) { this.setAnimation(anim); }
+        this._Animation = new EnumeratedValue([animation], func, this);
         this.zIndexForce = zIndexForce;
+        this.anchor = anchor;
         this.stage = stage;
         this.transform = transform;
         this.updateSpriteSheet(spriteSheetInfo).then(() => {
@@ -42,9 +48,18 @@ class Renderer
         });
     }
 
+    get anchor() { return this._Anchor; }
+    set anchor(value) { this._Anchor = value; }
+
+    get currentAnimation() { return this._Animation.selected; }
+    set currentAnimation(value) 
+    {
+        this._Animation.value = value;
+    }
+
     getAnimation()
     {
-        return this._CurrentAnimation;
+        return this.currentAnimation;
     }
     
     /**
@@ -103,6 +118,15 @@ class Renderer
         var data = await PIXI.Assets.load(spriteSheetInfo._Json);
         this.spriteSheet = new PIXI.Spritesheet(PIXI.Texture.from(spriteSheetInfo._Img), data.data);
         await this.spriteSheet.parse();
+        
+        // Load animations for level builder use
+        const animations = [];
+        for (const anim in data.animations)
+        {
+            animations.push(anim);
+        }
+        const func = function(anim) { this.setAnimation(anim); }
+        this._Animation = new EnumeratedValue(animations, func, this);
     }
     /**
      * Changes the animation of this Renderer. The animation must be defined by the current sprite
@@ -121,7 +145,7 @@ class Renderer
             throw new Error("Trying to change a renderer's animation, but the animation does not exist.");
         }
 
-        this._CurrentAnimation = animationId;
+        this._Animation.selected = animationId;
         this.unlink();
         this.sprite = new PIXI.AnimatedSprite(anim);
         this.link();
@@ -129,6 +153,7 @@ class Renderer
         this.sprite.animationSpeed = speed;
         this.sprite.play();
         console.log("Successfully changed animation to "+animationId);
+        this.update(0);
     }
 
     /**
@@ -141,8 +166,14 @@ class Renderer
 
         var t = this.transform;
         this.sprite.zIndex = (this.zIndexForce == null) ? t.position.y : this.zIndexForce;
-        const w = this.sprite.width, h = this.sprite.height;
-        this.sprite.setTransform(t.position.x + w/2, t.position.y+ h/2, t.scale.x, t.scale.y, t.rotation/180*Math.PI, 0, 0, w/2/t.scale.x, h/2/t.scale.y);
+        const w = this.sprite.width;
+        const h = this.sprite.height;
+        this.sprite.setTransform(t.position.x + 32 * this.anchor.x, t.position.y + 32 * this.anchor.y, // Position
+            t.scale.x, t.scale.y, // Scale
+            t.rotation/180*Math.PI, // Rotation
+            0, 0, // Skew
+            w * this.anchor.x / t.scale.x, h * this.anchor.y / t.scale.y // Pivot
+            );
     }
 
     /**
@@ -151,7 +182,7 @@ class Renderer
      */
     serialize()
     {
-        return '{ "type":"Renderer", "spriteSheetInfo": { "json":"' + this._SpriteSheetInfo._Json +
+        return '{ "type":"Renderer", "anchor":' + this.anchor.serialize() + ', "zIndex":' + this.zIndexForce + ',"spriteSheetInfo": { "json":"' + this._SpriteSheetInfo._Json +
          '", "img":"'+this._SpriteSheetInfo._Img+'"}, "transform": ' + this.transform.serialize() + 
          ', "animation": "'+this.getAnimation()+'"}';
     }
@@ -164,6 +195,11 @@ class Renderer
      */
     static deserialize(obj, stage)
     {
+        if (!('zIndex' in obj)) 
+            obj.zIndex = null;
+        if (!('anchor' in obj))
+            obj.anchor = new Vector2(0.5, 0.5);
+
         return new Renderer(
             {
                 _Json : obj.spriteSheetInfo.json,
@@ -171,7 +207,9 @@ class Renderer
             }, 
             stage,
             Transform.deserialize(obj.transform), 
-            obj.animation
+            obj.animation, 
+            obj.zIndex,
+            Vector2.deserialize(obj.anchor)
         );
     }
 }

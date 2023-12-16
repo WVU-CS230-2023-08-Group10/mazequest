@@ -20,6 +20,7 @@ class Entity
     _Name;
     _Transform;
     _Renderer;
+    
     game;
     uuid;
 

@@ -72,7 +72,7 @@ class Game
      */
     generateRoomLayout()
     {
-        if (this.roomData != null)
+        if (this.roomData == null)
         {
             console.warn("This Game instance was not initialized with roomData, indicating it was not intended to generate layouts.");
         }

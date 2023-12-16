@@ -2,6 +2,7 @@ import { Entity } from "./Entity.js";
 import { Game } from "./Game.js";
 import { Renderer } from "./Renderer.js";
 import { Vector2 } from "./Vectors.js";
+import EnumeratedValue from "./EnumeratedValue.js";
 
 // New supabase session 
 const supabaseUrl = "https://inyelmyxiphvbfgmhmrk.supabase.co";
@@ -239,7 +240,45 @@ function loadEditorUI(parent, entity, indent=0)
         const newElement = document.createElement(`h${indent+3}`);
         newElement.textContent = prop.substring(1);
         const val = entity[prop];
-        if (val instanceof Object)
+        if (val instanceof EnumeratedValue)
+        {
+            const dropdown = document.createElement('div');
+            dropdown.setAttribute('class', 'dropdown');
+            const dropbtn = document.createElement('button');
+            dropbtn.style.marginLeft = "10px";
+            dropbtn.textContent = val.selected;
+            dropbtn.setAttribute('class', 'dropbtn');
+            dropbtn.addEventListener('click', () => {
+                let i = val.values.findIndex((e) => e == val.selected);
+                i = (i + 1) % val.values.length;
+                val.value = val.values[i];
+                dropbtn.textContent = val.selected;
+            });
+            // TODO : Get the drop down button working here.
+            /*
+            const dropcontent = document.createElement('div');
+            dropcontent.setAttribute('class', 'dropdown-content');
+            for (const v of val.values)
+            {
+                const option = document.createElement('button');
+                option.setAttribute('class', 'dropbtn');
+                option.textContent = v;
+                option.addEventListener('click', () => {
+                    val.value = option.textContent;
+                    dropbtn.textContent = option.textContent;
+                    clearEditorUI();
+                    loadEditorUI(document.querySelector('.vars'), selectedEntity);
+                });
+                dropcontent.appendChild(option);
+            }
+            */
+
+            dropdown.appendChild(newElement);
+            dropdown.appendChild(dropbtn);
+            //dropdown.appendChild(dropcontent);
+            parent.appendChild(dropdown);
+        }
+        else if (val instanceof Object)
         {
             loadEditorUI(newElement, entity[prop], indent+1);
             parent.appendChild(newElement);
