@@ -117,7 +117,7 @@ body {
   padding: 0% 10%;
   overflow-y: scroll;
   overflow-x: scroll;
-  height: 70%;
+  height: 75%;
 }
 .vars div{
   display: flex;
@@ -150,9 +150,10 @@ body {
   grid-template-areas: 
     'entities canvas vars'
     'prefabs levels vars';
-  grid-template-rows: 50% 50%;
+  grid-template-rows: 540px auto;
   grid-template-columns: 30% 40% 30%;
   position: sticky;
+  height: 900px;
 }
 
 .dropbtn {
