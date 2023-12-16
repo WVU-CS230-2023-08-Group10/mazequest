@@ -63,7 +63,6 @@ class Game
      */
     get currentRoom()
     {
-        console.log(this.layout.roomArray);
         return this.layout.roomArray[this.currentRoomPosition.y][this.currentRoomPosition.x];
     }
 
@@ -281,7 +280,6 @@ class Game
      */
     deserializeGameState(json)
     {
-        console.log(json);
         for (const o of json)
         {
             this.deserializeEntity(o);

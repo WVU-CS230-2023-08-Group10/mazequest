@@ -128,8 +128,6 @@ class MazeLayout
             }
             logStr += "\n";
         }
-        console.log(logStr);
-        console.log(this.params.currentRoomCount);
     }
 
     isPositionInMaze(pos)
