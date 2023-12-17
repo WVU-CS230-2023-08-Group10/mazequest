@@ -10,6 +10,11 @@ class Item extends Entity
     {
         super(name, transform, renderer, game);
     }
+
+    update(delta)
+    {
+        this.renderer.playAnimation(1/6, true);
+    }
     
     /**
      * Checks if passed item is a weapon

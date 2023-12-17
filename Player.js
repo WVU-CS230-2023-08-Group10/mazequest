@@ -7,6 +7,7 @@ import { Collider } from "./LevelElements.js";
 import { Enemy } from "./Enemy.js";
 import { Combat } from "./Combat.js";
 import { Mob } from "./Mob.js";
+import { Item } from "./Item.js";
 export { Player };
 
 /**
@@ -175,7 +176,6 @@ class Player extends Entity
         {
             this.inventory.weapon.transform.position = new Vector2(544, 432);
             this.inventory.weapon.transform.scale = new Vector2(4, 4);
-            this.inventory.weapon.renderer.playAnimation(1/6, true);
         }
         if (this.inventory.armor != null)
         {
@@ -249,6 +249,16 @@ class Player extends Entity
             {
                 new Combat(this, e, this.game.stage);
                 return;
+            }
+            if (e instanceof Item)
+            {
+                if (Item.isWeapon(e))
+                {
+                    this.inventory.weapon.transform.position = pos;
+                    this.inventory.weapon.transform.scale = new Vector2(2, 2);
+                    this.inventory.weapon = e;
+                    return;
+                }
             }
         }
 

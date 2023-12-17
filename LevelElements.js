@@ -38,7 +38,7 @@ class Tile extends Entity
     {
         super(name, transform, renderer, game);
 
-        this.renderer.forceZIndex(1);
+        this.renderer.forceZIndex(-1);
     }
 
     /**

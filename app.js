@@ -28,6 +28,7 @@ const bkgTexture = PIXI.Texture.from("./images/tiles/default_bg.png");
 let bkg = new PIXI.Sprite(bkgTexture);
 bkg.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 bkg.setTransform(0, 0, 2, 2);
+bkg.zIndex = -10;
 app.stage.addChild(bkg);
 
 // Load prefabs from .json file
@@ -136,6 +137,7 @@ document.getElementById("lbCanvasAnchor").appendChild(lbapp.view);
 bkg = new PIXI.Sprite(bkgTexture);
 bkg.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 bkg.setTransform(0, 0, 2, 2);
+bkg.zIndex = -10;
 lbapp.stage.addChild(bkg);
 
 const levelBuilder = new Game(lbapp.stage);
@@ -214,6 +216,7 @@ function highlightEntity()
 
     this.setAttribute('class','entity-select dropbtn selected-entity');
     selectedEntity = newEntity;
+
     loadEditorUI(document.querySelector('.vars'), selectedEntity);
 }
 
@@ -255,6 +258,7 @@ function loadEditorUI(parent, entity, indent=0)
         const newElement = document.createElement(`h${indent+3}`);
         newElement.textContent = prop.substring(1);
         const val = entity[prop];
+        
         if (val instanceof EnumeratedValue)
         {
             const dropdown = document.createElement('div');
@@ -273,8 +277,9 @@ function loadEditorUI(parent, entity, indent=0)
                 option.addEventListener('click', () => {
                     val.value = option.textContent;
                     dropbtn.textContent = option.textContent;
-                    clearEditorUI();
-                    loadEditorUI(document.querySelector('.vars'), selectedEntity);
+                    const e = selectedEntity;
+                    deselectCurrentEntity();
+                    document.querySelector(`#id${e.getID()}`).click();
                 });
                 dropcontent.appendChild(option);
             }

@@ -1,5 +1,5 @@
 {
-    "starter_sword": { 
+    "Sword": { 
         "type":"Weapon", 
         "name":"Starter Sword",
         "damage": { "low":5, "high":20 },
@@ -21,7 +21,7 @@
             "animation":"sword"
         }
     },
-    "master_sword": {
+    "Dragonslayer": {
         "type":"Weapon", 
         "name":"Dragonslayer",
         "damage": { "low":20, "high":50 },

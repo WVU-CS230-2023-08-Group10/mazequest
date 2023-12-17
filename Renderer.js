@@ -267,4 +267,18 @@ class Renderer
             Vector2.deserialize(obj.anchor)
         );
     }
+
+    static loadAssets()
+    {
+        let assets = [];
+        for (const sheet in spriteSheets)
+        {
+            assets.push(sheet.json);
+            assets.push(sheet.img);
+        }
+        for (const asset of assets)
+        {
+            PIXI.Assets.backgroundLoad(asset);
+        }
+    }
 }
