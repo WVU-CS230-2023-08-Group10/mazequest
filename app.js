@@ -260,20 +260,12 @@ function loadEditorUI(parent, entity, indent=0)
             const dropdown = document.createElement('div');
             dropdown.setAttribute('class', 'dropdown');
             const dropbtn = document.createElement('button');
-            dropbtn.style.marginLeft = "10px";
+            dropbtn.style.width = "100%";
             dropbtn.textContent = val.selected;
             dropbtn.setAttribute('class', 'dropbtn');
-            dropbtn.addEventListener('click', () => {
-                val.nextValue();
-                dropbtn.textContent = val.selected;
-                clearEditorUI();
-                loadEditorUI(document.querySelector('.vars'), selectedEntity);
-            });
-            // TODO : Get the drop down button working here.
-            /*
             const dropcontent = document.createElement('div');
-            dropcontent.setAttribute('class', 'dropdown-content');
-            for (const v of val.values)
+            dropcontent.setAttribute('class', 'dropdown-content-down');
+            for (const v in val.map)
             {
                 const option = document.createElement('button');
                 option.setAttribute('class', 'dropbtn');
@@ -286,11 +278,10 @@ function loadEditorUI(parent, entity, indent=0)
                 });
                 dropcontent.appendChild(option);
             }
-            */
 
-            dropdown.appendChild(newElement);
+            parent.appendChild(newElement);
             dropdown.appendChild(dropbtn);
-            //dropdown.appendChild(dropcontent);
+            dropdown.appendChild(dropcontent);
             parent.appendChild(dropdown);
         }
         else if (val instanceof Object)

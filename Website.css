@@ -118,7 +118,7 @@ body {
   overflow-y: scroll;
   overflow-x: scroll;
 }
-.vars div{
+.vars div:not(.dropdown-content-down){
   display: flex;
 }
 .vars input{
@@ -166,6 +166,7 @@ body {
 .dropdown {
   position: relative;
   display: grid;
+  width: 100%;
 }
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
@@ -174,13 +175,26 @@ body {
   top: 0px; 
   left: 100%;
 }
+.dropdown-content-down {
+  display: none;
+  position : absolute;
+  top : 100%;
+  left : 0%;
+  width: 100%;
+  z-index: 10;
+}
 /* Links inside the dropdown */
 .dropdown-content:hover .dropbtn {
   text-decoration: none;
   display: block;
+  width: 100%;
 }
 /* Show the dropdown menu on hover */
 .dropdown:hover > .dropdown-content 
+{
+  display: grid;
+}
+.dropdown:hover > .dropdown-content-down
 {
   display: grid;
 }

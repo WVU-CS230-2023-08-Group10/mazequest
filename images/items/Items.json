@@ -95,8 +95,7 @@
   "format": "RGBA8888",
   "size": { "w": 352, "h": 32 },
   "scale": "1"
- }
- ,
+ },
  "animations" : {
   "default" : ["sword0"],
   "sword" : ["sword0"],
