@@ -371,7 +371,7 @@ document.getElementById("saveLevel").addEventListener("click", async (e) => {
     }
 
     // Check to see if name exceeds maximum length
-    if (levelNameTextBox.value.length > maxNameSize) {
+    if (levelNameTextBox.value.trim().length > maxNameSize) {
        // Name is too long. Make user enter a new name
        alert("Error: Level name cannot be longer than 15 characters. Please enter a new name.");
        levelNameTextBox.style.backgroundColor = "#E3963E";
@@ -379,7 +379,7 @@ document.getElementById("saveLevel").addEventListener("click", async (e) => {
     }
 
     // Get the user's level name
-    const level_name = levelNameTextBox.value;
+    const level_name = levelNameTextBox.value.trim();
 
     // Get the user's username
     const user = await s.auth.getUser();

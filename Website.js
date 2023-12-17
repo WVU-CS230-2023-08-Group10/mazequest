@@ -211,8 +211,6 @@ async function updateLeaderboard() {
    var topMazeRunnersPromise
    var topEnemySlayersPromise
 
-
-
    // retrieve promises
    topDragonSlayersPromise = s
       .from("player_stats")
@@ -244,42 +242,35 @@ async function updateLeaderboard() {
       ]).catch(error => {
          console.log(error)
       })
-
-
-
-
-
    // convert data to js objects and ready to load into
 
    //TODO : Create dummy data to test
 
 
    // grabs stats and usernames for leaderboard
-   var firstDragonSlayer = topDragonSlayers.data[0].username
-   var secondDragonSlayer = topDragonSlayers.data[1].username
-   var thirdDragonSlayer = topDragonSlayers.data[2].username
+   var firstDragonSlayer = topDragonSlayers.data[0].username.substring(1, topDragonSlayers.data[0].username.length - 1);
+   var secondDragonSlayer = topDragonSlayers.data[1].username.substring(1, topDragonSlayers.data[1].username.length - 1);
+   var thirdDragonSlayer = topDragonSlayers.data[2].username.substring(1, topDragonSlayers.data[2].username.length - 1);
 
-   var firstDragonSlayerStat = topDragonSlayers.data[0].dragons_slain
-   var secondDragonSlayerStat = topDragonSlayers.data[1].dragons_slain
-   var thirdDragonSlayerStat = topDragonSlayers.data[2].dragons_slain
+   var firstDragonSlayerStat = topDragonSlayers.data[0].dragons_slain;
+   var secondDragonSlayerStat = topDragonSlayers.data[1].dragons_slain;
+   var thirdDragonSlayerStat = topDragonSlayers.data[2].dragons_slain;
 
-   var firstMazeRunner = topMazeRunners.data[0].username
-   var secondMazeRunner = topMazeRunners.data[1].username
-   var thirdMazeRunner = topMazeRunners.data[2].username
+   var firstMazeRunner = topMazeRunners.data[0].username.substring(1, topDragonSlayers.data[0].username.length - 1);
+   var secondMazeRunner = topMazeRunners.data[1].username.substring(1, topMazeRunners.data[1].username.length - 1);
+   var thirdMazeRunner = topMazeRunners.data[2].username.substring(1, topMazeRunners.data[2].username.length - 1);
 
-   var firstMazeRunnerStat = topMazeRunners.data[0].mazes_escaped
-   var secondMazeRunnerStat = topMazeRunners.data[1].mazes_escaped
-   var thirdMazeRunnerStat = topMazeRunners.data[2].mazes_escaped
+   var firstMazeRunnerStat = topMazeRunners.data[0].mazes_escaped;
+   var secondMazeRunnerStat = topMazeRunners.data[1].mazes_escaped;
+   var thirdMazeRunnerStat = topMazeRunners.data[2].mazes_escaped;
 
-   var firstEnemySlayer = topEnemySlayers.data[0].username
-   var secondEnemySlayer = topEnemySlayers.data[1].username
-   var thirdEnemySlayer = topEnemySlayers.data[2].username
+   var firstEnemySlayer = topEnemySlayers.data[0].username.substring(1, topEnemySlayers.data[0].username.length - 1);
+   var secondEnemySlayer = topEnemySlayers.data[1].username.substring(1, topEnemySlayers.data[1].username.length - 1);
+   var thirdEnemySlayer = topEnemySlayers.data[2].username.substring(1, topEnemySlayers.data[2].username.length - 1);
 
-   var firstEnemySlayerStat = topEnemySlayers.data[0].enemies_slain
-   var secondEnemySlayerStat = topEnemySlayers.data[1].enemies_slain
-   var thirdEnemySlayerStat = topEnemySlayers.data[2].enemies_slain
-
-
+   var firstEnemySlayerStat = topEnemySlayers.data[0].enemies_slain;
+   var secondEnemySlayerStat = topEnemySlayers.data[1].enemies_slain;
+   var thirdEnemySlayerStat = topEnemySlayers.data[2].enemies_slain;
 
 
    const user = await s.auth.getUser()
@@ -295,8 +286,6 @@ async function updateLeaderboard() {
       // retrieve user id to access stats table
       const id = stringId.substring(1, stringId.length - 1)
 
-
-
       const personalStats = await s
          .from("player_stats")
          .select()
@@ -305,10 +294,10 @@ async function updateLeaderboard() {
 
       // convert username to json and display
       // console.log(JSON.stringify(personalStats.data[0].username))
-      const usernameString = JSON.stringify(personalStats.data[0].username)
+      const usernameString = personalStats.data[0].username.substring(1, personalStats.data[0].username.length - 1);
 
       //const username = usernameString.substring(1,usernameString.length-1)
-      document.getElementById("personal_stat").innerHTML = usernameString.substring(3, usernameString.length - 3) + "'s conquests..."
+      document.getElementById("personal_stat").textContent = usernameString + "'s conquests..."
 
 
       //console.log(JSON.stringify(personalStats))
