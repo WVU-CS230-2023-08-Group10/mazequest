@@ -1,3 +1,7 @@
+| :warning:  NOTE: Website is currently OFFLINE! |
+|----------------------------------------------------|
+
+
 # MazeQuest
 MazeQuest is a website that contains the two-dimensional dungeon crawler RPG, MazeQuest, of which is entirely played in the browser. 
 
