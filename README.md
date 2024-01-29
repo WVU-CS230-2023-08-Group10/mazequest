@@ -1,15 +1,15 @@
-| :warning:  NOTE: Website is currently OFFLINE! |
-|----------------------------------------------------|
+| ☑️ Website is back online! We are now hosting through GitHub! |
+|---------------------------------------------------------------|
 
 
 # MazeQuest
 MazeQuest is a website that contains the two-dimensional dungeon crawler RPG, MazeQuest, of which is entirely played in the browser. 
 
 ## Motivation
-MazeQuest was built as a group project for an Introductory Software Engineering course, where the team was tasked with building a website to offer a service. Our group decided to create a video game that can be played within the website itself: Our decision to build a game stemmed from our shared interest in video games and was motivated by our interest in learning more about how video games are made. Having little to no experience with building websites and video games, the team took this project as a means to challenge ourselves and build a unique video game that we *would* want to play ourselves. Part of what we felt would make or break our game was the ability for users to design their own levels. We wanted to create the tools that allowed each user to create new places & environments for their game, all in the browser. Here's what came of it all: Welcome to Mazequest.
+MazeQuest was built as a group project for an Introductory Software Engineering course, where the team was tasked with building a website to offer a service. Our group decided to create a video game that can be played within the website itself: Our decision to build a game stemmed from our shared interest in video games and was motivated by our interest in learning more about how video games are made. Having little to no experience with building websites and video games, the team took this project as a means to challenge ourselves and build a unique video game that we *would* want to play ourselves. Part of what we felt would make or break our game was the ability for users to design their own levels. We wanted to create the tools that allowed each user to create new places & environments for their game, all in the browser.
 
 ## Getting Started
-MazeQuest is competely contained within the website itself and does not require any downloads or installations to be able to use. In order to use the Level Builder and access to the game itself, users must create a new account or login with an existing, authenticated account. The website can be found [here](https://dev.d1nqqr84hhhv1o.amplifyapp.com/).
+MazeQuest is competely contained within the website itself and does not require any downloads or installations to be able to use. In order to use the Level Builder and access to the game itself, users must create a new account or login with an existing, authenticated account. The website can be found [here](https://wvu-cs230-2023-08-group10.github.io/mazequest/).
 
 ### Navigating the Website
 ##### The website is divided into 8 tabs that contains different information and functionalities of the website. 
@@ -23,7 +23,7 @@ MazeQuest is competely contained within the website itself and does not require 
 
 ### Creating an Account
 To play MazeQuest or use the Level Builder, you must first create and authenticate an account. Here are the steps to create an account:
-1. Go to the [website](https://dev.d1nqqr84hhhv1o.amplifyapp.com/).
+1. Go to the [website](https://wvu-cs230-2023-08-group10.github.io/mazequest/).
 2. Navigate to the "Sign Up" tab and enter an email, a new username, and a password. Click submit.
 3. You'll be prompted to check your email for a validation link.
 4. Click the link in the email to be redirected back to the website, signed in and ready to go!
